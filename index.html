@@ -332,6 +332,12 @@ button{ font-family:inherit; }
 }
 .modal-input:focus{ border-color:var(--blue); }
 
+.settings-card{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:22px 24px; box-shadow:var(--shadow); max-width:480px; margin:0 auto; }
+.settings-warning{ font-size:13px; color:var(--ink-soft); line-height:1.6; background:var(--amber-soft); padding:14px 16px; border-radius:10px; margin:0 0 18px; text-align:left; }
+.settings-warning a{ color:var(--amber); }
+.settings-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px; }
+.settings-status{ margin:14px 0 0; font-size:13px; color:var(--ink-faint); text-align:center; }
+
 .trend-card{
   background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:16px; padding:18px 20px;
   box-shadow:var(--shadow); border-top:5px solid var(--c);
@@ -1687,12 +1693,41 @@ function currentProfile(){ return currentProfiles().find(p=>p.id===state.profile
 function currentData(){ return loadData(state.profileId); }
 
 /* ============== AI hint (Claude) — falls back to the static concept text
-   when the sample capability isn't available (e.g. self-hosted outside Claude) */
+   when neither the sample capability nor a saved API key is available
+   (e.g. self-hosted outside Claude, no key added). */
+const API_KEY_STORAGE = 'cto_api_key';
+function getApiKey(){ try{ return (localStorage.getItem(API_KEY_STORAGE)||'').trim(); }catch(e){ return ''; } }
+function setApiKey(key){
+  try{ if(key) localStorage.setItem(API_KEY_STORAGE, key); else localStorage.removeItem(API_KEY_STORAGE); }catch(e){}
+  cachedSample = undefined; // force re-check on next hint request
+}
+async function callAnthropicDirect(turns, opts){
+  const key = getApiKey();
+  const messages = Array.isArray(turns) ? turns.map(t=>({role:t.role, content:t.content})) : [{role:'user', content:String(turns)}];
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{
+      'content-type':'application/json',
+      'x-api-key': key,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true'
+    },
+    body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:300, messages })
+  });
+  if(!res.ok){ let detail=''; try{ detail=await res.text(); }catch(e){} throw { code:'api_error', message:'Anthropic API error '+res.status+(detail?': '+detail:'') }; }
+  const data = await res.json();
+  const text = (data.content && data.content[0] && data.content[0].text) || '';
+  if(opts && opts.onText) opts.onText({text});
+  return { text };
+}
 let cachedSample; // undefined = not checked yet, null = unavailable, function = ready
 async function getSample(){
   if(cachedSample !== undefined) return cachedSample;
-  if(typeof window==='undefined' || !window.claude || !window.claude.use){ cachedSample = null; return null; }
-  try{ cachedSample = await window.claude.use('sample'); }catch(e){ cachedSample = null; }
+  if(typeof window!=='undefined' && window.claude && window.claude.use){
+    try{ const s = await window.claude.use('sample'); if(s){ cachedSample = s; return cachedSample; } }catch(e){}
+  }
+  if(getApiKey()){ cachedSample = callAnthropicDirect; return cachedSample; }
+  cachedSample = null;
   return cachedSample;
 }
 function buildHintPrompt(problem, grade){
@@ -1783,8 +1818,12 @@ function renderLogin(){
           </div>
         </div>
       </div>
+      <div style="text-align:center;margin-top:28px;">
+        <button class="link-btn" id="api-settings-link">⚙️ AI hint settings</button>
+      </div>
     </div>
   `;
+  document.getElementById('api-settings-link').addEventListener('click', ()=>{ state.screen='apiKeySettings'; render(); });
   app.querySelectorAll('.tab[data-id]').forEach(el=>{
     el.addEventListener('click', ()=>{
       const id = el.getAttribute('data-id');
@@ -1867,6 +1906,44 @@ function renderGradeSelect(){
       state.screen='dashboard'; render();
     });
   });
+}
+
+/* ============== render: AI hint settings ============== */
+function renderApiKeySettings(){
+  const app = document.getElementById('app');
+  const existing = getApiKey();
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <h1>AI Hint Settings</h1>
+        <p class="tag">Optional: add your own Anthropic API key so "Ask Claude" hints keep working even on a device that is not signed into Claude.</p>
+      </div>
+      <div class="settings-card">
+        <p class="settings-warning">⚠️ <strong>Read this first.</strong> This key is stored only in this browser, in plain readable form — anyone with access to this device's browser developer tools could read it and use it to run up charges on your account. Only add a key on a device you trust. This is a separate <a href="https://console.anthropic.com" target="_blank" rel="noopener">console.anthropic.com</a> API account with its own billing — not your claude.ai subscription — and each hint here makes a small paid API call. Leave this blank to keep using the free built-in written hints instead.</p>
+        <input type="password" id="api-key-input" class="modal-input" placeholder="sk-ant-..." value="${existing?esc(existing):''}" autocomplete="off">
+        <div class="settings-actions">
+          <button class="btn btn-ghost" type="button" id="show-key-btn">Show</button>
+          <button class="btn btn-primary" id="save-key-btn">Save key</button>
+          ${existing?'<button class="btn btn-ghost" id="clear-key-btn">Remove key</button>':''}
+        </div>
+        <p class="settings-status">${existing?'✓ A key is currently saved on this device.':'No key saved — using the free built-in hints.'}</p>
+      </div>
+      <div style="text-align:center;margin-top:18px;">
+        <button class="link-btn" id="settings-back-btn">← Back</button>
+      </div>
+    </div>
+  `;
+  const input = document.getElementById('api-key-input');
+  document.getElementById('show-key-btn').addEventListener('click', ()=>{
+    input.type = input.type==='password' ? 'text' : 'password';
+  });
+  document.getElementById('save-key-btn').addEventListener('click', ()=>{
+    setApiKey(input.value.trim());
+    render();
+  });
+  const clearBtn = document.getElementById('clear-key-btn');
+  if(clearBtn) clearBtn.addEventListener('click', ()=>{ setApiKey(''); render(); });
+  document.getElementById('settings-back-btn').addEventListener('click', ()=>{ state.screen='login'; render(); });
 }
 
 /* ============== render: dashboard ============== */
@@ -2462,6 +2539,7 @@ function render(){
   if(state.screen==='login') renderLogin();
   else if(state.screen==='gradeSelect') renderGradeSelect();
   else if(state.screen==='avatarSelect') renderAvatarSelect();
+  else if(state.screen==='apiKeySettings') renderApiKeySettings();
   else if(state.screen==='dashboard') renderDashboard();
   else if(state.screen==='session') renderSession();
   else if(state.screen==='summary') renderSummary();
