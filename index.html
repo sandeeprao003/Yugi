@@ -1,0 +1,2473 @@
+<title>Yugi</title>
+<meta name="apple-mobile-web-app-title" content="Yugi">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<style>
+:root{
+  --paper:#FBF9F4;
+  --paper-raise:#FFFFFF;
+  --grid:#E4DECD;
+  --ink:#26313A;
+  --ink-soft:#5E6971;
+  --ink-faint:#8B9298;
+  --blue:#3D6EDB;      --blue-soft:#E9EFFC;    --blue-line:#C7D6F6;
+  --amber:#C97A1E;     --amber-soft:#FBEEDD;   --amber-line:#F0D6AE;
+  --teal:#1C8E76;      --teal-soft:#E1F3EE;    --teal-line:#B9E2D6;
+  --good:#2E8F52;      --good-soft:#E4F5EA;
+  --bad:#C3453A;       --bad-soft:#FBEAE8;
+  --info:#7A5FC9;      --info-soft:#EFEAFB;
+  --shadow: 0 1px 2px rgba(38,49,58,.06), 0 6px 16px rgba(38,49,58,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1C2126;
+    --paper-raise:#242A31;
+    --grid:rgba(232,227,214,.09);
+    --ink:#ECE7DA;
+    --ink-soft:#AAB2B8;
+    --ink-faint:#7C848B;
+    --blue:#7FA0F2;    --blue-soft:rgba(127,160,242,.14);  --blue-line:rgba(127,160,242,.35);
+    --amber:#EDA84F;   --amber-soft:rgba(237,168,79,.14);  --amber-line:rgba(237,168,79,.35);
+    --teal:#57C7A9;    --teal-soft:rgba(87,199,169,.14);   --teal-line:rgba(87,199,169,.35);
+    --good:#5FC783;    --good-soft:rgba(95,199,131,.14);
+    --bad:#E8776B;     --bad-soft:rgba(232,119,107,.14);
+    --info:#A98CF0;    --info-soft:rgba(169,140,240,.16);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1C2126;
+  --paper-raise:#242A31;
+  --grid:rgba(232,227,214,.09);
+  --ink:#ECE7DA;
+  --ink-soft:#AAB2B8;
+  --ink-faint:#7C848B;
+  --blue:#7FA0F2;    --blue-soft:rgba(127,160,242,.14);  --blue-line:rgba(127,160,242,.35);
+  --amber:#EDA84F;   --amber-soft:rgba(237,168,79,.14);  --amber-line:rgba(237,168,79,.35);
+  --teal:#57C7A9;    --teal-soft:rgba(87,199,169,.14);   --teal-line:rgba(87,199,169,.35);
+  --good:#5FC783;    --good-soft:rgba(95,199,131,.14);
+  --bad:#E8776B;     --bad-soft:rgba(232,119,107,.14);
+  --info:#A98CF0;    --info-soft:rgba(169,140,240,.16);
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 32px,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/32px 100%,
+    var(--paper);
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  min-height:100vh;
+}
+h1,h2,h3,.display{ font-family:'Fredoka',system-ui,sans-serif; text-wrap:balance; }
+.num, .mono{ font-family:'IBM Plex Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+button{ font-family:inherit; }
+:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+@media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+
+#app{ max-width:920px; margin:0 auto; padding:28px 20px 64px; }
+
+.eyebrow{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); }
+
+.btn{
+  border:none; border-radius:12px; padding:12px 22px; font-weight:600; font-size:15px;
+  cursor:pointer; transition:transform .1s ease, box-shadow .15s ease, filter .15s ease;
+  font-family:'Fredoka',system-ui,sans-serif;
+}
+.btn:hover{ filter:brightness(1.04); }
+.btn:active{ transform:translateY(1px); }
+.btn-primary{ background:var(--ink); color:var(--paper); box-shadow:var(--shadow); }
+.btn-ghost{ background:transparent; color:var(--ink-soft); border:1.5px solid var(--grid); }
+.btn-strand{ color:#fff; box-shadow:var(--shadow); }
+.btn:disabled{ opacity:.45; cursor:default; }
+
+/* ---------- Login ---------- */
+.login-wrap{ padding-top:6vh; }
+.brand{ text-align:center; margin-bottom:40px; }
+.brand h1{ font-size:40px; margin:0 0 8px; color:var(--ink); }
+.brand .tag{ color:var(--ink-soft); font-size:16px; max-width:480px; margin:0 auto; }
+.brand .tag .num{ color:var(--blue); font-weight:600; }
+.tabs{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+.tab{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:16px 16px 4px 4px;
+  padding:20px 22px; min-width:150px; text-align:center; cursor:pointer; box-shadow:var(--shadow);
+  transition:transform .12s ease;
+}
+.tab:hover{ transform:translateY(-3px); }
+.tab .badge{
+  width:48px; height:48px; border-radius:50%; margin:0 auto 10px; display:flex; align-items:center;
+  justify-content:center; font-family:'Fredoka'; font-weight:600; font-size:20px; color:#fff;
+}
+.avatar-badge{ background:var(--grid) !important; overflow:hidden; }
+.avatar-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:14px; max-width:520px; margin:0 auto; }
+.avatar-option{
+  background:var(--paper-raise); border:2.5px solid var(--grid); border-radius:16px; padding:8px; cursor:pointer;
+  transition:transform .12s ease, border-color .12s ease; box-shadow:var(--shadow);
+}
+.avatar-option:hover{ transform:translateY(-3px); }
+.avatar-option.selected{ border-color:var(--blue); }
+.avatar-option svg{ display:block; width:100%; height:auto; }
+.tab .name{ font-weight:600; font-size:16px; }
+.tab .streak{ margin-top:6px; font-size:12px; color:var(--ink-faint); }
+.tab-new{ border-style:dashed; color:var(--ink-faint); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
+.new-form{ display:flex; gap:8px; margin-top:8px; }
+.new-form input{
+  font-family:inherit; font-size:15px; padding:10px 12px; border-radius:10px; border:1.5px solid var(--grid);
+  background:var(--paper); color:var(--ink); width:150px;
+}
+.grade-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:14px; max-width:640px; margin:0 auto; }
+.grade-btn{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:20px 12px;
+  font-family:'Fredoka'; font-weight:600; font-size:20px; color:var(--ink); cursor:pointer; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; align-items:center; gap:6px; transition:transform .12s ease, border-color .12s ease;
+}
+.grade-btn:hover{ transform:translateY(-3px); border-color:var(--blue); }
+.grade-band-label{ font-family:'Inter'; font-weight:500; font-size:11px; color:var(--ink-faint); }
+
+/* ---------- Dashboard ---------- */
+.dash-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px; flex-wrap:wrap; }
+.dash-header-left{ display:flex; align-items:center; gap:14px; }
+.dash-avatar{ width:56px; height:56px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--grid); }
+.dash-avatar svg{ display:block; width:100%; height:100%; }
+.dash-header h2{ margin:0; font-size:26px; }
+.streak-pill{
+  display:inline-flex; align-items:center; gap:6px; background:var(--amber-soft); color:var(--amber);
+  padding:6px 14px; border-radius:999px; font-weight:700; font-size:14px;
+}
+.link-btn{ background:none; border:none; color:var(--ink-faint); text-decoration:underline; cursor:pointer; font-size:14px; font-family:inherit; }
+
+.today-bar{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:16px 18px; margin-bottom:22px; box-shadow:var(--shadow); }
+.today-bar .row1{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+.today-bar .row1 strong{ font-family:'Fredoka'; font-size:15px; }
+.dots{ display:flex; gap:8px; }
+.dot{ width:34px; height:10px; border-radius:6px; background:var(--grid); }
+.dot.on{ background:var(--good); }
+
+.strand-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:26px; }
+.strand-card{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:16px; padding:20px;
+  box-shadow:var(--shadow); display:flex; flex-direction:column; gap:12px; border-top:5px solid var(--c);
+}
+.strand-card .icon{ width:38px; height:38px; }
+.strand-card h3{ margin:0; font-size:18px; }
+.strand-card .sub{ font-size:13px; color:var(--ink-soft); line-height:1.5; min-height:38px; }
+.status-pill{ align-self:flex-start; font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; }
+.status-pill.done{ background:var(--good-soft); color:var(--good); }
+.status-pill.todo{ background:var(--c-soft); color:var(--c); }
+.acc{ font-size:12px; color:var(--ink-faint); }
+
+.week-strip{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); }
+.week-strip h4{ margin:0 0 12px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; }
+.week-cols{ display:flex; gap:10px; justify-content:space-between; }
+.week-col{ display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
+.week-col .lbl{ font-size:11px; color:var(--ink-faint); }
+.week-col .bar{ width:100%; max-width:26px; height:52px; background:var(--grid); border-radius:6px; display:flex; flex-direction:column-reverse; overflow:hidden; }
+.week-col .fill{ background:var(--teal); width:100%; }
+.week-col.today .lbl{ color:var(--ink); font-weight:700; }
+
+/* ---------- Session ---------- */
+.session-top{ display:flex; align-items:center; justify-content:space-between; padding:10px 16px; border-radius:14px; margin-bottom:22px; }
+.session-top .timer{ font-size:20px; font-weight:600; }
+.session-top .timer.low{ color:var(--bad); }
+.progress-track{ height:6px; border-radius:4px; background:rgba(0,0,0,.08); margin-bottom:26px; overflow:hidden; }
+.progress-fill{ height:100%; background:var(--c); transition:width .3s ease; }
+
+.problem-card{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:20px; padding:36px 32px;
+  box-shadow:var(--shadow); text-align:center; min-height:220px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:18px;
+}
+.problem-card .eyebrow{ color:var(--c); }
+.problem-tags{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:center; }
+.exam-tag{ font-size:11px; font-weight:600; color:var(--ink-faint); background:var(--grid); padding:3px 9px; border-radius:999px; }
+.problem-eq{ font-family:'IBM Plex Mono'; font-weight:600; font-size:clamp(24px,5vw,34px); font-variant-numeric:tabular-nums; }
+.problem-text{ font-size:19px; line-height:1.55; max-width:56ch; }
+.problem-text .num{ font-weight:600; color:var(--c); }
+
+.answer-row{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:6px; }
+.answer-input{
+  font-family:'IBM Plex Mono'; font-size:20px; padding:12px 16px; border-radius:12px; border:2px solid var(--grid);
+  background:var(--paper); color:var(--ink); width:160px; text-align:center;
+}
+.answer-input:focus{ border-color:var(--c); }
+.choice-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:6px; }
+.choice-btn{
+  border:2px solid var(--grid); background:var(--paper); color:var(--ink); border-radius:12px;
+  padding:12px 20px; font-size:16px; font-weight:600; cursor:pointer; font-family:'Fredoka';
+}
+.choice-btn:hover{ border-color:var(--c); }
+.choice-btn.correct{ background:var(--good-soft); border-color:var(--good); color:var(--good); }
+.choice-btn.wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
+.choice-btn.dim{ opacity:.5; }
+
+.feedback{ margin-top:6px; padding:14px 18px; border-radius:12px; font-size:15px; max-width:52ch; }
+.feedback.correct{ background:var(--good-soft); color:var(--good); }
+.feedback.wrong{ background:var(--bad-soft); color:var(--bad); }
+.feedback.assisted{ background:var(--info-soft); color:var(--info); }
+.feedback .explain{ color:var(--ink-soft); font-weight:400; margin-top:4px; display:block; }
+.assisted-note{ color:var(--info); font-weight:600; display:block; margin-top:6px; font-size:13px; }
+
+.help-row{ margin-top:2px; }
+.help-btn{ font-size:13px; padding:8px 16px; }
+.help-btn:disabled{ opacity:.6; }
+.help-panel{ display:flex; flex-direction:column; gap:8px; max-width:52ch; width:100%; text-align:left; }
+.help-panel[hidden]{ display:none; }
+.hint-source{ font-size:11px; font-weight:700; background:var(--info); color:var(--paper-raise); padding:2px 7px; border-radius:999px; margin-right:6px; white-space:nowrap; }
+.chat-bubble{ padding:10px 14px; border-radius:12px; font-size:14px; line-height:1.5; }
+.chat-bubble.chat-claude{ background:var(--info-soft); color:var(--info); align-self:flex-start; max-width:100%; }
+.chat-bubble.chat-user{ background:var(--grid); color:var(--ink); align-self:flex-end; max-width:85%; }
+.chat-ask-row{ display:flex; gap:8px; }
+.chat-ask-row input{ flex:1; min-width:0; font-family:inherit; font-size:14px; padding:9px 12px; border-radius:10px; border:1.5px solid var(--grid); background:var(--paper); color:var(--ink); }
+.chat-ask-row input:focus{ border-color:var(--info); }
+.chat-ask-row button{ font-size:13px; padding:8px 16px; flex-shrink:0; }
+.problem-diagram{ display:flex; justify-content:center; margin:2px 0; }
+.problem-diagram svg{ max-width:280px; width:100%; height:auto; }
+
+.score-breakdown{ display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:2px 0 14px; }
+.sb-item{ font-size:12px; font-weight:700; padding:4px 12px; border-radius:999px; }
+.sb-correct{ background:var(--good-soft); color:var(--good); }
+.sb-assisted{ background:var(--info-soft); color:var(--info); }
+.sb-missed{ background:var(--bad-soft); color:var(--bad); }
+.summary-actions{ display:flex; gap:12px; justify-content:center; margin-top:26px; flex-wrap:wrap; }
+
+.review-list{ display:flex; flex-direction:column; gap:14px; }
+.review-item{
+  display:flex; gap:14px; background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px;
+  padding:16px 18px; box-shadow:var(--shadow); border-left:4px solid var(--grid);
+}
+.review-item.correct{ border-left-color:var(--good); }
+.review-item.wrong{ border-left-color:var(--bad); }
+.review-mark{ font-size:20px; flex-shrink:0; }
+.review-body{ flex:1; min-width:0; }
+.review-eyebrow{ font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--c); margin-bottom:6px; }
+.review-prompt{ font-size:15px; margin-bottom:8px; }
+.review-prompt.mono{ font-family:'IBM Plex Mono'; font-weight:600; }
+.review-answers{ display:flex; gap:16px; flex-wrap:wrap; font-size:13px; color:var(--ink-soft); margin-bottom:6px; }
+.review-your strong{ color:var(--ink); }
+.review-correct strong{ color:var(--good); }
+.review-explain{ font-size:13px; color:var(--ink-soft); }
+
+.session-actions{ display:flex; justify-content:center; margin-top:22px; }
+
+/* ---------- Summary ---------- */
+.summary-card{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:20px; padding:44px 32px;
+  box-shadow:var(--shadow); text-align:center;
+}
+.summary-card .score{ font-family:'IBM Plex Mono'; font-weight:700; font-size:56px; margin:14px 0; }
+.summary-card h2{ margin:0; font-size:24px; }
+.summary-card p{ color:var(--ink-soft); font-size:15px; }
+.day-banner{
+  margin-top:22px; padding:16px; border-radius:14px; background:var(--amber-soft); color:var(--amber);
+  font-weight:700; font-family:'Fredoka';
+}
+
+/* ---------- Roadmap & Progress ---------- */
+.phase-line{ font-size:13px; color:var(--ink-faint); margin-top:2px; font-weight:600; }
+.persona-card{
+  display:flex; align-items:center; gap:18px; background:var(--paper-raise); border:1.5px solid var(--grid);
+  border-radius:16px; padding:20px 22px; box-shadow:var(--shadow); margin-bottom:22px;
+}
+.persona-badge{
+  width:56px; height:56px; border-radius:50%; background:var(--amber-soft); display:flex; align-items:center;
+  justify-content:center; font-size:26px; flex-shrink:0;
+}
+.persona-title{ font-family:'Fredoka'; font-weight:600; font-size:20px; }
+.persona-stats{ font-size:13px; color:var(--ink-soft); margin-top:2px; }
+
+.roadmap{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); margin-bottom:22px; }
+.roadmap h4{ margin:0 0 14px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; }
+.roadmap-track{ display:flex; gap:6px; }
+.roadmap-step{ flex:1; text-align:center; padding-top:14px; position:relative; }
+.roadmap-step::before{
+  content:''; position:absolute; top:4px; left:-50%; width:100%; height:2px; background:var(--grid);
+}
+.roadmap-step:first-child::before{ display:none; }
+.roadmap-step.past::before{ background:var(--good); }
+.roadmap-dot{ width:9px; height:9px; border-radius:50%; background:var(--grid); margin:0 auto 8px; position:relative; z-index:1; }
+.roadmap-step.past .roadmap-dot{ background:var(--good); }
+.roadmap-step.current .roadmap-dot{ background:var(--amber); width:13px; height:13px; box-shadow:0 0 0 4px var(--amber-soft); }
+.roadmap-name{ font-size:12px; font-weight:700; font-family:'Fredoka'; }
+.roadmap-step.current .roadmap-name{ color:var(--amber); }
+.roadmap-weeks{ font-size:11px; color:var(--ink-faint); margin-top:2px; }
+.roadmap-current{ margin:16px 0 0; font-size:14px; color:var(--ink-soft); }
+.roadmap-disclaimer{ margin:10px 0 0; font-size:12px; color:var(--ink-faint); font-style:italic; }
+
+.sources-card{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); margin-bottom:22px; }
+.sources-card h4{ margin:0 0 14px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; }
+.sources-list{ display:flex; flex-direction:column; gap:12px; }
+.source-row{ display:flex; flex-direction:column; gap:2px; padding-bottom:12px; border-bottom:1px solid var(--grid); }
+.source-row:last-child{ border-bottom:none; padding-bottom:0; }
+.source-name{ font-family:'Fredoka'; font-weight:600; font-size:14px; }
+.source-note{ font-size:13px; color:var(--ink-soft); }
+.sources-hint{ margin:14px 0 0; font-size:12px; color:var(--ink-faint); }
+
+.past-days-card{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:18px 20px; box-shadow:var(--shadow); max-height:420px; overflow-y:auto; }
+.past-days-card h4{ margin:0 0 14px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; position:sticky; top:0; background:var(--paper-raise); }
+.past-day-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 0; border-bottom:1px solid var(--grid); }
+.past-day-row:last-child{ border-bottom:none; }
+.past-day-label{ font-family:'Fredoka'; font-weight:600; font-size:14px; min-width:52px; flex-shrink:0; }
+.past-day-strands{ display:flex; gap:8px; flex-wrap:wrap; flex:1; }
+.past-strand-chip{ font-size:12px; font-weight:600; padding:5px 10px; border-radius:999px; background:var(--c-soft, var(--grid)); color:var(--c, var(--ink-soft)); display:inline-flex; align-items:center; gap:4px; }
+.past-strand-chip.todo{ background:var(--grid); color:var(--ink-faint); font-weight:500; }
+.mini-review-btn{ border:none; background:none; cursor:pointer; font-size:13px; padding:0 0 0 2px; line-height:1; }
+
+/* ---------- Modal ---------- */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center;
+  z-index:1000; padding:20px;
+}
+.modal-box{
+  background:var(--paper-raise); border-radius:16px; padding:28px 26px; max-width:360px; width:100%;
+  box-shadow:0 8px 32px rgba(0,0,0,.25); text-align:center;
+}
+.modal-box h3{ margin:0 0 8px; font-size:19px; }
+.modal-box p{ margin:0 0 20px; font-size:14px; color:var(--ink-soft); }
+.modal-actions{ display:flex; gap:10px; justify-content:center; }
+.modal-input{
+  width:100%; font-family:inherit; font-size:16px; padding:10px 14px; border-radius:10px; border:1.5px solid var(--grid);
+  background:var(--paper); color:var(--ink); margin-bottom:18px; text-align:center; box-sizing:border-box;
+}
+.modal-input:focus{ border-color:var(--blue); }
+
+.trend-card{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:16px; padding:18px 20px;
+  box-shadow:var(--shadow); border-top:5px solid var(--c);
+}
+.trend-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:6px; }
+.trend-head h3{ margin:0; font-size:16px; }
+.tier-pill{ font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px; background:var(--grid); color:var(--ink-soft); white-space:nowrap; }
+.tier-pill.small{ font-size:11px; padding:3px 9px; }
+.trend-note{ font-size:13px; font-weight:600; margin-top:4px; }
+.trend-note.tone-up{ color:var(--good); }
+.trend-note.tone-down{ color:var(--bad); }
+.trend-note.tone-flat{ color:var(--ink-faint); }
+
+.mastery-group{ margin-bottom:18px; }
+.mastery-group:last-child{ margin-bottom:0; }
+.mastery-strand-label{ font-family:'Fredoka'; font-weight:600; font-size:14px; margin-bottom:10px; }
+.subtopic-row{ display:grid; grid-template-columns:1fr 100px 44px 20px auto; align-items:center; gap:12px; padding:7px 0; border-bottom:1px solid var(--grid); }
+.subtopic-row:last-child{ border-bottom:none; }
+.subtopic-name{ font-size:14px; }
+.locked-tag{ font-size:11px; color:var(--ink-faint); font-style:italic; }
+.bar-track{ height:8px; border-radius:5px; background:var(--grid); overflow:hidden; }
+.bar-fill{ height:100%; border-radius:5px; }
+.subtopic-pct{ font-size:13px; color:var(--ink-soft); text-align:right; }
+.trend-arrow{ font-size:13px; text-align:center; color:var(--ink-faint); }
+.trend-arrow.up{ color:var(--good); }
+.trend-arrow.down{ color:var(--bad); }
+@media (max-width:640px){
+  .subtopic-row{ grid-template-columns:1fr 70px 36px 16px; }
+  .subtopic-row .tier-pill{ display:none; }
+}
+</style>
+
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============== utilities ============== */
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
+function pick(arr){ return arr[randInt(0,arr.length-1)]; }
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=randInt(0,i); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function fmt(n){ return n.toLocaleString('en-US'); }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ [a,b]=[b,a%b]; } return a||1; }
+function reduceFrac(n,d){ const g=gcd(n,d); return [n/g, d/g]; }
+function fracStr(n,d){ [n,d]=reduceFrac(n,d); if(d===1) return String(n); if(Math.abs(n)>d){ const w=Math.trunc(n/d), r=Math.abs(n%d); return r===0? String(w) : (w+' '+r+'/'+d); } return n+'/'+d; }
+function parseFrac(str){
+  str=String(str).trim();
+  if(str==='') return null;
+  let m=str.match(/^(-?\d+)\s+(\d+)\/(\d+)$/);
+  if(m){ const w=parseInt(m[1]), n=parseInt(m[2]), d=parseInt(m[3]); if(d===0) return null; const sign=w<0?-1:1; return [w*d+sign*n, d]; }
+  m=str.match(/^(-?\d+)\/(\d+)$/);
+  if(m){ const n=parseInt(m[1]), d=parseInt(m[2]); if(d===0) return null; return [n,d]; }
+  m=str.match(/^-?\.\d+$/) ? str : null;
+  if(/^-?\d+(\.\d+)?$/.test(str)){
+    if(str.includes('.')){ const dp=str.split('.')[1].length; const d=Math.pow(10,dp); return [Math.round(parseFloat(str)*d), d]; }
+    return [parseInt(str),1];
+  }
+  return null;
+}
+function fracEq(n1,d1,n2,d2){ return n1*d2 === n2*d1; }
+function checkNumber(input, answer, tol){ tol=tol===undefined?1e-6:tol; const v=parseFloat(String(input).trim()); if(Number.isNaN(v)) return false; return Math.abs(v-answer)<tol; }
+function answerMatchesFraction(input, n, d){
+  input=String(input).trim();
+  if(input==='') return false;
+  if(/^-?\d*\.\d+$/.test(input)){ const v=parseFloat(input); return Math.abs(v-n/d) < 0.01; }
+  const parsed=parseFrac(input);
+  if(!parsed) return false;
+  return fracEq(parsed[0],parsed[1], n, d);
+}
+function N(x){ return '<span class="num">'+x+'</span>'; }
+
+const NAMES = ['Maya','Diego','Priya','Sam','Alex','Noah','Zoe','Liam','Ava','Kofi','Ines','Theo'];
+const ITEMS = ['trading cards','marbles','stickers','stamps','pages','points','beads','seashells'];
+
+/* ============== problem generators ============== */
+const TOPIC_LABEL = {
+  placeValue:'Place Value', addSub:'Addition & Subtraction', multiplication:'Multiplication', division:'Division',
+  factorsMultiples:'Factors & Multiples', fracEquivalence:'Equivalent Fractions', fracAddSub:'Adding & Subtracting Fractions',
+  fracMultiply:'Multiplying Fractions', decimals:'Decimals', measurement:'Measurement & Conversions',
+  perimeterArea:'Perimeter & Area', angles:'Angles', shapesSymmetry:'Symmetry', dataLinePlot:'Data & Line Plots',
+  numberPatterns:'Number Patterns', sumDiffPuzzle:'Sum & Difference Puzzles',
+  fractionWordPuzzle:'Fraction Word Puzzles', fractionOfGroup:'Fraction of a Group',
+  patternSquares:'Growing Patterns', combinatoricsCount:'Counting & Combinatorics',
+  orderOfOps:'Order of Operations', decimalMultDiv:'Decimal Multiplication & Division', exponentsBasic:'Exponents',
+  divisibilityCheck:'Divisibility Rules', gcfLcmWord:'GCF & LCM', primeFactorLargest:'Prime Factorization', digitSumCount:'Digit Sum Puzzles',
+  ratioSimplify:'Simplifying Ratios', unitRate:'Unit Rate', percentOf:'Percent of a Number', proportionSolve:'Solving Proportions',
+  percentWordPuzzle:'Percent Word Problems', ratioWordPuzzle:'Ratio Word Problems',
+  areaTriangle:'Area of Triangles', volumeRectPrism:'Volume', coordinateDistance:'Coordinate Plane', meanMedian:'Mean & Median', basicProbability:'Probability',
+  compositeAreaPuzzle:'Composite Area', rangePuzzle:'Data Range',
+  oneStepEquation:'One-Step Equations', twoStepEquation:'Two-Step Equations', integerOperations:'Integer Operations',
+  evaluateExpression:'Evaluating Expressions', simplifyExpression:'Simplifying Expressions',
+  equationWordPuzzle:'Equation Word Puzzles', ageWordPuzzle:'Age Word Puzzles',
+  proportionalRelationship:'Proportional Relationships', scientificNotation:'Scientific Notation', squareRoots:'Square Roots', exponentRules:'Exponent Rules',
+  scaleFactorPuzzle:'Scale Factor', rateWordPuzzle:'Rate Word Problems',
+  pythagoreanTheorem:'Pythagorean Theorem', circleAreaCircumference:'Circle Area & Circumference', surfaceAreaPrism:'Surface Area',
+  compoundProbability:'Compound Probability', statisticsRange:'Statistics: Range',
+  geometryOlympiadPuzzle:'Geometry Puzzles', combinatoricsAdvanced:'Permutations',
+  quadraticFactoring:'Quadratic Equations', systemsOfEquations:'Systems of Equations', functionEvaluation:'Function Evaluation',
+  exponentialGrowth:'Exponential Growth', polynomialSimplify:'Polynomial Simplification',
+  quadraticWordPuzzle:'Quadratic Word Puzzles', systemWordPuzzle:'System Word Puzzles',
+  trigRatios:'Trigonometric Ratios', distanceMidpointSlope:'Distance, Midpoint & Slope', similarTriangles:'Similar Triangles', circleArcAngle:'Circle Arcs & Angles',
+  trigWordPuzzle:'Trigonometry Word Puzzles', geometryChallenge:'Polygon Angle Sums',
+  modularArithmetic:'Modular Arithmetic', permutationsCount:'Permutations', combinationsCount:'Combinations',
+  seriesSum:'Arithmetic Series', probabilityCombinatorics:'Probability & Combinatorics',
+  amcStylePuzzle1:'Competition Puzzles I', amcStylePuzzle2:'Competition Puzzles II'
+};
+
+/* General strategy for each topic — teaches the METHOD, never the specific
+   numeric answer to the problem on screen, so a kid can read this and still
+   work the problem out themselves. */
+const CONCEPT_HELP = {
+  placeValue:'Break the number into its place-value columns (ones, tens, hundreds, thousands...). The value of a digit is that digit multiplied by its place’s value.',
+  addSub:'Line up the numbers by place value, then add or subtract column by column, regrouping (carrying or borrowing) when a column doesn’t fit in one digit.',
+  multiplication:'Break bigger numbers into place-value parts (e.g. 23 × 4 = 20×4 + 3×4) and add the partial products together.',
+  division:'Think of division as "how many groups of the divisor fit into the number?" Multiply the divisor by trial numbers to get close, then whatever is left over is the remainder.',
+  factorsMultiples:'Factors are numbers that divide evenly into another number. Multiples are what you get by multiplying a number by 1, 2, 3... List them out to compare two numbers.',
+  fracEquivalence:'Multiply (or divide) the top and bottom of a fraction by the same number — that keeps the value the same but changes how it looks.',
+  fracAddSub:'When denominators (bottom numbers) match, just add or subtract the numerators (top numbers) and keep the denominator the same.',
+  fracMultiply:'Multiplying a whole number by a fraction means multiplying it by the numerator, then keeping the same denominator.',
+  decimals:'Decimals are fractions written differently — the first digit after the point is tenths, the second is hundredths. Line up decimal points before adding or comparing.',
+  measurement:'Find the conversion factor between the two units (like 12 inches = 1 foot), then multiply or divide by it depending on which direction you’re converting.',
+  perimeterArea:'Perimeter is the distance around a shape (add up all the sides). Area is the space inside — for a rectangle, multiply length × width.',
+  angles:'Compare the angle to a right angle (90°): smaller is acute, exactly 90° is right, bigger (but under 180°) is obtuse, exactly 180° is straight.',
+  shapesSymmetry:'A line of symmetry splits a shape into two mirror-image halves. Try imagining folding the shape different ways to find every fold that matches evenly.',
+  dataLinePlot:'List all the values in order from smallest to largest — that makes it much easier to find the shortest, longest, or total count.',
+  numberPatterns:'Look at how each number changes to reach the next one — is a fixed amount being added each time, or is it being multiplied?',
+  sumDiffPuzzle:'If you know the sum and difference of two numbers, the larger number is (sum + difference) ÷ 2, and the smaller is the larger minus the difference.',
+  fractionWordPuzzle:'Add up all the fractions or parts that were used or eaten, then subtract that total from the whole to find what’s left.',
+  fractionOfGroup:'First find what the fraction of the total means as an actual count, then subtract that count from the total to find the rest.',
+  patternSquares:'Look at how the count grows from one figure to the next — many growing patterns follow a simple rule like squaring the figure number.',
+  combinatoricsCount:'When order matters and nothing repeats, multiply the number of choices for the first pick by the choices left for the second pick.',
+  orderOfOps:'Work in this order: parentheses first, then multiplication and division (left to right), then addition and subtraction (left to right).',
+  decimalMultDiv:'Multiply or divide as if the decimals weren’t there, then place the decimal point back based on how many decimal places the original numbers had.',
+  exponentsBasic:'An exponent tells you how many times to multiply the base by itself. 3^4 means 3 × 3 × 3 × 3.',
+  divisibilityCheck:'Each divisor has its own quick test (e.g. divisible by 3 if the digits add to a multiple of 3). When unsure, just try the division.',
+  gcfLcmWord:'For "greatest number of identical groups", find the GCF. For "when will two repeating events line up again", find the LCM.',
+  primeFactorLargest:'Break the number down by dividing by the smallest primes first (2, 3, 5, 7...) until only primes are left.',
+  digitSumCount:'List the two-digit numbers systematically (by tens digit) and check each one’s digit sum — an organized search avoids missing any.',
+  ratioSimplify:'Divide both numbers in the ratio by their greatest common factor to reach the simplest form.',
+  unitRate:'Divide the total amount by the number of units (like hours) to find the amount per single unit.',
+  percentOf:'Turn the percent into a fraction or decimal (25% = 25/100 = 0.25), then multiply by the number.',
+  proportionSolve:'Find what number the first fraction’s denominator was multiplied by to reach the second denominator, then multiply the numerator by that same amount.',
+  percentWordPuzzle:'Find the discount amount first (percent × price), then subtract it from the original price.',
+  ratioWordPuzzle:'Add the parts of the ratio to find the total "ratio units", then figure out how many real items each unit represents.',
+  areaTriangle:'The area of a triangle is half of base × height — picture two identical triangles forming a rectangle.',
+  volumeRectPrism:'Volume of a rectangular box is length × width × height — how many unit cubes would fill it.',
+  coordinateDistance:'If two points share the same x or y coordinate, the distance is just the difference between the other coordinates.',
+  meanMedian:'The median is the middle value once the numbers are sorted. The mean is the total of all values divided by how many there are.',
+  basicProbability:'Probability is the number of favorable outcomes divided by the total number of possible outcomes.',
+  compositeAreaPuzzle:'Find the area of the whole simple shape, then subtract the area of the part that was removed.',
+  rangePuzzle:'The range is just the biggest value minus the smallest value in the data set.',
+  oneStepEquation:'Do the opposite operation to both sides of the equation to get the variable alone — undo addition with subtraction, multiplication with division.',
+  twoStepEquation:'Undo addition or subtraction first, then undo multiplication or division, to isolate the variable.',
+  integerOperations:'Same-sign numbers combine like positives and keep the sign; different-sign numbers subtract the smaller size from the larger and take the bigger one’s sign.',
+  evaluateExpression:'Substitute the given value in for the variable everywhere it appears, then follow the order of operations.',
+  simplifyExpression:'Group terms with the same variable together and combine their coefficients; do the same for the constant (plain number) terms.',
+  equationWordPuzzle:'Work backwards from the final result, undoing each step (add, multiply...) in reverse order.',
+  ageWordPuzzle:'Turn the words into an equation: let the unknown age be a variable, then write what you know about sums or differences as an equation.',
+  proportionalRelationship:'Find the constant of proportionality (k = y ÷ x) from the known pair, then use it to find the new y value.',
+  scientificNotation:'Moving the decimal point right by the exponent’s value is the same as multiplying by 10 that many times.',
+  squareRoots:'A square root asks "what number times itself gives this?" Memorizing perfect squares (1, 4, 9, 16, 25...) makes this quick.',
+  exponentRules:'When multiplying powers with the same base, add the exponents together.',
+  scaleFactorPuzzle:'Multiply the model’s measurement by the scale factor to get the real-world size.',
+  rateWordPuzzle:'Find the amount per single unit first (like per serving), then multiply by the new number of units needed.',
+  pythagoreanTheorem:'In a right triangle, leg² + leg² = hypotenuse². Solve for whichever side is missing.',
+  circleAreaCircumference:'Area = πr² and circumference = 2πr — plug in the radius and simplify.',
+  surfaceAreaPrism:'Add up the areas of all 6 rectangular faces — there are 3 pairs of matching faces.',
+  compoundProbability:'For two independent events, multiply the probability of each one happening.',
+  statisticsRange:'Subtract the smallest value in the data set from the largest.',
+  geometryOlympiadPuzzle:'Work backwards — if you know the area, find the side length first (square root it), then use that to find what’s asked.',
+  combinatoricsAdvanced:'Multiply the number of choices for each position, decreasing by one each time an item is used up.',
+  quadraticFactoring:'Find two numbers that multiply to the constant term and add to the middle coefficient — those are the roots with the sign flipped.',
+  systemsOfEquations:'Multiply one or both equations so a variable’s coefficients match, then add or subtract the equations to eliminate that variable.',
+  functionEvaluation:'Substitute the given input for x everywhere it appears in the function, then simplify using order of operations.',
+  exponentialGrowth:'Multiply the starting amount by the growth factor once for every time period that passes.',
+  polynomialSimplify:'Combine terms with the same variable and exponent by adding their coefficients.',
+  quadraticWordPuzzle:'Set up an equation using the unknown, expand it, and solve — often by factoring or trying nearby integers.',
+  systemWordPuzzle:'Translate the word problem into an equation using the given known values, then solve for the unknown.',
+  trigRatios:'SOH-CAH-TOA: sine = opposite/hypotenuse, cosine = adjacent/hypotenuse, tangent = opposite/adjacent.',
+  distanceMidpointSlope:'Slope = change in y ÷ change in x. Midpoint = average of the x’s and average of the y’s. Distance uses the Pythagorean theorem on the horizontal and vertical legs.',
+  similarTriangles:'Similar triangles have proportional sides — find the scale factor between one known pair of sides, then apply it to the unknown side.',
+  circleArcAngle:'Divide the full circle (360°) by the number of equal arcs to find each central angle.',
+  trigWordPuzzle:'Draw the right triangle the situation describes, then use the Pythagorean theorem or a trig ratio to solve for the missing side.',
+  geometryChallenge:'The sum of interior angles of a polygon is (number of sides − 2) × 180°.',
+  modularArithmetic:'Divide and look only at the remainder — that’s the "mod" result.',
+  permutationsCount:'When order matters, multiply the number of choices for each position, one fewer each time.',
+  combinationsCount:'When order doesn’t matter, use n! divided by (r! times (n−r)!) so you don’t count the same group more than once.',
+  seriesSum:'Add the first and last term, multiply by the number of terms, then divide by 2.',
+  probabilityCombinatorics:'Divide the number of favorable combinations by the total number of possible combinations.',
+  amcStylePuzzle1:'Represent consecutive integers as n, n+1, n+2... and set their sum equal to the given total to solve for n.',
+  amcStylePuzzle2:'Turn the digit clues into two equations (sum and difference of the digits), then solve them together.'
+};
+
+function genPlaceValue(){
+  const variant = pick(['digitValue','round','compare','expanded']);
+  if(variant==='digitValue'){
+    const num = randInt(100000,987654);
+    const placeNames=['hundred-thousands','ten-thousands','thousands','hundreds','tens','ones'];
+    const placeValues=[100000,10000,1000,100,10,1];
+    const pos = randInt(0,5);
+    const digitsArr = String(num).split('');
+    const digit = parseInt(digitsArr[pos]);
+    const value = digit*placeValues[pos];
+    const highlighted = digitsArr.map((ch,i)=> i===pos ? '<strong>'+ch+'</strong>' : ch).join('');
+    return { isEquation:false, prompt:'What is the value of the digit in '+N(highlighted)+' shown in bold?',
+      type:'number', answer:value,
+      explanation:'The bold digit is in the '+placeNames[pos]+' place, so its value is '+digit+' × '+fmt(placeValues[pos])+' = '+fmt(value)+'.',
+      diagram:{type:'placeValueChart', digits:digitsArr, highlightPos:pos} };
+  }
+  if(variant==='round'){
+    const num = randInt(1000,987654);
+    const place = pick([10,100,1000,10000]);
+    const rounded = Math.round(num/place)*place;
+    return { isEquation:false, prompt:'Round '+N(fmt(num))+' to the nearest '+N(fmt(place))+'.',
+      type:'number', answer:rounded, explanation:fmt(num)+' rounds to '+fmt(rounded)+'.' };
+  }
+  if(variant==='compare'){
+    let a=randInt(1000,99999), b= Math.random()<0.15 ? a : randInt(1000,99999);
+    const symbol = a<b?'<':a>b?'>':'=';
+    return { isEquation:true, prompt:fmt(a)+' &nbsp;___&nbsp; '+fmt(b),
+      type:'choice', choices:shuffle(['<','>','=']), answer:symbol,
+      explanation:fmt(a)+' '+symbol+' '+fmt(b)+'.' };
+  }
+  // expanded
+  const parts=[]; let sum=0;
+  const places=[100000,10000,1000,100,10,1];
+  places.forEach(p=>{ if(Math.random()<0.75 || p===1){ const d=randInt(1,9); parts.push(d*p); sum+=d*p; } });
+  if(parts.length<2){ parts.push(4*10); sum+=40; }
+  return { isEquation:false, prompt:'What number is '+N(parts.map(fmt).join(' + '))+'?',
+    type:'number', answer:sum, explanation:parts.map(fmt).join(' + ')+' = '+fmt(sum)+'.' };
+}
+
+function genAddSub(){
+  const op = pick(['add','sub']);
+  const asWord = Math.random()<0.5;
+  if(!asWord){
+    if(op==='add'){ const a=randInt(1000,89999), b=randInt(1000,89999); return { isEquation:true, prompt:fmt(a)+' + '+fmt(b)+' = ?', type:'number', answer:a+b, explanation:fmt(a)+' + '+fmt(b)+' = '+fmt(a+b)+'.' }; }
+    const a=randInt(2000,99999), b=randInt(1000,a-1); return { isEquation:true, prompt:fmt(a)+' - '+fmt(b)+' = ?', type:'number', answer:a-b, explanation:fmt(a)+' - '+fmt(b)+' = '+fmt(a-b)+'.' };
+  }
+  const n1=pick(NAMES), n2=pick(NAMES.filter(n=>n!==n1)), item=pick(ITEMS);
+  if(op==='add'){
+    const a=randInt(120,4800), b=randInt(90,4800);
+    return { isEquation:false, prompt:n1+' collected '+N(fmt(a))+' '+item+' and '+n2+' collected '+N(fmt(b))+' more '+item+'. How many '+item+' did they collect in total?',
+      type:'number', answer:a+b, explanation:fmt(a)+' + '+fmt(b)+' = '+fmt(a+b)+'.' };
+  }
+  const a=randInt(500,5000), b=randInt(100,a-1);
+  return { isEquation:false, prompt:n1+' had '+N(fmt(a))+' '+item+'. '+n1+' gave away '+N(fmt(b))+' '+item+'. How many '+item+' does '+n1+' have left?',
+    type:'number', answer:a-b, explanation:fmt(a)+' - '+fmt(b)+' = '+fmt(a-b)+'.' };
+}
+
+function genMultiplication(){
+  const variant = pick(['basic2x1','basic3x1','twoByTwo','comparison']);
+  if(variant==='basic2x1'){ const a=randInt(10,99), b=randInt(2,9); return { isEquation:true, prompt:a+' × '+b+' = ?', type:'number', answer:a*b, explanation:a+' × '+b+' = '+(a*b)+'.' }; }
+  if(variant==='basic3x1'){ const a=randInt(100,999), b=randInt(2,9); return { isEquation:true, prompt:a+' × '+b+' = ?', type:'number', answer:a*b, explanation:a+' × '+b+' = '+fmt(a*b)+'.' }; }
+  if(variant==='twoByTwo'){ const a=randInt(11,79), b=randInt(11,49); return { isEquation:true, prompt:a+' × '+b+' = ?', type:'number', answer:a*b, explanation:a+' × '+b+' = '+fmt(a*b)+'.' }; }
+  const n1=pick(NAMES), n2=pick(NAMES.filter(n=>n!==n1)), item=pick(ITEMS);
+  const base=randInt(3,9), factor=randInt(2,6);
+  return { isEquation:false, prompt:n1+' has '+N(factor)+' times as many '+item+' as '+n2+'. '+n2+' has '+N(base)+' '+item+'. How many '+item+' does '+n1+' have?',
+    type:'number', answer:base*factor, explanation:base+' × '+factor+' = '+(base*factor)+'.' };
+}
+
+function genDivision(){
+  const variant = pick(['exact','remainder']);
+  if(variant==='exact'){ const divisor=randInt(2,9), quotient=randInt(11,199), dividend=divisor*quotient;
+    return { isEquation:true, prompt:fmt(dividend)+' ÷ '+divisor+' = ?', type:'number', answer:quotient, explanation:fmt(dividend)+' ÷ '+divisor+' = '+quotient+'.' }; }
+  const divisor=randInt(2,9), quotient=randInt(5,99), remainder=randInt(1,divisor-1), dividend=divisor*quotient+remainder;
+  return { isEquation:false, prompt:'What is the remainder when '+N(fmt(dividend))+' is divided by '+N(divisor)+'?',
+    type:'number', answer:remainder, explanation:fmt(dividend)+' ÷ '+divisor+' = '+quotient+' remainder '+remainder+'.' };
+}
+
+function genFactorsMultiples(){
+  const variant = pick(['primeComposite','gcf','lcm','listFactors']);
+  function isPrime(n){ if(n<2) return false; for(let i=2;i*i<=n;i++){ if(n%i===0) return false; } return true; }
+  function factorsOf(n){ const f=[]; for(let i=1;i<=n;i++){ if(n%i===0) f.push(i); } return f; }
+  if(variant==='primeComposite'){ const n=randInt(2,60); const ans = isPrime(n) ? 'Prime' : 'Composite';
+    return { isEquation:false, prompt:'Is '+N(n)+' prime or composite?', type:'choice', choices:shuffle(['Prime','Composite']), answer:ans,
+      explanation: ans==='Prime' ? n+' has only two factors: 1 and '+n+'.' : n+' has factors besides 1 and itself: '+factorsOf(n).join(', ')+'.' }; }
+  if(variant==='gcf'){ const a=randInt(6,48), b=randInt(6,48); const g=gcd(a,b);
+    return { isEquation:false, prompt:'What is the greatest common factor of '+N(a)+' and '+N(b)+'?', type:'number', answer:g, explanation:'The largest number that divides both '+a+' and '+b+' evenly is '+g+'.' }; }
+  if(variant==='lcm'){ const a=randInt(2,12), b=randInt(2,12); const l=(a*b)/gcd(a,b);
+    return { isEquation:false, prompt:'What is the least common multiple of '+N(a)+' and '+N(b)+'?', type:'number', answer:l, explanation:'The smallest number that is a multiple of both '+a+' and '+b+' is '+l+'.' }; }
+  const n=randInt(12,48); const f=factorsOf(n);
+  return { isEquation:false, prompt:'How many factors does '+N(n)+' have (including 1 and '+n+')?', type:'number', answer:f.length, explanation:'The factors of '+n+' are '+f.join(', ')+' — that is '+f.length+' factors.' };
+}
+
+function genFracEquivalence(){
+  const variant = pick(['missing','compare','simplify']);
+  if(variant==='missing'){ const d1=randInt(2,9), mult=randInt(2,6), n1=randInt(1,d1-1), d2=d1*mult, n2=n1*mult;
+    const askNumerator = Math.random()<0.7;
+    if(askNumerator){ return { isEquation:true, prompt:n1+'/'+d1+' = ?/'+d2, type:'number', answer:n2, explanation:n1+'/'+d1+' × '+mult+'/'+mult+' = '+n2+'/'+d2+'.', diagram:{type:'fractionBar', d:d1, shaded:[n1]} }; }
+    return { isEquation:true, prompt:n1+'/'+d1+' = '+n2+'/?', type:'number', answer:d2, explanation:n1+'/'+d1+' × '+mult+'/'+mult+' = '+n2+'/'+d2+'.', diagram:{type:'fractionBar', d:d1, shaded:[n1]} }; }
+  if(variant==='compare'){ const d1=randInt(2,12), d2=randInt(2,12), n1=randInt(1,d1-1), n2=randInt(1,d2-1);
+    const cross1=n1*d2, cross2=n2*d1; const symbol = cross1<cross2?'<':cross1>cross2?'>':'=';
+    return { isEquation:true, prompt:n1+'/'+d1+' &nbsp;___&nbsp; '+n2+'/'+d2, type:'choice', choices:shuffle(['<','>','=']), answer:symbol,
+      explanation:n1+'/'+d1+' '+symbol+' '+n2+'/'+d2+'.' }; }
+  const rd=randInt(2,9); let rn=randInt(1,rd-1); const [srn,srd]=reduceFrac(rn,rd);
+  const k=randInt(2,6); const n=srn*k, d=srd*k;
+  return { isEquation:true, prompt:'Simplify '+n+'/'+d+' to lowest terms.', type:'text', placeholder:'e.g. 3/4', answer:srn+'/'+srd,
+    check:(input)=>{ const p=parseFrac(input); if(!p) return false; const r=reduceFrac(p[0],p[1]); return r[0]===srn && r[1]===srd; },
+    explanation:n+'/'+d+' simplifies to '+srn+'/'+srd+' (divide top and bottom by '+gcd(n,d)+').', diagram:{type:'fractionBar', d, shaded:[n]} };
+}
+
+function genFracAddSub(){
+  const d=randInt(4,12); let n1=randInt(1,d-1), n2=randInt(1,d-1);
+  const op = pick(['add','sub']);
+  let resultN;
+  if(op==='sub'){ if(n1<n2) [n1,n2]=[n2,n1]; resultN=n1-n2; } else { resultN=n1+n2; }
+  const symbol = op==='add' ? '+' : '-';
+  return { isEquation:true, prompt:n1+'/'+d+' '+symbol+' '+n2+'/'+d+' = ?', type:'text', placeholder:'e.g. 5/'+d,
+    answer:fracStr(resultN,d),
+    check:(input)=>answerMatchesFraction(input, resultN, d),
+    explanation:n1+'/'+d+' '+symbol+' '+n2+'/'+d+' = '+resultN+'/'+d+(reduceFrac(resultN,d)[1]!==d?' = '+fracStr(resultN,d):'')+'.',
+    diagram: op==='add' ? {type:'fractionBar', d, shaded:[n1,n2], colors:['var(--c)','var(--info)']} : {type:'fractionBar', d, shaded:[n1]} };
+}
+
+function genFracMultiply(){
+  const whole=randInt(2,6), n=randInt(1,5), d=randInt(n+1,8);
+  const rn=whole*n;
+  return { isEquation:true, prompt:whole+' × '+n+'/'+d+' = ?', type:'text', placeholder:'fraction or decimal',
+    answer:fracStr(rn,d),
+    check:(input)=>answerMatchesFraction(input, rn, d),
+    explanation:whole+' × '+n+'/'+d+' = '+rn+'/'+d+(reduceFrac(rn,d)[1]!==d || Math.abs(rn)>d ? ' = '+fracStr(rn,d):'')+'.',
+    diagram:{type:'fractionBar', d, shaded:[n]} };
+}
+
+function genDecimals(){
+  const variant = pick(['fracToDec','compare','add','placeValue']);
+  if(variant==='fracToDec'){ const d=pick([10,100]); const n=randInt(1,d-1); const dec=(n/d).toFixed(d===100?2:1);
+    return { isEquation:true, prompt:'Write '+n+'/'+d+' as a decimal.', type:'text', placeholder:'e.g. 0.'+('5'),
+      check:(input)=>checkNumber(input, n/d, 0.001), answer:dec, explanation:n+'/'+d+' = '+dec+'.', diagram:{type:'fractionBar', d, shaded:[n]} }; }
+  if(variant==='compare'){ const a=(randInt(1,99)/100).toFixed(2), b=(randInt(1,99)/100).toFixed(2);
+    const symbol = parseFloat(a)<parseFloat(b)?'<':parseFloat(a)>parseFloat(b)?'>':'=';
+    return { isEquation:true, prompt:a+' &nbsp;___&nbsp; '+b, type:'choice', choices:shuffle(['<','>','=']), answer:symbol, explanation:a+' '+symbol+' '+b+'.' }; }
+  if(variant==='add'){ const a=randInt(1,999)/100, b=randInt(1,999)/100; const sum=Math.round((a+b)*100)/100;
+    return { isEquation:true, prompt:a.toFixed(2)+' + '+b.toFixed(2)+' = ?', type:'text', placeholder:'e.g. 1.25',
+      check:(input)=>checkNumber(input, sum, 0.005), answer:sum.toFixed(2), explanation:a.toFixed(2)+' + '+b.toFixed(2)+' = '+sum.toFixed(2)+'.' }; }
+  const whole=randInt(1,9), tenths=randInt(0,9), hundredths=randInt(0,9);
+  const numStr = whole+'.'+tenths+hundredths;
+  const askTenths = Math.random()<0.5;
+  return { isEquation:false, prompt:'What digit is in the '+(askTenths?'tenths':'hundredths')+' place of '+N(numStr)+'?',
+    type:'number', answer: askTenths?tenths:hundredths, explanation:'In '+numStr+', the '+(askTenths?'tenths':'hundredths')+' digit is '+(askTenths?tenths:hundredths)+'.',
+    diagram:{type:'placeValueChart', digits:[String(whole),String(tenths),String(hundredths)], highlightPos: askTenths?1:2} };
+}
+
+function genMeasurement(){
+  const conv = pick([
+    {from:'feet',to:'inches',factor:12}, {from:'yards',to:'feet',factor:3},
+    {from:'kilograms',to:'grams',factor:1000}, {from:'pounds',to:'ounces',factor:16},
+    {from:'liters',to:'milliliters',factor:1000}, {from:'gallons',to:'quarts',factor:4},
+    {from:'hours',to:'minutes',factor:60}, {from:'minutes',to:'seconds',factor:60},
+    {from:'weeks',to:'days',factor:7}, {from:'years',to:'months',factor:12}
+  ]);
+  const value = randInt(2,12);
+  return { isEquation:false, prompt:'Convert: '+N(value+' '+conv.from)+' = ? '+conv.to,
+    type:'number', answer:value*conv.factor, explanation:value+' '+conv.from+' × '+conv.factor+' = '+fmt(value*conv.factor)+' '+conv.to+'.' };
+}
+
+function genPerimeterArea(){
+  const variant = pick(['perimeter','area','missingWidth','missingLength']);
+  const l=randInt(4,24), w=randInt(3,l);
+  if(variant==='perimeter') return { isEquation:false, prompt:'A rectangle is '+N(l+' cm')+' long and '+N(w+' cm')+' wide. What is its perimeter (in cm)?',
+    type:'number', answer:2*(l+w), explanation:'2 × ('+l+' + '+w+') = '+(2*(l+w))+' cm.', diagram:{type:'rectDims', w:l, h:w} };
+  if(variant==='area') return { isEquation:false, prompt:'A rectangle is '+N(l+' cm')+' long and '+N(w+' cm')+' wide. What is its area (in cm²)?',
+    type:'number', answer:l*w, explanation:l+' × '+w+' = '+(l*w)+' cm².', diagram:{type:'rectDims', w:l, h:w} };
+  if(variant==='missingWidth'){ const area=l*w; return { isEquation:false, prompt:'A rectangle has an area of '+N(area+' cm²')+' and a length of '+N(l+' cm')+'. What is its width (in cm)?',
+    type:'number', answer:w, explanation:area+' ÷ '+l+' = '+w+' cm.', diagram:{type:'rectDims', w:l, h:'?'} }; }
+  const p=2*(l+w); return { isEquation:false, prompt:'A rectangle has a perimeter of '+N(p+' cm')+' and a width of '+N(w+' cm')+'. What is its length (in cm)?',
+    type:'number', answer:l, explanation:'('+p+' ÷ 2) - '+w+' = '+l+' cm.', diagram:{type:'rectDims', w:'?', h:w} };
+}
+
+function genAngles(){
+  const variant = pick(['classify','triangleSum','lineSum']);
+  if(variant==='classify'){
+    let deg = pick([90,180,randInt(1,89),randInt(91,179)]);
+    const cls = deg===90?'Right':deg===180?'Straight':deg<90?'Acute':'Obtuse';
+    return { isEquation:false, prompt:'An angle measures '+N(deg+'°')+'. What type of angle is it?', type:'choice',
+      choices:shuffle(['Acute','Right','Obtuse','Straight']), answer:cls, explanation:deg+'° is '+cls.toLowerCase()+'.', diagram:{type:'angle', deg} };
+  }
+  if(variant==='triangleSum'){ const a=randInt(30,90), b=randInt(20,150-a); const c=180-a-b;
+    return { isEquation:false, prompt:'A triangle has angles of '+N(a+'°')+' and '+N(b+'°')+'. What is the measure of the third angle?',
+      type:'number', answer:c, explanation:'180 - '+a+' - '+b+' = '+c+'°.' }; }
+  const a=randInt(20,160), b=180-a;
+  return { isEquation:false, prompt:'Two angles together form a straight line. One angle measures '+N(a+'°')+'. What is the other angle?',
+    type:'number', answer:b, explanation:'180 - '+a+' = '+b+'°.', diagram:{type:'angle', deg:a} };
+}
+
+function genShapesSymmetry(){
+  const shapes=[
+    {name:'square',sym:4}, {name:'non-square rectangle',sym:2}, {name:'equilateral triangle',sym:3},
+    {name:'isosceles triangle that is not equilateral',sym:1}, {name:'regular pentagon',sym:5}, {name:'regular hexagon',sym:6}
+  ];
+  const s=pick(shapes);
+  const sidesMap={'square':4,'equilateral triangle':3,'isosceles triangle that is not equilateral':3,'regular pentagon':5,'regular hexagon':6};
+  const diagram = s.name==='non-square rectangle' ? {type:'rectDims', w:'', h:''} : {type:'polygon', sides:sidesMap[s.name]};
+  return { isEquation:false, prompt:'How many lines of symmetry does a '+N(s.name)+' have?', type:'number', answer:s.sym,
+    explanation:'A '+s.name+' has '+s.sym+' line'+(s.sym===1?'':'s')+' of symmetry.', diagram };
+}
+
+function genDataLinePlot(){
+  const count = randInt(6,9);
+  const quarters=[]; for(let i=0;i<count;i++){ quarters.push(randInt(8,24)); }
+  quarters.sort((a,b)=>a-b);
+  const listStr = quarters.map(q=>fracStr(q,4)).join(', ');
+  const diagram = {type:'numberLineDots', values:quarters.map(q=>q/4)};
+  const variant = pick(['count','longest','shortest','difference']);
+  const context = 'A class measured pencil lengths in inches: '+N(listStr)+'.';
+  if(variant==='count') return { isEquation:false, prompt:context+' How many pencils were measured?', type:'number', answer:count, explanation:'There are '+count+' measurements listed.', diagram };
+  const max=quarters[quarters.length-1], min=quarters[0];
+  if(variant==='longest') return { isEquation:false, prompt:context+' What is the length of the longest pencil (in inches)?', type:'text', placeholder:'e.g. 4 1/4',
+    check:(input)=>answerMatchesFraction(input, max, 4), answer:fracStr(max,4), explanation:'The longest pencil is '+fracStr(max,4)+' inches.', diagram };
+  if(variant==='shortest') return { isEquation:false, prompt:context+' What is the length of the shortest pencil (in inches)?', type:'text', placeholder:'e.g. 2 1/2',
+    check:(input)=>answerMatchesFraction(input, min, 4), answer:fracStr(min,4), explanation:'The shortest pencil is '+fracStr(min,4)+' inches.', diagram };
+  return { isEquation:false, prompt:context+' What is the difference between the longest and shortest pencil (in inches)?', type:'text', placeholder:'e.g. 1 1/4',
+    check:(input)=>answerMatchesFraction(input, max-min, 4), answer:fracStr(max-min,4), explanation:fracStr(max,4)+' - '+fracStr(min,4)+' = '+fracStr(max-min,4)+' inches.', diagram };
+}
+
+/* ---- Olympiad-track enrichment generators (unlocked from Phase 2 onward) ---- */
+function genNumberPatterns(){
+  const kind = pick(['arithmetic','geometric']);
+  if(kind==='arithmetic'){
+    const start = randInt(2,25), step = randInt(2,9);
+    const terms = [start, start+step, start+2*step, start+3*step];
+    const next = start+4*step;
+    return { isEquation:false, prompt:'What is the next number in this pattern? '+N(terms.join(', ')+', ?'),
+      type:'number', answer:next, explanation:'Each number increases by '+step+', so the next number is '+terms[3]+' + '+step+' = '+next+'.', diagram:{type:'numberLineDots', values:terms} };
+  }
+  const start = randInt(1,4), ratio = pick([2,3]);
+  const terms = [start, start*ratio, start*ratio*ratio, start*ratio*ratio*ratio];
+  const next = terms[3]*ratio;
+  return { isEquation:false, prompt:'What is the next number in this pattern? '+N(terms.join(', ')+', ?'),
+    type:'number', answer:next, explanation:'Each number is multiplied by '+ratio+', so the next number is '+terms[3]+' × '+ratio+' = '+next+'.', diagram:{type:'numberLineDots', values:terms} };
+}
+function genSumDiffPuzzle(){
+  const larger = randInt(20,70), smaller = randInt(5, larger-2);
+  const sum = larger+smaller, diff = larger-smaller;
+  const askLarger = Math.random()<0.5;
+  return { isEquation:false, prompt:'Two numbers have a sum of '+N(sum)+' and a difference of '+N(diff)+'. What is the '+(askLarger?'larger':'smaller')+' number?',
+    type:'number', answer: askLarger?larger:smaller,
+    explanation:'Larger = (sum + difference) ÷ 2 = ('+sum+' + '+diff+') ÷ 2 = '+larger+'. Smaller = larger − difference = '+smaller+'.' };
+}
+function genFractionWordPuzzle(){
+  const d = randInt(6,12);
+  const n1 = randInt(1, Math.max(1,Math.floor(d/2)-1));
+  const n2 = randInt(1, Math.max(1,d-n1-1));
+  const name1=pick(NAMES), name2=pick(NAMES.filter(n=>n!==name1));
+  const leftN = d-n1-n2;
+  return { isEquation:false, prompt:'A pizza is cut into '+N(d)+' equal slices. '+name1+' eats '+N(n1)+' slices and '+name2+' eats '+N(n2)+' slices. What fraction of the pizza is left?',
+    type:'text', placeholder:'e.g. '+leftN+'/'+d,
+    check:(input)=>answerMatchesFraction(input, leftN, d), answer:fracStr(leftN,d),
+    explanation:d+' - '+n1+' - '+n2+' = '+leftN+' slices left, or '+fracStr(leftN,d)+' of the pizza.',
+    diagram:{type:'fractionBar', d, shaded:[n1,n2], colors:['var(--c)','var(--info)']} };
+}
+function genFractionOfGroup(){
+  const d = pick([2,3,4,5,6,8,10]);
+  const groups = randInt(2,6);
+  const T = d*groups, redCount = T/d;
+  return { isEquation:false, prompt:'There are '+N(T)+' marbles in a jar. '+N('1/'+d)+' of them are red. How many marbles are NOT red?',
+    type:'number', answer:T-redCount, explanation:'1/'+d+' of '+T+' = '+redCount+' red marbles, so '+T+' - '+redCount+' = '+(T-redCount)+' are not red.',
+    diagram:{type:'fractionBar', d, shaded:[1]} };
+}
+function genPatternSquares(){
+  const n = randInt(4,9), answer = n*n;
+  return { isEquation:false, prompt:'A pattern of triangles grows so that Figure 1 uses '+N(1)+' small triangle, Figure 2 uses '+N(4)+', and Figure 3 uses '+N(9)+' (each figure is a perfect square number of triangles). How many small triangles are in Figure '+N(n)+'?',
+    type:'number', answer:answer, explanation:'Figure '+n+' uses '+n+' × '+n+' = '+answer+' small triangles.' };
+}
+function genCombinatoricsCount(){
+  const k = randInt(3,5);
+  const letters = shuffle(['A','B','C','D','E','F']).slice(0,k);
+  const answer = k*(k-1);
+  return { isEquation:false, prompt:'Using the letters '+N(letters.join(', '))+', how many different 2-letter codes can you make if you cannot repeat a letter (order matters, so AB and BA are different)?',
+    type:'number', answer:answer, explanation:'There are '+k+' choices for the first letter and '+(k-1)+' choices left for the second: '+k+' × '+(k-1)+' = '+answer+'.', diagram:{type:'iconRow', n:k} };
+}
+
+/* ================================================================
+   GRADE 5–6 PACKAGE (ages 10–11): Number Theory & Operations,
+   Ratios/Rates & Percent, Geometry & Data
+   ================================================================ */
+function genOrderOfOps(){
+  const t = pick(['A','B','C','D']);
+  if(t==='A'){ const a=randInt(2,12),b=randInt(2,9),c=randInt(2,9);
+    return { isEquation:true, prompt:a+' + '+b+' × '+c+' = ?', type:'number', answer:a+b*c, explanation:'Multiply first: '+b+' × '+c+' = '+(b*c)+', then add '+a+' = '+(a+b*c)+'.' }; }
+  if(t==='B'){ const a=randInt(2,12),b=randInt(2,9),c=randInt(2,9);
+    return { isEquation:true, prompt:'('+a+' + '+b+') × '+c+' = ?', type:'number', answer:(a+b)*c, explanation:'Parentheses first: '+a+' + '+b+' = '+(a+b)+', then × '+c+' = '+((a+b)*c)+'.' }; }
+  if(t==='C'){ const a=randInt(3,12),b=randInt(2,9); const c=randInt(1,a*b);
+    return { isEquation:true, prompt:a+' × '+b+' - '+c+' = ?', type:'number', answer:a*b-c, explanation:'Multiply first: '+a+' × '+b+' = '+(a*b)+', then subtract '+c+' = '+(a*b-c)+'.' }; }
+  const a=randInt(10,30), b=randInt(1,a), c=randInt(1,20);
+  return { isEquation:true, prompt:a+' - '+b+' + '+c+' = ?', type:'number', answer:a-b+c, explanation:'Work left to right: '+a+' - '+b+' = '+(a-b)+', then + '+c+' = '+(a-b+c)+'.' };
+}
+function genDecimalMultDiv(){
+  if(Math.random()<0.5){ const av=(randInt(15,95)/10); const b=randInt(2,9);
+    const product = Math.round(av*b*10)/10;
+    return { isEquation:true, prompt:av.toFixed(1)+' × '+b+' = ?', type:'text', placeholder:'e.g. '+product.toFixed(1),
+      check:(input)=>checkNumber(input, product, 0.05), answer:product.toFixed(1), explanation:av.toFixed(1)+' × '+b+' = '+product.toFixed(1)+'.' }; }
+  const d = randInt(2,9); const q = randInt(2,150)/10; const dividend = Math.round(q*d*10)/10;
+  return { isEquation:true, prompt:dividend.toFixed(1)+' ÷ '+d+' = ?', type:'text', placeholder:'e.g. '+q.toFixed(1),
+    check:(input)=>checkNumber(input, q, 0.05), answer:q.toFixed(1), explanation:dividend.toFixed(1)+' ÷ '+d+' = '+q.toFixed(1)+'.' };
+}
+function genExponentsBasic(){
+  const base=randInt(2,6), exp=randInt(2,4);
+  return { isEquation:true, prompt:base+'^'+exp+' = ? (that is, '+base+' to the power of '+exp+')', type:'number', answer:Math.pow(base,exp),
+    explanation:base+'^'+exp+' means '+Array(exp).fill(base).join(' × ')+' = '+Math.pow(base,exp)+'.' };
+}
+function genDivisibilityCheck(){
+  const d = pick([2,3,4,5,6,8,9,10]);
+  const makeYes = Math.random()<0.5;
+  const n = makeYes ? d*randInt(100,999) : d*randInt(100,999)+randInt(1,d-1);
+  return { isEquation:false, prompt:'Is '+N(fmt(n))+' divisible by '+N(d)+'?', type:'choice', choices:shuffle(['Yes','No']), answer: n%d===0?'Yes':'No',
+    explanation:fmt(n)+' ÷ '+d+' = '+(n/d)+(n%d===0?' exactly, so yes.':' with a remainder, so no.') };
+}
+function genGcfLcmWord(){
+  if(Math.random()<0.5){ const a=randInt(12,60), b=randInt(12,60); const g=gcd(a,b);
+    return { isEquation:false, prompt:'You have '+N(a)+' pencils and '+N(b)+' erasers. You want to make identical kits with nothing left over, using the greatest number of kits possible. What is the greatest number of kits you can make?',
+      type:'number', answer:g, explanation:'The greatest common factor of '+a+' and '+b+' is '+g+'.' }; }
+  const x=randInt(3,12), y=randInt(3,12); const l=(x*y)/gcd(x,y);
+  return { isEquation:false, prompt:'Bus A arrives every '+N(x)+' minutes and Bus B arrives every '+N(y)+' minutes. If they just arrived together, in how many minutes will they next arrive together again?',
+    type:'number', answer:l, explanation:'The least common multiple of '+x+' and '+y+' is '+l+'.' };
+}
+function genPrimeFactorLargest(){
+  const primes=[2,3,5,7,11,13];
+  const count = randInt(2,3);
+  const chosen = []; for(let i=0;i<count;i++) chosen.push(pick(primes));
+  const n = chosen.reduce((a,b)=>a*b,1);
+  const largest = Math.max(...chosen);
+  return { isEquation:false, prompt:'What is the largest prime factor of '+N(n)+'?', type:'number', answer:largest,
+    explanation:n+' = '+chosen.sort((a,b)=>a-b).join(' × ')+', so the largest prime factor is '+largest+'.' };
+}
+function genDigitSumCount(){
+  const target = randInt(3,17);
+  let count=0; for(let n=10;n<=99;n++){ const s=Math.floor(n/10)+(n%10); if(s===target) count++; }
+  return { isEquation:false, prompt:'How many two-digit numbers have digits that add up to '+N(target)+'?', type:'number', answer:count,
+    explanation:'Checking every two-digit number, '+count+' of them have digits summing to '+target+'.' };
+}
+function genRatioSimplify(){
+  const rd=randInt(2,9); let rn=randInt(2,9); if(rn===rd) rn=rd-1||1; const [srn,srd]=reduceFrac(rn,rd);
+  const k=randInt(2,6); const a=srn*k, b=srd*k;
+  return { isEquation:true, prompt:'Simplify the ratio '+a+':'+b+' to lowest terms.', type:'text', placeholder:'e.g. '+srn+':'+srd,
+    check:(input)=>{ const m=String(input).trim().match(/^(\d+)\s*[:\/]\s*(\d+)$/); if(!m) return false; const r=reduceFrac(parseInt(m[1]),parseInt(m[2])); return r[0]===srn && r[1]===srd; },
+    answer:srn+':'+srd, explanation:a+':'+b+' simplifies to '+srn+':'+srd+' (divide both sides by '+gcd(a,b)+').', diagram:{type:'fractionBar', d:a+b, shaded:[a], colors:['var(--c)']} };
+}
+function genUnitRate(){
+  const hours=randInt(2,6); const speed=randInt(20,60); const distance=speed*hours;
+  return { isEquation:false, prompt:'A car travels '+N(fmt(distance)+' miles')+' in '+N(hours+' hours')+'. What is its speed in miles per hour?', type:'number', answer:speed,
+    explanation:distance+' ÷ '+hours+' = '+speed+' mph.' };
+}
+function genPercentOf(){
+  const pct = pick([10,20,25,50,75,5,15,40,60,80]);
+  let base; do{ base=randInt(4,400); } while((pct*base)%100!==0);
+  return { isEquation:true, prompt:'What is '+N(pct+'%')+' of '+N(base)+'?', type:'number', answer:pct*base/100,
+    explanation:pct+'% of '+base+' = ('+pct+'/100) × '+base+' = '+(pct*base/100)+'.', diagram:{type:'percentBar', pct} };
+}
+function genProportionSolve(){
+  const a=randInt(2,9), b=randInt(2,9), m=randInt(2,9); const d=b*m, x=a*m;
+  return { isEquation:true, prompt:'Solve for x: '+a+'/'+b+' = x/'+d, type:'number', answer:x,
+    explanation:a+'/'+b+' = '+x+'/'+d+' because both sides scale by '+m+'.', diagram:{type:'balanceScale'} };
+}
+function genPercentWordPuzzle(){
+  const pairs=[[20,10],[20,25],[20,50],[40,10],[40,25],[50,10],[50,50],[60,25],[80,25],[100,10],[100,20],[100,50]];
+  const [price,discountPct] = pick(pairs);
+  const sale = price - price*discountPct/100;
+  return { isEquation:false, prompt:'A jacket costs $'+N(price)+'. It is on sale for '+N(discountPct+'%')+' off. What is the sale price (in dollars)?', type:'number', answer:sale,
+    explanation:'Discount = '+discountPct+'% of $'+price+' = $'+(price*discountPct/100)+'. Sale price = $'+price+' - $'+(price*discountPct/100)+' = $'+sale+'.', diagram:{type:'percentBar', pct:discountPct} };
+}
+function genRatioWordPuzzle(){
+  const a=randInt(2,6), b=randInt(2,6); const multiplier=randInt(2,8); const total=(a+b)*multiplier; const girls=b*multiplier;
+  return { isEquation:false, prompt:'The ratio of boys to girls in a class is '+N(a+':'+b)+'. If there are '+N(total)+' students total, how many are girls?', type:'number', answer:girls,
+    explanation:'There are '+(a+b)+' ratio units total, each worth '+multiplier+' students, so girls = '+b+' × '+multiplier+' = '+girls+'.', diagram:{type:'fractionBar', d:a+b, shaded:[a,b], colors:['var(--c)','var(--info)']} };
+}
+function genAreaTriangle(){
+  let base=randInt(4,20), height=randInt(2,16); if((base*height)%2!==0) height++;
+  return { isEquation:false, prompt:'A triangle has a base of '+N(base+' cm')+' and a height of '+N(height+' cm')+'. What is its area (in cm²)?', type:'number', answer:base*height/2,
+    explanation:'Area = (base × height) ÷ 2 = ('+base+' × '+height+') ÷ 2 = '+(base*height/2)+' cm².', diagram:{type:'rightTriangle', a:height, b:base, c:''} };
+}
+function genVolumeRectPrism(){
+  const l=randInt(2,10), w=randInt(2,10), h=randInt(2,10);
+  return { isEquation:false, prompt:'A rectangular box is '+N(l+' cm')+' by '+N(w+' cm')+' by '+N(h+' cm')+'. What is its volume (in cm³)?', type:'number', answer:l*w*h,
+    explanation:l+' × '+w+' × '+h+' = '+(l*w*h)+' cm³.', diagram:{type:'rectDims', w:l, h:w, depth:h} };
+}
+function genCoordinateDistance(){
+  const horizontal = Math.random()<0.5;
+  const y=randInt(-6,6), x1=randInt(-8,0), dx=randInt(2,12), x2=x1+dx;
+  if(horizontal) return { isEquation:false, prompt:'Point A is at ('+x1+', '+y+') and Point B is at ('+x2+', '+y+'). What is the distance between them?', type:'number', answer:dx,
+    explanation:'Same y-coordinate, so the distance is the difference in x: '+x2+' - '+x1+' = '+dx+'.', diagram:{type:'coordPoints', points:[[x1,y],[x2,y]], connect:true} };
+  const x=randInt(-6,6), y1=randInt(-8,0), dy=randInt(2,12), y2=y1+dy;
+  return { isEquation:false, prompt:'Point A is at ('+x+', '+y1+') and Point B is at ('+x+', '+y2+'). What is the distance between them?', type:'number', answer:dy,
+    explanation:'Same x-coordinate, so the distance is the difference in y: '+y2+' - '+y1+' = '+dy+'.', diagram:{type:'coordPoints', points:[[x,y1],[x,y2]], connect:true} };
+}
+function genMeanMedian(){
+  if(Math.random()<0.5){
+    const list=[]; for(let i=0;i<5;i++) list.push(randInt(1,50)); list.sort((a,b)=>a-b);
+    return { isEquation:false, prompt:'Find the median of this data set: '+N(list.join(', ')), type:'number', answer:list[2],
+      explanation:'Sorted, the middle value is '+list[2]+'.', diagram:{type:'numberLineDots', values:list} };
+  }
+  const target=randInt(10,40); const rest=[randInt(1,60),randInt(1,60),randInt(1,60),randInt(1,60)];
+  const last = target*5 - rest.reduce((a,b)=>a+b,0);
+  if(last<1 || last>90) return genMeanMedian();
+  const list = rest.concat([last]);
+  return { isEquation:false, prompt:'Find the mean (average) of this data set: '+N(list.join(', ')), type:'number', answer:target,
+    explanation:'Sum = '+list.reduce((a,b)=>a+b,0)+', divided by 5 values = '+target+'.', diagram:{type:'numberLineDots', values:list} };
+}
+function genBasicProbability(){
+  const red=randInt(2,9), blue=randInt(2,9); const total=red+blue;
+  return { isEquation:false, prompt:'A bag has '+N(red)+' red marbles and '+N(blue)+' blue marbles. If you pick one marble at random, what is the probability it is red? (fraction, lowest terms)', type:'text', placeholder:'e.g. 1/2',
+    check:(input)=>answerMatchesFraction(input, red, total), answer:fracStr(red,total), explanation:red+' red out of '+total+' total = '+fracStr(red,total)+'.',
+    diagram:{type:'fractionBar', d:total, shaded:[red], colors:['var(--bad)']} };
+}
+function genCompositeAreaPuzzle(){
+  const L=randInt(8,16), W=randInt(6,12); const s=randInt(2, Math.min(L,W)-1);
+  return { isEquation:false, prompt:'A rectangle is '+N(L+' cm')+' by '+N(W+' cm')+'. A '+N(s+' cm')+' by '+N(s+' cm')+' square is cut from one corner. What is the remaining area (in cm²)?', type:'number', answer:L*W-s*s,
+    explanation:L+' × '+W+' - '+s+' × '+s+' = '+(L*W)+' - '+(s*s)+' = '+(L*W-s*s)+' cm².', diagram:{type:'rectDims', w:L, h:W, depth:'cut-out: '+s+'×'+s} };
+}
+function genRangePuzzle(){
+  const list=[]; for(let i=0;i<6;i++) list.push(randInt(1,99));
+  return { isEquation:false, prompt:'Find the range of this data set: '+N(list.join(', ')), type:'number', answer:Math.max(...list)-Math.min(...list),
+    explanation:'Range = greatest - least = '+Math.max(...list)+' - '+Math.min(...list)+' = '+(Math.max(...list)-Math.min(...list))+'.', diagram:{type:'numberLineDots', values:list} };
+}
+
+/* ================================================================
+   GRADE 7–8 PACKAGE (ages 12–13): Algebraic Thinking,
+   Proportions & Real Numbers, Geometry & Statistics
+   ================================================================ */
+function genOneStepEquation(){
+  const op = pick(['+','-','×','÷']);
+  if(op==='+'){ const x=randInt(2,30), b=randInt(2,20); return { isEquation:true, prompt:'Solve for x: x + '+b+' = '+(x+b), type:'number', answer:x, explanation:'x = '+(x+b)+' - '+b+' = '+x+'.', diagram:{type:'balanceScale'} }; }
+  if(op==='-'){ const x=randInt(2,30), b=randInt(2,20); return { isEquation:true, prompt:'Solve for x: x - '+b+' = '+(x-b), type:'number', answer:x, explanation:'x = '+(x-b)+' + '+b+' = '+x+'.', diagram:{type:'balanceScale'} }; }
+  if(op==='×'){ const x=randInt(2,20), m=randInt(2,12); return { isEquation:true, prompt:'Solve for x: '+m+'x = '+(m*x), type:'number', answer:x, explanation:'x = '+(m*x)+' ÷ '+m+' = '+x+'.', diagram:{type:'balanceScale'} }; }
+  const d=randInt(2,12), x=d*randInt(2,15);
+  return { isEquation:true, prompt:'Solve for x: x ÷ '+d+' = '+(x/d), type:'number', answer:x, explanation:'x = '+(x/d)+' × '+d+' = '+x+'.', diagram:{type:'balanceScale'} };
+}
+function genTwoStepEquation(){
+  const a=randInt(2,9), x=randInt(2,20), b=randInt(1,30);
+  if(Math.random()<0.5){ const c=a*x+b; return { isEquation:true, prompt:'Solve for x: '+a+'x + '+b+' = '+c, type:'number', answer:x, explanation:'x = ('+c+' - '+b+') ÷ '+a+' = '+x+'.', diagram:{type:'balanceScale'} }; }
+  const c=a*x-b; return { isEquation:true, prompt:'Solve for x: '+a+'x - '+b+' = '+c, type:'number', answer:x, explanation:'x = ('+c+' + '+b+') ÷ '+a+' = '+x+'.', diagram:{type:'balanceScale'} };
+}
+function genIntegerOperations(){
+  const op = pick(['+','-','×','÷']);
+  if(op==='÷'){ let b=randInt(-9,9); if(b===0) b=3; let q=randInt(-9,9); if(q===0) q=2; const a=q*b;
+    return { isEquation:true, prompt:a+' ÷ ('+b+') = ?', type:'number', answer:q, explanation:a+' ÷ ('+b+') = '+q+'.' }; }
+  const a=randInt(-20,20), b=randInt(-12,12);
+  const val = op==='+'?a+b : op==='-'?a-b : a*b;
+  const diagram = (op==='+'||op==='-') ? {type:'signedJump', start:a, delta: op==='+'?b:-b} : undefined;
+  return { isEquation:true, prompt:'('+a+') '+op+' ('+b+') = ?', type:'number', answer:val, explanation:'('+a+') '+op+' ('+b+') = '+val+'.', diagram };
+}
+function genEvaluateExpression(){
+  const n=randInt(1,10); const t=pick(['A','B','C']);
+  if(t==='A'){ const a=randInt(2,9), b=randInt(1,20); return { isEquation:false, prompt:'If n = '+N(n)+', what is '+a+'n + '+b+'?', type:'number', answer:a*n+b, explanation:a+'×'+n+' + '+b+' = '+(a*n+b)+'.' }; }
+  if(t==='B'){ return { isEquation:false, prompt:'If n = '+N(n)+', what is n² - 4?', type:'number', answer:n*n-4, explanation:n+'² - 4 = '+(n*n)+' - 4 = '+(n*n-4)+'.' }; }
+  const a=randInt(2,8), b=randInt(1,10);
+  return { isEquation:false, prompt:'If n = '+N(n)+', what is '+a+'(n + '+b+')?', type:'number', answer:a*(n+b), explanation:a+'×('+n+' + '+b+') = '+a+'×'+(n+b)+' = '+(a*(n+b))+'.' };
+}
+function genSimplifyExpression(){
+  const a=randInt(1,9), b=randInt(1,9), c=randInt(1,20), d=randInt(1,20);
+  const askCoef = Math.random()<0.5;
+  return { isEquation:true, prompt:'Simplify: '+a+'x + '+c+' + '+b+'x + '+d+'. What is the '+(askCoef?'coefficient of x':'constant term')+' in the simplified expression?',
+    type:'number', answer: askCoef?a+b:c+d, explanation:'Combine like terms: ('+a+'+'+b+')x + ('+c+'+'+d+') = '+(a+b)+'x + '+(c+d)+'.' };
+}
+function genEquationWordPuzzle(){
+  const x=randInt(2,20), m=randInt(2,9), b=randInt(1,30); const r=m*x+b;
+  return { isEquation:false, prompt:'I think of a number, multiply it by '+N(m)+', then add '+N(b)+', and get '+N(r)+'. What is my number?', type:'number', answer:x,
+    explanation:'('+r+' - '+b+') ÷ '+m+' = '+x+'.', diagram:{type:'balanceScale'} };
+}
+function genAgeWordPuzzle(){
+  const B=randInt(8,40), diff=randInt(2,15); const A=B+diff, sumAges=A+B;
+  const nameA=pick(NAMES), nameB=pick(NAMES.filter(n=>n!==nameA));
+  return { isEquation:false, prompt:nameA+' is '+N(diff)+' years older than '+nameB+'. Together their ages add up to '+N(sumAges)+'. How old is '+nameB+'?', type:'number', answer:B,
+    explanation:'('+sumAges+' - '+diff+') ÷ 2 = '+B+'.', diagram:{type:'balanceScale'} };
+}
+function genProportionalRelationship(){
+  const k=randInt(2,9), X1=randInt(2,10), X2=randInt(2,15);
+  return { isEquation:false, prompt:'If y varies directly with x, and y = '+N(k*X1)+' when x = '+N(X1)+', what is y when x = '+N(X2)+'?', type:'number', answer:k*X2,
+    explanation:'k = '+(k*X1)+' ÷ '+X1+' = '+k+', so y = '+k+' × '+X2+' = '+(k*X2)+'.', diagram:{type:'balanceScale'} };
+}
+function genScientificNotation(){
+  const mantissa=randInt(1,9), exp=randInt(2,6);
+  return { isEquation:true, prompt:'What is '+mantissa+' × 10^'+exp+' written in standard form?', type:'number', answer:mantissa*Math.pow(10,exp),
+    explanation:mantissa+' × 10^'+exp+' = '+fmt(mantissa*Math.pow(10,exp))+'.' };
+}
+function genSquareRoots(){
+  const squares=[4,9,16,25,36,49,64,81,100,121,144,169,196,225]; const n2=pick(squares);
+  return { isEquation:true, prompt:'What is √'+n2+'?', type:'number', answer:Math.sqrt(n2), explanation:Math.sqrt(n2)+' × '+Math.sqrt(n2)+' = '+n2+'.', diagram:{type:'squareArea', area:n2} };
+}
+function genExponentRules(){
+  const base=pick([2,3,4,5]), e1=randInt(2,4), e2=randInt(2,4);
+  return { isEquation:true, prompt:'What is '+base+'^'+e1+' × '+base+'^'+e2+'? (give the value as a number)', type:'number', answer:Math.pow(base,e1+e2),
+    explanation:base+'^'+e1+' × '+base+'^'+e2+' = '+base+'^'+(e1+e2)+' = '+Math.pow(base,e1+e2)+'.' };
+}
+function genScaleFactorPuzzle(){
+  const S=pick([10,12,20,24,25]), L=randInt(3,20);
+  return { isEquation:false, prompt:'A model car is built at a scale of 1:'+S+'. If the model is '+N(L+' cm')+' long, how long is the real car (in cm)?', type:'number', answer:L*S,
+    explanation:L+' × '+S+' = '+(L*S)+' cm.' };
+}
+function genRateWordPuzzle(){
+  const perServingCups=randInt(1,4), S=randInt(2,6), C=perServingCups*S, T=randInt(2,10);
+  return { isEquation:false, prompt:'A recipe uses '+N(C+' cups')+' of flour for '+N(S+' servings')+'. How many cups of flour are needed for '+N(T+' servings')+'?', type:'number', answer:perServingCups*T,
+    explanation:'Each serving needs '+perServingCups+' cups, so '+T+' servings need '+(perServingCups*T)+' cups.' };
+}
+const PYTHAG_TRIPLES = [[3,4,5],[6,8,10],[5,12,13],[9,12,15],[8,15,17],[7,24,25],[20,21,29],[9,40,41],[12,16,20]];
+function genPythagoreanTheorem(){
+  const [a,b,c] = pick(PYTHAG_TRIPLES); const k=randInt(1,3); const A=a*k,B=b*k,C=c*k;
+  if(Math.random()<0.5) return { isEquation:false, prompt:'A right triangle has legs of '+N(A)+' and '+N(B)+'. What is the length of the hypotenuse?', type:'number', answer:C,
+    explanation:'√('+A+'² + '+B+'²) = √('+(A*A)+' + '+(B*B)+') = '+C+'.', diagram:{type:'rightTriangle', a:A, b:B, unknown:'c'} };
+  return { isEquation:false, prompt:'A right triangle has a hypotenuse of '+N(C)+' and one leg of '+N(A)+'. What is the length of the other leg?', type:'number', answer:B,
+    explanation:'√('+C+'² - '+A+'²) = √('+(C*C)+' - '+(A*A)+') = '+B+'.', diagram:{type:'rightTriangle', a:A, c:C, unknown:'b'} };
+}
+function genCircleAreaCircumference(){
+  const r=randInt(2,12);
+  if(Math.random()<0.5) return { isEquation:false, prompt:'A circle has a radius of '+N(r+' cm')+'. What is its area in terms of π? (give just the coefficient — e.g. answer 16 for 16π)', type:'number', answer:r*r,
+    explanation:'Area = πr² = π×'+r+'² = '+(r*r)+'π cm².', diagram:{type:'circle', r} };
+  return { isEquation:false, prompt:'A circle has a radius of '+N(r+' cm')+'. What is its circumference in terms of π? (give just the coefficient — e.g. answer 10 for 10π)', type:'number', answer:2*r,
+    explanation:'Circumference = 2πr = 2×π×'+r+' = '+(2*r)+'π cm.', diagram:{type:'circle', r} };
+}
+function genSurfaceAreaPrism(){
+  const l=randInt(2,10), w=randInt(2,10), h=randInt(2,10); const sa=2*(l*w+l*h+w*h);
+  return { isEquation:false, prompt:'A rectangular prism is '+N(l+' cm')+' by '+N(w+' cm')+' by '+N(h+' cm')+'. What is its total surface area (in cm²)?', type:'number', answer:sa,
+    explanation:'2×('+l+'×'+w+' + '+l+'×'+h+' + '+w+'×'+h+') = 2×('+(l*w)+' + '+(l*h)+' + '+(w*h)+') = '+sa+' cm².', diagram:{type:'rectDims', w:l, h:w, depth:h} };
+}
+function genCompoundProbability(){
+  const n=pick([4,6,8,10]); const evens=Math.floor(n/2);
+  return { isEquation:false, prompt:'A spinner has '+N(n)+' equal sections numbered 1 to '+n+'. If you spin it twice, what is the probability of getting an even number both times? (fraction, lowest terms)', type:'text', placeholder:'e.g. 1/4',
+    check:(input)=>answerMatchesFraction(input, evens*evens, n*n), answer:fracStr(evens*evens,n*n),
+    explanation:'P(even) = '+evens+'/'+n+' each spin, so P(both) = ('+evens+'/'+n+')² = '+fracStr(evens*evens,n*n)+'.', diagram:{type:'fractionBar', d:n, shaded:[evens]} };
+}
+function genStatisticsRange(){
+  const list=[]; for(let i=0;i<7;i++) list.push(randInt(20,95));
+  return { isEquation:false, prompt:'These are the high temperatures (°F) recorded over a week: '+N(list.join(', '))+'. What is the range?', type:'number', answer:Math.max(...list)-Math.min(...list),
+    explanation:'Range = '+Math.max(...list)+' - '+Math.min(...list)+' = '+(Math.max(...list)-Math.min(...list))+'.', diagram:{type:'numberLineDots', values:list} };
+}
+function genGeometryOlympiadPuzzle(){
+  const side=randInt(3,20); const A=side*side;
+  return { isEquation:false, prompt:'A square has an area of '+N(A+' cm²')+'. What is its perimeter (in cm)?', type:'number', answer:4*side,
+    explanation:'√'+A+' = '+side+' cm per side, so perimeter = 4 × '+side+' = '+(4*side)+' cm.', diagram:{type:'squareArea', area:A} };
+}
+function genCombinatoricsAdvanced(){
+  const n=randInt(4,7), r=randInt(2,3);
+  let perm=1; for(let i=0;i<r;i++) perm*=(n-i);
+  return { isEquation:false, prompt:'How many ways can you arrange '+N(r)+' of '+N(n)+' different books on a shelf (order matters)?', type:'number', answer:perm,
+    explanation:'There are '+n+' choices, then '+(n-1)+', '+(r>2?'then '+(n-2)+', ':'')+'multiplied together: '+perm+'.', diagram:{type:'iconRow', n} };
+}
+
+/* ================================================================
+   GRADE 9–10+ PACKAGE (ages 14–16): Algebra, Geometry & Trigonometry,
+   Number Theory / Probability & Combinatorics (AMC-style)
+   ================================================================ */
+function termStr(coef, varStr){ if(coef===0) return ''; return (coef>0?' + ':' - ')+Math.abs(coef)+varStr; }
+function genQuadraticFactoring(){
+  let p=randInt(-9,9); if(p===0) p=1; let q=randInt(-9,9); if(q===0) q=-1;
+  const b=-(p+q), c=p*q;
+  return { isEquation:true, prompt:'Solve for x: x²'+termStr(b,'x')+termStr(c,'')+' = 0. (Enter the larger solution.)', type:'number', answer:Math.max(p,q),
+    explanation:'x²'+termStr(b,'x')+termStr(c,'')+' = (x - '+p+')(x - '+q+'), so x = '+p+' or x = '+q+'; the larger is '+Math.max(p,q)+'.', diagram:{type:'balanceScale'} };
+}
+function genSystemsOfEquations(){
+  let x,y,a1,b1,a2,b2;
+  do{ x=randInt(-6,10); y=randInt(-6,10); a1=randInt(1,5); b1=randInt(1,5); a2=randInt(1,5); b2=randInt(1,5); } while(a1*b2-a2*b1===0);
+  const c1=a1*x+b1*y, c2=a2*x+b2*y;
+  return { isEquation:true, prompt:'Solve the system: '+a1+'x + '+b1+'y = '+c1+' and '+a2+'x + '+b2+'y = '+c2+'. What is x?', type:'number', answer:x,
+    explanation:'Solving the system gives x = '+x+', y = '+y+'.', diagram:{type:'balanceScale'} };
+}
+function genFunctionEvaluation(){
+  const a=randInt(1,5), b=randInt(-5,5), c=randInt(-10,10), n=randInt(-4,6);
+  return { isEquation:true, prompt:'If f(x) = '+a+'x²'+termStr(b,'x')+termStr(c,'')+', what is f('+n+')?', type:'number', answer:a*n*n+b*n+c,
+    explanation:a+'×'+n+'² '+(b>=0?'+ ':'- ')+Math.abs(b)+'×'+n+' '+(c>=0?'+ ':'- ')+Math.abs(c)+' = '+(a*n*n+b*n+c)+'.' };
+}
+function genExponentialGrowth(){
+  const P=randInt(2,20)*10, r=pick([2,3]), Y=randInt(2,4);
+  return { isEquation:false, prompt:'A population starts at '+N(P)+' and multiplies by '+N(r)+' every year. What will the population be after '+N(Y)+' years?', type:'number', answer:P*Math.pow(r,Y),
+    explanation:P+' × '+r+'^'+Y+' = '+fmt(P*Math.pow(r,Y))+'.' };
+}
+function genPolynomialSimplify(){
+  const a1=randInt(1,6), a2=randInt(1,6), b1=randInt(-8,8), b2=randInt(-8,8), c1=randInt(-10,10), c2=randInt(-10,10);
+  const askX2 = Math.random()<0.5;
+  return { isEquation:true, prompt:'Simplify: ('+a1+'x²'+termStr(b1,'x')+termStr(c1,'')+') + ('+a2+'x²'+termStr(b2,'x')+termStr(c2,'')+'). What is the '+(askX2?'coefficient of x²':'constant term')+'?',
+    type:'number', answer: askX2?a1+a2:c1+c2, explanation:'Combine like terms across both polynomials.' };
+}
+function genQuadraticWordPuzzle(){
+  const n=randInt(3,25), P=n*(n+1);
+  return { isEquation:false, prompt:'The product of two consecutive positive integers is '+N(P)+'. What is the smaller integer?', type:'number', answer:n,
+    explanation:n+' × '+(n+1)+' = '+P+'.', diagram:{type:'balanceScale'} };
+}
+function genSystemWordPuzzle(){
+  const A=randInt(8,15), c=randInt(3,10), nAdult=randInt(1,4), nChild=randInt(1,4);
+  const T = A*nAdult + c*nChild;
+  return { isEquation:false, prompt:'Adult movie tickets cost $'+N(A)+' each. A family bought '+N(nAdult)+' adult tickets and '+N(nChild)+' child tickets for a total of $'+N(T)+'. How much does one child ticket cost (in dollars)?', type:'number', answer:c,
+    explanation:'($'+T+' - '+nAdult+'×$'+A+') ÷ '+nChild+' = $'+c+'.', diagram:{type:'balanceScale'} };
+}
+function genTrigRatios(){
+  const [a,b,c] = pick(PYTHAG_TRIPLES); const ratio = pick(['sin','cos','tan']);
+  let num,den,desc;
+  if(ratio==='sin'){ num=a; den=c; desc='sin θ (opposite/hypotenuse)'; }
+  else if(ratio==='cos'){ num=b; den=c; desc='cos θ (adjacent/hypotenuse)'; }
+  else { num=a; den=b; desc='tan θ (opposite/adjacent)'; }
+  return { isEquation:false, prompt:'In a right triangle with legs '+N(a)+' and '+N(b)+' and hypotenuse '+N(c)+', the angle θ is opposite the side of length '+N(a)+'. What is '+desc+'? (fraction, lowest terms)', type:'text', placeholder:'e.g. 3/5',
+    check:(input)=>answerMatchesFraction(input, num, den), answer:fracStr(num,den), explanation:desc+' = '+num+'/'+den+' = '+fracStr(num,den)+'.', diagram:{type:'rightTriangle', a, b, c} };
+}
+function genDistanceMidpointSlope(){
+  const variant = pick(['slope','midpoint','distance']);
+  if(variant==='slope'){ const dx=randInt(1,6); let slope=randInt(-5,5); if(slope===0) slope=1; const dy=slope*dx;
+    const x1=randInt(-8,4), y1=randInt(-8,8); const x2=x1+dx, y2=y1+dy;
+    return { isEquation:false, prompt:'What is the slope of the line through ('+x1+', '+y1+') and ('+x2+', '+y2+')?', type:'number', answer:slope, explanation:'slope = ('+y2+' - '+y1+') ÷ ('+x2+' - '+x1+') = '+dy+'/'+dx+' = '+slope+'.', diagram:{type:'coordPoints', points:[[x1,y1],[x2,y2]], connect:true} }; }
+  if(variant==='midpoint'){ const dx=randInt(2,10), dy=randInt(2,10); const Mx=randInt(-6,6);
+    const x1=Mx-dx, x2=Mx+dx; const y1=randInt(-6,6), y2=y1+2*dy;
+    return { isEquation:false, prompt:'What is the x-coordinate of the midpoint of the segment from ('+x1+', '+y1+') to ('+x2+', '+y2+')?', type:'number', answer:Mx, explanation:'Midpoint x = ('+x1+' + '+x2+') ÷ 2 = '+Mx+'.', diagram:{type:'coordPoints', points:[[x1,y1],[x2,y2]], connect:true} }; }
+  const [dx,dy,dist] = pick(PYTHAG_TRIPLES); const x1=randInt(-6,6), y1=randInt(-6,6); const x2=x1+dx, y2=y1+dy;
+  return { isEquation:false, prompt:'What is the distance between ('+x1+', '+y1+') and ('+x2+', '+y2+')?', type:'number', answer:dist,
+    explanation:'√(('+dx+')² + ('+dy+')²) = √('+(dx*dx)+' + '+(dy*dy)+') = '+dist+'.', diagram:{type:'coordPoints', points:[[x1,y1],[x2,y2]], connect:true} };
+}
+function genSimilarTriangles(){
+  const a=randInt(2,10), b=randInt(2,10), k=randInt(2,5); const d=a*k, EF=b*k;
+  return { isEquation:false, prompt:'Triangle ABC is similar to triangle DEF. AB = '+N(a)+', BC = '+N(b)+', and DE = '+N(d)+'. What is EF?', type:'number', answer:EF,
+    explanation:'Scale factor = '+d+' ÷ '+a+' = '+k+', so EF = '+b+' × '+k+' = '+EF+'.' };
+}
+function genCircleArcAngle(){
+  const N_ = pick([3,4,5,6,8,9,10,12,15,18,20,24]);
+  return { isEquation:false, prompt:'A circle is divided into '+N(N_)+' equal arcs by evenly spaced points. What is the central angle (in degrees) between two adjacent points?', type:'number', answer:360/N_,
+    explanation:'360° ÷ '+N_+' = '+(360/N_)+'°.', diagram:{type:'circle', r:6, arcs:N_} };
+}
+function genTrigWordPuzzle(){
+  const [height,base,ladder] = pick(PYTHAG_TRIPLES);
+  return { isEquation:false, prompt:'A ladder ('+N(ladder+' ft')+') leans against a wall. The base of the ladder is '+N(base+' ft')+' from the wall. How high up the wall does the ladder reach (in ft)?', type:'number', answer:height,
+    explanation:'√('+ladder+'² - '+base+'²) = √('+(ladder*ladder)+' - '+(base*base)+') = '+height+' ft.', diagram:{type:'rightTriangle', b:base, c:ladder, unknown:'a'} };
+}
+function genGeometryChallenge(){
+  const N_=randInt(5,12);
+  return { isEquation:false, prompt:'What is the sum of the interior angles (in degrees) of a polygon with '+N(N_)+' sides?', type:'number', answer:(N_-2)*180,
+    explanation:'(n - 2) × 180 = ('+N_+' - 2) × 180 = '+((N_-2)*180)+'°.', diagram:{type:'polygon', sides:Math.min(N_,10)} };
+}
+function factorial(n){ let f=1; for(let i=2;i<=n;i++) f*=i; return f; }
+function nCr(n,r){ return Math.round(factorial(n)/(factorial(r)*factorial(n-r))); }
+function genModularArithmetic(){
+  const a=randInt(15,99), m=pick([3,4,5,6,7,8,9,11,12]);
+  return { isEquation:true, prompt:'What is '+a+' mod '+m+'? (the remainder when '+a+' is divided by '+m+')', type:'number', answer:a%m, explanation:a+' ÷ '+m+' = '+Math.floor(a/m)+' remainder '+(a%m)+'.' };
+}
+function genPermutationsCount(){
+  const n=randInt(4,8), r=randInt(2,4>n?n:4);
+  let perm=1; for(let i=0;i<r;i++) perm*=(n-i);
+  return { isEquation:false, prompt:'How many ways can '+N(r)+' people be arranged in a line, chosen from a group of '+N(n)+'? (order matters)', type:'number', answer:perm,
+    explanation:n+' × '+Array.from({length:r-1},(_,i)=>n-1-i).join(' × ')+' = '+perm+'.', diagram:{type:'iconRow', n} };
+}
+function genCombinationsCount(){
+  const n=randInt(4,10), r=randInt(2,4>n?n:4);
+  return { isEquation:false, prompt:'How many different '+N(r)+'-person committees can be formed from a group of '+N(n)+' people? (order does not matter)', type:'number', answer:nCr(n,r),
+    explanation:'C('+n+','+r+') = '+n+'! / ('+r+'! × '+(n-r)+'!) = '+nCr(n,r)+'.', diagram:{type:'iconRow', n} };
+}
+function genSeriesSum(){
+  const first=randInt(1,10), diff=randInt(1,6), terms=randInt(4,10); const last=first+diff*(terms-1);
+  const seq=[]; for(let i=0;i<terms;i++) seq.push(first+diff*i);
+  return { isEquation:false, prompt:'What is the sum of the first '+N(terms)+' terms of the arithmetic sequence starting at '+N(first)+' with common difference '+N(diff)+'?', type:'number', answer:terms*(first+last)/2,
+    explanation:'Sum = n×(first+last)/2 = '+terms+'×('+first+'+'+last+')/2 = '+(terms*(first+last)/2)+'.', diagram:{type:'numberLineDots', values:seq} };
+}
+function genProbabilityCombinatorics(){
+  const M=randInt(2,6), W=randInt(2,6); const num=nCr(W,2), den=nCr(M+W,2);
+  return { isEquation:false, prompt:'A committee of 2 is chosen at random from a group of '+N(M)+' men and '+N(W)+' women. What is the probability both chosen are women? (fraction, lowest terms)', type:'text', placeholder:'e.g. 1/3',
+    check:(input)=>answerMatchesFraction(input, num, den), answer:fracStr(num,den), explanation:'C('+W+',2)/C('+(M+W)+',2) = '+num+'/'+den+' = '+fracStr(num,den)+'.', diagram:{type:'iconRow', n:M+W} };
+}
+function genAmcStylePuzzle1(){
+  const n=randInt(10,60); const S=3*n+3;
+  return { isEquation:false, prompt:'The sum of three consecutive integers is '+N(S)+'. What is the largest of the three?', type:'number', answer:n+2,
+    explanation:'The integers are '+n+', '+(n+1)+', '+(n+2)+' — their sum is '+S+', so the largest is '+(n+2)+'.', diagram:{type:'balanceScale'} };
+}
+function genAmcStylePuzzle2(){
+  const t=randInt(2,9), o=randInt(0,t-1); const S=t+o, D=t-o; const number=t*10+o;
+  return { isEquation:false, prompt:'A two-digit number has a digit sum of '+N(S)+', and its tens digit minus its ones digit equals '+N(D)+'. What is the number?', type:'number', answer:number,
+    explanation:'tens = ('+S+'+'+D+')/2 = '+t+', ones = ('+S+'-'+D+')/2 = '+o+', so the number is '+number+'.' };
+}
+
+const GENERATORS = {
+  placeValue:genPlaceValue, addSub:genAddSub, multiplication:genMultiplication, division:genDivision, factorsMultiples:genFactorsMultiples,
+  fracEquivalence:genFracEquivalence, fracAddSub:genFracAddSub, fracMultiply:genFracMultiply, decimals:genDecimals,
+  measurement:genMeasurement, perimeterArea:genPerimeterArea, angles:genAngles, shapesSymmetry:genShapesSymmetry, dataLinePlot:genDataLinePlot,
+  numberPatterns:genNumberPatterns, sumDiffPuzzle:genSumDiffPuzzle,
+  fractionWordPuzzle:genFractionWordPuzzle, fractionOfGroup:genFractionOfGroup,
+  patternSquares:genPatternSquares, combinatoricsCount:genCombinatoricsCount,
+  orderOfOps:genOrderOfOps, decimalMultDiv:genDecimalMultDiv, exponentsBasic:genExponentsBasic,
+  divisibilityCheck:genDivisibilityCheck, gcfLcmWord:genGcfLcmWord, primeFactorLargest:genPrimeFactorLargest, digitSumCount:genDigitSumCount,
+  ratioSimplify:genRatioSimplify, unitRate:genUnitRate, percentOf:genPercentOf, proportionSolve:genProportionSolve,
+  percentWordPuzzle:genPercentWordPuzzle, ratioWordPuzzle:genRatioWordPuzzle,
+  areaTriangle:genAreaTriangle, volumeRectPrism:genVolumeRectPrism, coordinateDistance:genCoordinateDistance, meanMedian:genMeanMedian, basicProbability:genBasicProbability,
+  compositeAreaPuzzle:genCompositeAreaPuzzle, rangePuzzle:genRangePuzzle,
+  oneStepEquation:genOneStepEquation, twoStepEquation:genTwoStepEquation, integerOperations:genIntegerOperations,
+  evaluateExpression:genEvaluateExpression, simplifyExpression:genSimplifyExpression,
+  equationWordPuzzle:genEquationWordPuzzle, ageWordPuzzle:genAgeWordPuzzle,
+  proportionalRelationship:genProportionalRelationship, scientificNotation:genScientificNotation, squareRoots:genSquareRoots, exponentRules:genExponentRules,
+  scaleFactorPuzzle:genScaleFactorPuzzle, rateWordPuzzle:genRateWordPuzzle,
+  pythagoreanTheorem:genPythagoreanTheorem, circleAreaCircumference:genCircleAreaCircumference, surfaceAreaPrism:genSurfaceAreaPrism,
+  compoundProbability:genCompoundProbability, statisticsRange:genStatisticsRange,
+  geometryOlympiadPuzzle:genGeometryOlympiadPuzzle, combinatoricsAdvanced:genCombinatoricsAdvanced,
+  quadraticFactoring:genQuadraticFactoring, systemsOfEquations:genSystemsOfEquations, functionEvaluation:genFunctionEvaluation,
+  exponentialGrowth:genExponentialGrowth, polynomialSimplify:genPolynomialSimplify,
+  quadraticWordPuzzle:genQuadraticWordPuzzle, systemWordPuzzle:genSystemWordPuzzle,
+  trigRatios:genTrigRatios, distanceMidpointSlope:genDistanceMidpointSlope, similarTriangles:genSimilarTriangles, circleArcAngle:genCircleArcAngle,
+  trigWordPuzzle:genTrigWordPuzzle, geometryChallenge:genGeometryChallenge,
+  modularArithmetic:genModularArithmetic, permutationsCount:genPermutationsCount, combinationsCount:genCombinationsCount,
+  seriesSum:genSeriesSum, probabilityCombinatorics:genProbabilityCombinatorics,
+  amcStylePuzzle1:genAmcStylePuzzle1, amcStylePuzzle2:genAmcStylePuzzle2
+};
+
+const ICONS = {
+  ops:'<svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="22" y="4" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="4" y="22" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="22" y="22" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><text x="11" y="14" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">+</text><text x="29" y="14" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">×</text><text x="11" y="32" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">−</text><text x="29" y="32" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">÷</text></svg>',
+  ratio:'<svg viewBox="0 0 40 40" fill="none"><line x1="10" y1="30" x2="30" y2="10" stroke="var(--c)" stroke-width="2.5"/><circle cx="12" cy="12" r="7" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><circle cx="28" cy="28" r="7" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">3</text><text x="28" y="31" font-size="8" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">4</text></svg>',
+  geo:'<svg viewBox="0 0 40 40" fill="none"><polygon points="6,32 34,32 20,8" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2" stroke-linejoin="round"/><path d="M14 32 A6 6 0 0 1 20 26" stroke="var(--c)" stroke-width="2" fill="none"/></svg>'
+};
+
+/* ============== chibi avatars ============== */
+function svgAvatarChibi(p){
+  let hair;
+  if(p.style==='A'){ hair = '<path d="M4 34 L14 6 L26 26 L36 2 L46 24 L58 4 L68 24 L76 34 A36 36 0 0 1 4 34 Z" fill="'+p.hair+'"/>'; }
+  else if(p.style==='B'){ hair = '<path d="M2 36 L10 4 L22 28 L32 0 L40 26 L48 0 L58 28 L70 4 L78 36 A38 38 0 0 1 2 36 Z" fill="'+p.hair+'"/>'; }
+  else { hair = '<path d="M4 36 A36 36 0 0 1 76 36 L74 24 Q60 2 40 10 Q20 2 6 24 Z" fill="'+p.hair+'"/><path d="M10 20 L2 2 L20 14 Z" fill="'+p.hair+'"/><path d="M70 20 L78 2 L60 14 Z" fill="'+p.hair+'"/>'; }
+  const mouth = p.mask
+    ? '<path d="M22 52 Q40 68 58 52 L58 68 Q40 78 22 68 Z" fill="'+p.band+'"/>'
+    : '<path d="M34 60 Q40 65 46 60" stroke="#7a5647" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+  const band = '<rect x="3" y="32" width="74" height="11" rx="2" fill="'+p.band+'"/>'
+    + '<rect x="4" y="41" width="7" height="16" fill="'+p.band+'" opacity="0.85"/>'
+    + '<rect x="33" y="30.5" width="14" height="13" rx="2" fill="#B9C0C6"/>'
+    + '<circle cx="40" cy="37" r="1.6" fill="#6B7278"/>';
+  return '<svg viewBox="0 0 80 80" width="100%" height="100%">'
+    + '<circle cx="40" cy="44" r="30" fill="'+p.skin+'"/>'
+    + '<circle cx="27" cy="46" r="7.5" fill="#fff"/><circle cx="27" cy="47" r="4.2" fill="'+p.eye+'"/><circle cx="25" cy="44.5" r="1.5" fill="#fff"/>'
+    + '<circle cx="53" cy="46" r="7.5" fill="#fff"/><circle cx="53" cy="47" r="4.2" fill="'+p.eye+'"/><circle cx="51" cy="44.5" r="1.5" fill="#fff"/>'
+    + mouth
+    + hair
+    + band
+    + '</svg>';
+}
+const AVATAR_PRESETS = [
+  {id:'n1', skin:'#FBD8B0', hair:'#3B2A20', eye:'#3D6EDB', band:'#1C2126', style:'A', mask:false},
+  {id:'n2', skin:'#F3C08A', hair:'#C97A1E', eye:'#1C8E76', band:'#C3453A', style:'B', mask:false},
+  {id:'n3', skin:'#FDE3C7', hair:'#7A5FC9', eye:'#C3453A', band:'#3D6EDB', style:'C', mask:true},
+  {id:'n4', skin:'#E8A97A', hair:'#221A16', eye:'#EDA84F', band:'#1C8E76', style:'A', mask:false},
+  {id:'n5', skin:'#FBD8B0', hair:'#57C7A9', eye:'#7A5FC9', band:'#221A16', style:'B', mask:true},
+  {id:'n6', skin:'#D89468', hair:'#E8776B', eye:'#3D6EDB', band:'#C97A1E', style:'C', mask:false},
+  {id:'n7', skin:'#F3C08A', hair:'#F4EFE3', eye:'#1C8E76', band:'#7A5FC9', style:'A', mask:false},
+  {id:'n8', skin:'#FDE3C7', hair:'#3D6EDB', eye:'#C97A1E', band:'#57C7A9', style:'B', mask:true}
+];
+function hashStr(s){ let h=0; for(let i=0;i<String(s).length;i++){ h=(h*31+s.charCodeAt(i))|0; } return Math.abs(h); }
+function avatarFor(profile){
+  if(profile && profile.avatarId){ const p=AVATAR_PRESETS.find(a=>a.id===profile.avatarId); if(p) return p; }
+  return AVATAR_PRESETS[hashStr((profile&&profile.id)||'x') % AVATAR_PRESETS.length];
+}
+
+const BANDS = [
+  { id:'b3_4', label:'Grades 3–4', name:'Foundations Track' },
+  { id:'b5_6', label:'Grades 5–6', name:'Ratios & Reasoning Track' },
+  { id:'b7_8', label:'Grades 7–8', name:'Pre-Algebra Track' },
+  { id:'b9_10', label:'Grades 9–10+', name:'Algebra & AMC Track' }
+];
+function bandForGrade(grade){ const g=Number(grade)||4; if(g<=4) return 'b3_4'; if(g<=6) return 'b5_6'; if(g<=8) return 'b7_8'; return 'b9_10'; }
+function bandLabelFor(band){ const b=BANDS.find(x=>x.id===band); return b?b.name:''; }
+function strandsFor(band){ return STRANDS_BY_BAND[band] || STRANDS_BY_BAND.b3_4; }
+
+/* Style/family each band's problems are modeled after — these are ORIGINAL practice
+   questions matched to each exam's typical topics and difficulty, never verbatim
+   past questions (which are copyrighted by their organizations). */
+const BAND_EXAM_STYLE = {
+  b3_4:  { core:'Math Kangaroo (Levels 3–4)', advanced:'MOEMS (Division E)' },
+  b5_6:  { core:'Math Kangaroo (Levels 5–6)', advanced:'MOEMS (Division E)' },
+  b7_8:  { core:'MATHCOUNTS (Sprint Round)',  advanced:'AMC 8' },
+  b9_10: { core:'AMC 10',                     advanced:'AMC 10 / AMC 12' }
+};
+function examStyleFor(subtopic, band){
+  const strands = strandsFor(band);
+  for(const s of Object.values(strands)){
+    if((s.advanced||[]).includes(subtopic)) return BAND_EXAM_STYLE[band].advanced;
+    if(s.subtopics.includes(subtopic)) return BAND_EXAM_STYLE[band].core;
+  }
+  return '';
+}
+
+/* Where to find the REAL retired contests for each band — organization names only
+   (no linked URLs, since those can go stale or be mistyped from memory). Search
+   the organization's own site for "past contests" or "practice problems". */
+const BAND_OFFICIAL_SOURCES = {
+  b3_4:  [ { name:'Math Kangaroo USA — Levels 3–4', note:'Publishes free retired contests every year.' },
+           { name:'MOEMS — Division E', note:'Math Olympiads for Elementary and Middle Schools; sample problem sets available.' } ],
+  b5_6:  [ { name:'Math Kangaroo USA — Levels 5–6', note:'Publishes free retired contests every year.' },
+           { name:'MOEMS — Division E', note:'Covers grades 4–6; sample problem sets available.' } ],
+  b7_8:  [ { name:'MATHCOUNTS', note:'Free annual School Handbook plus past Sprint & Target rounds.' },
+           { name:'AMC 8', note:'Run by the Mathematical Association of America (MAA); past contests archived on the Art of Problem Solving (AoPS) wiki.' } ],
+  b9_10: [ { name:'AMC 10 & AMC 12', note:'Run by the MAA; past contests archived on the Art of Problem Solving (AoPS) wiki.' },
+           { name:'Math Kangaroo USA — Levels 9–10', note:'Publishes free retired contests every year.' } ]
+};
+
+const STRANDS_BY_BAND = {
+  b3_4: {
+    numberOps:{ key:'numberOps', name:'Number & Operations', tagline:'Place value, addition, multiplication, division & factors.', color:'blue',
+      subtopics:['placeValue','addSub','multiplication','division','factorsMultiples'], advanced:['numberPatterns','sumDiffPuzzle'], icon:ICONS.ops },
+    fractions:{ key:'fractions', name:'Fractions & Decimals', tagline:'Equivalence, adding, multiplying fractions & decimals.', color:'amber',
+      subtopics:['fracEquivalence','fracAddSub','fracMultiply','decimals'], advanced:['fractionWordPuzzle','fractionOfGroup'], icon:ICONS.ratio },
+    geometry:{ key:'geometry', name:'Geometry & Measurement', tagline:'Angles, shapes, perimeter, area & unit conversions.', color:'teal',
+      subtopics:['measurement','perimeterArea','angles','shapesSymmetry','dataLinePlot'], advanced:['patternSquares','combinatoricsCount'], icon:ICONS.geo }
+  },
+  b5_6: {
+    numberTheory:{ key:'numberTheory', name:'Number Theory & Operations', tagline:'Order of operations, decimals, exponents & factors.', color:'blue',
+      subtopics:['orderOfOps','decimalMultDiv','exponentsBasic','divisibilityCheck','gcfLcmWord'], advanced:['primeFactorLargest','digitSumCount'], icon:ICONS.ops },
+    ratiosPercent:{ key:'ratiosPercent', name:'Ratios, Rates & Percent', tagline:'Simplifying ratios, unit rates, percents & proportions.', color:'amber',
+      subtopics:['ratioSimplify','unitRate','percentOf','proportionSolve'], advanced:['percentWordPuzzle','ratioWordPuzzle'], icon:ICONS.ratio },
+    geometryData:{ key:'geometryData', name:'Geometry & Data', tagline:'Area, volume, the coordinate plane & basic statistics.', color:'teal',
+      subtopics:['areaTriangle','volumeRectPrism','coordinateDistance','meanMedian','basicProbability'], advanced:['compositeAreaPuzzle','rangePuzzle'], icon:ICONS.geo }
+  },
+  b7_8: {
+    algebra:{ key:'algebra', name:'Algebraic Thinking', tagline:'Equations, integers & evaluating expressions.', color:'blue',
+      subtopics:['oneStepEquation','twoStepEquation','integerOperations','evaluateExpression','simplifyExpression'], advanced:['equationWordPuzzle','ageWordPuzzle'], icon:ICONS.ops },
+    proportionsReals:{ key:'proportionsReals', name:'Proportions & Real Numbers', tagline:'Proportional relationships, scientific notation & exponents.', color:'amber',
+      subtopics:['proportionalRelationship','scientificNotation','squareRoots','exponentRules'], advanced:['scaleFactorPuzzle','rateWordPuzzle'], icon:ICONS.ratio },
+    geometryStats:{ key:'geometryStats', name:'Geometry & Statistics', tagline:'Pythagorean theorem, circles, surface area & probability.', color:'teal',
+      subtopics:['pythagoreanTheorem','circleAreaCircumference','surfaceAreaPrism','compoundProbability','statisticsRange'], advanced:['geometryOlympiadPuzzle','combinatoricsAdvanced'], icon:ICONS.geo }
+  },
+  b9_10: {
+    algebra2:{ key:'algebra2', name:'Algebra', tagline:'Quadratics, systems of equations & functions.', color:'blue',
+      subtopics:['quadraticFactoring','systemsOfEquations','functionEvaluation','exponentialGrowth','polynomialSimplify'], advanced:['quadraticWordPuzzle','systemWordPuzzle'], icon:ICONS.ops },
+    geomTrig:{ key:'geomTrig', name:'Geometry & Trigonometry', tagline:'Trig ratios, coordinate geometry & circle theorems.', color:'amber',
+      subtopics:['trigRatios','distanceMidpointSlope','similarTriangles','circleArcAngle'], advanced:['trigWordPuzzle','geometryChallenge'], icon:ICONS.ratio },
+    numberTheoryComb:{ key:'numberTheoryComb', name:'Number Theory, Probability & Combinatorics', tagline:'Modular arithmetic, permutations, series & AMC-style puzzles.', color:'teal',
+      subtopics:['modularArithmetic','permutationsCount','combinationsCount','seriesSum','probabilityCombinatorics'], advanced:['amcStylePuzzle1','amcStylePuzzle2'], icon:ICONS.geo }
+  }
+};
+
+const SESSION_LENGTH_SEC = 20*60;
+const PROBLEMS_PER_SESSION = 10;
+
+/* ============== olympiad syllabus (4 phases, ~16 weeks, then repeats Phase 4) ============== */
+const PHASES = [
+  { name:'Core Practice', tagline:'Build rock-solid grade-level fundamentals across all three strands.', weeks:[1,4] },
+  { name:'Olympiad Foundations', tagline:'Layer in patterns, logic puzzles, and non-routine problems.', weeks:[5,8] },
+  { name:'Olympiad Practice', tagline:'Mixed, multi-step challenge problems at competition difficulty.', weeks:[9,12] },
+  { name:'Mock Competition', tagline:'Full timed rounds mirroring real Olympiad-style rounds.', weeks:[13,99] }
+];
+/* Day N stays the active day until every one of its sessions is finished —
+   no matter how much real time passes — so a day is never lost, and the
+   next day unlocks the instant the current one is complete. Week/phase in
+   the Olympiad syllabus are driven by how many days have actually been
+   completed, not by calendar time elapsed. */
+function currentWeekNumber(data){ return Math.max(1, Math.ceil((data.currentDay||1)/7)); }
+function currentPhaseIndex(data){ const w=currentWeekNumber(data); if(w<=4) return 0; if(w<=8) return 1; if(w<=12) return 2; return 3; }
+
+/* ============== persistence ============== */
+function loadProfiles(){ try{ return JSON.parse(localStorage.getItem('cto_profiles')||'[]'); }catch(e){ return []; } }
+function saveProfiles(list){ localStorage.setItem('cto_profiles', JSON.stringify(list)); }
+function defaultData(){ return { days:{}, topicStats:{}, currentDay:1, band:null }; }
+function loadData(id){
+  try{
+    const raw=localStorage.getItem('cto_data_'+id);
+    const data = raw? JSON.parse(raw) : defaultData();
+    if(!data.days) data.days = {};
+    if(!data.currentDay) data.currentDay = 1;
+    if(!data.topicStats) data.topicStats = {};
+    return data;
+  }catch(e){ return defaultData(); }
+}
+function saveData(id,data){ localStorage.setItem('cto_data_'+id, JSON.stringify(data)); }
+/* Resets day-tracking if the learner's grade band changed (their old days'
+   strand keys wouldn't match the new package) — topicStats is kept either way. */
+function ensureBand(data, band){
+  if(data.band !== band){ data.days = {}; data.currentDay = 1; data.band = band; }
+}
+function ensureDay(data, band, dayNum){
+  if(!data.days[dayNum]){
+    const day={}; Object.keys(strandsFor(band)).forEach(k=>{ day[k]={done:false}; });
+    data.days[dayNum]=day;
+  }
+  return data.days[dayNum];
+}
+function allDone(day, band){ if(!day) return false; return Object.keys(strandsFor(band)).every(k=> day[k] && day[k].done); }
+function computeStreak(data, band){ let count=0, d=1; while(data.days[d] && allDone(data.days[d], band)){ count++; d++; } return count; }
+/* Keeps score/done/assisted forever (tiny), but only keeps the heavier
+   per-problem review text for the most recent N completed days. */
+function pruneOldReviews(data, keepLastN){
+  const dayNums = Object.keys(data.days).map(Number).sort((a,b)=>a-b);
+  const cutoff = dayNums.length - keepLastN;
+  if(cutoff<=0) return;
+  dayNums.slice(0, cutoff).forEach(d=>{
+    Object.keys(data.days[d]).forEach(k=>{ if(data.days[d][k] && data.days[d][k].review) delete data.days[d][k].review; });
+  });
+}
+
+/* ============== persona & progress trends ============== */
+function subtopicTrend(stats){
+  if(!stats || stats.attempted<6) return null;
+  const log = stats.log||[]; if(log.length<6) return null;
+  const half = Math.floor(log.length/2);
+  const older = log.slice(0,half), recent = log.slice(half);
+  const oldAcc = older.reduce((a,b)=>a+b,0)/older.length;
+  const newAcc = recent.reduce((a,b)=>a+b,0)/recent.length;
+  const diff = newAcc-oldAcc;
+  if(diff>0.12) return 'up';
+  if(diff<-0.12) return 'down';
+  return 'flat';
+}
+function masteryTier(stats){
+  if(!stats || stats.attempted<5) return {label:'Just starting', tone:'new'};
+  const acc = stats.correct/stats.attempted;
+  if(acc>=0.85) return {label:'Mastered', tone:'good'};
+  if(acc>=0.65) return {label:'Developing', tone:'mid'};
+  return {label:'Needs practice', tone:'low'};
+}
+function personaFor(data, band){
+  const strands = strandsFor(band);
+  const subtopics = Object.values(strands).flatMap(s=>s.subtopics.concat(s.advanced||[]));
+  let mastered=0, totalAttempted=0, totalCorrect=0;
+  subtopics.forEach(st=>{ const s=data.topicStats[st]; if(s){ totalAttempted+=s.attempted; totalCorrect+=s.correct; if(s.attempted>=5 && s.correct/s.attempted>=0.85) mastered++; } });
+  let title;
+  if(totalAttempted<10) title='Rookie';
+  else if(mastered<=2) title='Bronze Olympian';
+  else if(mastered<=6) title='Silver Olympian';
+  else if(mastered<=11) title='Gold Olympian';
+  else title='Olympiad Champion';
+  const overallAcc = totalAttempted>0 ? Math.round(100*totalCorrect/totalAttempted) : null;
+  return { title, mastered, totalAttempted, overallAcc, totalTopics:subtopics.length };
+}
+function strandRating(data, strand){
+  const subs = strand.subtopics.concat(strand.advanced||[]);
+  let correct=0, attempted=0;
+  subs.forEach(st=>{ const s=data.topicStats[st]; if(s){ correct+=s.correct; attempted+=s.attempted; } });
+  if(attempted<5) return {label:'New', acc:null};
+  const acc = Math.round(100*correct/attempted);
+  const label = acc>=85?'Gold':acc>=65?'Silver':'Bronze';
+  return {label, acc};
+}
+function strandSessionSeries(data, strandKey, limit){
+  limit = limit||8;
+  const dayNums = Object.keys(data.days).map(Number).filter(d=>data.days[d][strandKey] && data.days[d][strandKey].done).sort((a,b)=>a-b);
+  return dayNums.slice(-limit).map(d=>({ day:d, pct: Math.round(100*data.days[d][strandKey].score/data.days[d][strandKey].total) }));
+}
+function trendLabel(series){
+  if(series.length<2) return {text:'Not enough sessions yet', tone:'flat'};
+  const half = Math.floor(series.length/2);
+  const firstAvg = series.slice(0,half).reduce((a,p)=>a+p.pct,0)/half;
+  const secondAvg = series.slice(half).reduce((a,p)=>a+p.pct,0)/(series.length-half);
+  const diff = Math.round(secondAvg-firstAvg);
+  if(diff>=5) return {text:'▲ +'+diff+' pts — improving', tone:'up'};
+  if(diff<=-5) return {text:'▼ '+diff+' pts — dip', tone:'down'};
+  return {text:'– holding steady', tone:'flat'};
+}
+function sparklineSvg(series, colorVar){
+  if(series.length===0) return '<div style="font-size:13px;color:var(--ink-faint);padding:22px 0;">No completed sessions yet.</div>';
+  const w=240, h=64, pad=8;
+  const pts = series.map((p,i)=>{
+    const x = series.length===1 ? w/2 : pad + (i/(series.length-1))*(w-2*pad);
+    const y = pad + (1-p.pct/100)*(h-2*pad);
+    return [x,y];
+  });
+  const path = pts.map((p,i)=> (i===0?'M':'L')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" preserveAspectRatio="none" style="overflow:visible;">'
+    + '<line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="var(--grid)" stroke-width="1"/>'
+    + '<path d="'+path+'" fill="none" stroke="'+colorVar+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'
+    + pts.map((p,i)=> i===pts.length-1 ? '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4" fill="'+colorVar+'"/>' : '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="2" fill="'+colorVar+'" opacity="0.5"/>').join('')
+    + '</svg>';
+}
+
+/* ============== problem diagrams ==============
+   Schematic (not-to-scale) SVGs built from each problem's OWN given values.
+   They only ever show information already stated in the prompt — never the
+   answer being solved for — so they support the problem without spoiling it. */
+function svgOpen(vb, h){ return '<svg viewBox="'+vb+'" width="100%" height="'+(h||140)+'" style="overflow:visible;">'; }
+function svgTxt(x,y,txt,opts){
+  opts=opts||{};
+  return '<text x="'+x+'" y="'+y+'" font-size="'+(opts.size||14)+'" text-anchor="'+(opts.anchor||'middle')+'" '
+    +'fill="'+(opts.color||'var(--ink)')+'" font-family="'+(opts.mono===false?"'Fredoka'":"'IBM Plex Mono'")+'" font-weight="600">'+esc(String(txt))+'</text>';
+}
+
+function diagRectDims(spec){
+  const bx=40, by=24, bw=150, bh=76;
+  let extra = spec.depth!==undefined ? svgTxt(bx+bw/2, by+bh+34, 'depth: '+spec.depth, {size:12, color:'var(--ink-faint)', mono:false}) : '';
+  return svgOpen('0 0 230 150', 150)
+    + '<rect x="'+bx+'" y="'+by+'" width="'+bw+'" height="'+bh+'" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2.5" rx="3"/>'
+    + svgTxt(bx+bw/2, by-8, spec.w, {size:14})
+    + svgTxt(bx-10, by+bh/2+5, spec.h, {size:14, anchor:'end'})
+    + extra
+    + '</svg>';
+}
+function diagRightTriangle(spec){
+  const x0=30,y0=110, x1=190,y1=110, x2=30,y2=20;
+  const labelA = spec.unknown==='a' ? '?' : spec.a;
+  const labelB = spec.unknown==='b' ? '?' : spec.b;
+  const labelC = spec.unknown==='c' ? '?' : spec.c;
+  return svgOpen('0 0 220 140', 140)
+    + '<polygon points="'+x0+','+y0+' '+x1+','+y1+' '+x2+','+y2+'" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2.5" stroke-linejoin="round"/>'
+    + '<rect x="'+x0+'" y="'+(y0-14)+'" width="14" height="14" fill="none" stroke="var(--c)" stroke-width="1.5"/>'
+    + svgTxt((x0+x1)/2, y0+22, labelB, {size:14})
+    + svgTxt(x0-12, (y0+y2)/2+5, labelA, {size:14, anchor:'end'})
+    + svgTxt((x1+x2)/2+18, (y1+y2)/2-8, labelC, {size:14})
+    + '</svg>';
+}
+function diagCircle(spec){
+  const cx=110, cy=75, r=55;
+  let inner = '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2.5"/>';
+  if(spec.arcs){
+    for(let i=0;i<spec.arcs;i++){
+      const ang = (i/spec.arcs)*2*Math.PI - Math.PI/2;
+      const px = cx+r*Math.cos(ang), py = cy+r*Math.sin(ang);
+      inner += '<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.5" fill="var(--c)"/>';
+    }
+  } else {
+    inner += '<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r)+'" y2="'+cy+'" stroke="var(--c)" stroke-width="2"/>'
+      + svgTxt(cx+r/2, cy-8, spec.r, {size:13});
+  }
+  return svgOpen('0 0 220 150', 150) + inner + '</svg>';
+}
+function diagAngle(spec){
+  const ox=40, oy=120, len=150;
+  const rad = spec.deg*Math.PI/180;
+  const x2 = ox+len*Math.cos(-rad), y2 = oy+len*Math.sin(-rad);
+  const arcR = 34;
+  const largeArc = spec.deg>180?1:0;
+  const ax = ox+arcR, ay=oy;
+  const bx = ox+arcR*Math.cos(-rad), by = oy+arcR*Math.sin(-rad);
+  return svgOpen('0 0 220 140', 140)
+    + '<line x1="'+ox+'" y1="'+oy+'" x2="'+(ox+len)+'" y2="'+oy+'" stroke="var(--c)" stroke-width="2.5"/>'
+    + '<line x1="'+ox+'" y1="'+oy+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="var(--c)" stroke-width="2.5"/>'
+    + '<path d="M '+ax.toFixed(1)+' '+ay.toFixed(1)+' A '+arcR+' '+arcR+' 0 '+largeArc+' 0 '+bx.toFixed(1)+' '+by.toFixed(1)+'" fill="none" stroke="var(--c)" stroke-width="1.5"/>'
+    + '</svg>';
+}
+function diagPolygon(spec){
+  const cx=110, cy=75, r=55, n=spec.sides||4;
+  let pts=[];
+  for(let i=0;i<n;i++){ const ang=(i/n)*2*Math.PI - Math.PI/2; pts.push((cx+r*Math.cos(ang)).toFixed(1)+','+(cy+r*Math.sin(ang)).toFixed(1)); }
+  return svgOpen('0 0 220 150', 150)
+    + '<polygon points="'+pts.join(' ')+'" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2.5" stroke-linejoin="round"/>'
+    + '</svg>';
+}
+function diagFractionBar(spec){
+  const d=spec.d, W=220, H=44, x0=10, y0=20, cw=(W-2*x0)/d;
+  const colors = spec.colors || ['var(--c)'];
+  let rects='';
+  let filled=0;
+  (spec.shaded||[]).forEach((n,gi)=>{
+    for(let i=0;i<n;i++){
+      rects += '<rect x="'+(x0+(filled+i)*cw).toFixed(1)+'" y="'+y0+'" width="'+cw.toFixed(1)+'" height="'+H+'" fill="'+(colors[gi]||colors[0])+'" opacity="'+(gi===0?1:0.55)+'"/>';
+    }
+    filled+=n;
+  });
+  let cells='';
+  for(let i=0;i<=d;i++){ cells += '<line x1="'+(x0+i*cw).toFixed(1)+'" y1="'+y0+'" x2="'+(x0+i*cw).toFixed(1)+'" y2="'+(y0+H)+'" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>'; }
+  return svgOpen('0 0 '+W+' 80', 80)
+    + '<rect x="'+x0+'" y="'+y0+'" width="'+(W-2*x0)+'" height="'+H+'" fill="none" stroke="var(--c)" stroke-width="2"/>'
+    + rects + cells
+    + '</svg>';
+}
+function diagPercentBar(spec){
+  const W=220, H=34, x0=10, y0=14, pct=spec.pct;
+  return svgOpen('0 0 '+W+' 70', 70)
+    + '<rect x="'+x0+'" y="'+y0+'" width="'+(W-2*x0)+'" height="'+H+'" fill="none" stroke="var(--c)" stroke-width="2"/>'
+    + '<rect x="'+x0+'" y="'+y0+'" width="'+((W-2*x0)*pct/100).toFixed(1)+'" height="'+H+'" fill="var(--c-soft)"/>'
+    + svgTxt(x0+2, y0+H+18, '0%', {size:11, anchor:'start', color:'var(--ink-faint)'})
+    + svgTxt(x0+W-2*x0-2, y0+H+18, '100%', {size:11, anchor:'end', color:'var(--ink-faint)'})
+    + svgTxt(x0+(W-2*x0)*pct/100, y0+H/2+5, pct+'%', {size:13, color:'var(--c)'})
+    + '</svg>';
+}
+function diagNumberLineDots(spec){
+  const vals=spec.values, min=Math.min(...vals,spec.min!==undefined?spec.min:vals[0]), max=Math.max(...vals,spec.max!==undefined?spec.max:vals[vals.length-1]);
+  const W=240, x0=16, x1=224, y=70;
+  const range = (max-min)||1;
+  const xOf = v => x0 + ((v-min)/range)*(x1-x0);
+  let dots = vals.map(v=>'<circle cx="'+xOf(v).toFixed(1)+'" cy="'+y+'" r="5" fill="var(--c)"/>').join('');
+  return svgOpen('0 0 240 100', 100)
+    + '<line x1="'+x0+'" y1="'+y+'" x2="'+x1+'" y2="'+y+'" stroke="var(--ink-faint)" stroke-width="1.5"/>'
+    + dots
+    + svgTxt(x0, y+24, min, {size:11, anchor:'start', color:'var(--ink-faint)'})
+    + svgTxt(x1, y+24, max, {size:11, anchor:'end', color:'var(--ink-faint)'})
+    + '</svg>';
+}
+function diagSignedJump(spec){
+  const start=spec.start, delta=spec.delta;
+  const span = Math.max(Math.abs(start), Math.abs(start+delta), 5)*1.3;
+  const x0=16, x1=224, y=60, min=-span, max=span;
+  const xOf = v => x0 + ((v-min)/(max-min))*(x1-x0);
+  const sx = xOf(start), ex = xOf(start+delta);
+  return svgOpen('0 0 240 100', 100)
+    + '<line x1="'+x0+'" y1="'+y+'" x2="'+x1+'" y2="'+y+'" stroke="var(--ink-faint)" stroke-width="1.5"/>'
+    + '<line x1="'+x0+'" y1="'+y+'" x2="'+x0+'" y2="'+(y-4)+'" stroke="var(--ink-faint)"/>'
+    + '<circle cx="'+sx.toFixed(1)+'" cy="'+y+'" r="5" fill="var(--c)"/>'
+    + svgTxt(sx, y-14, start, {size:12})
+    + '<path d="M '+sx.toFixed(1)+' '+(y-24)+' Q '+((sx+ex)/2).toFixed(1)+' '+(y-46)+' '+ex.toFixed(1)+' '+(y-24)+'" fill="none" stroke="var(--info)" stroke-width="2" marker-end="url(#arrow)"/>'
+    + '<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--info)"/></marker></defs>'
+    + svgTxt(ex, y+20, '?', {size:14, color:'var(--info)'})
+    + '</svg>';
+}
+function diagCoordPoints(spec){
+  const pts=spec.points, W=220,H=140, pad=20;
+  const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  const minX=Math.min(...xs,0)-2, maxX=Math.max(...xs,0)+2, minY=Math.min(...ys,0)-2, maxY=Math.max(...ys,0)+2;
+  const xOf = x => pad + ((x-minX)/(maxX-minX))*(W-2*pad);
+  const yOf = y => H-pad - ((y-minY)/(maxY-minY))*(H-2*pad);
+  const zx = xOf(0), zy = yOf(0);
+  let inner = '<line x1="'+pad+'" y1="'+zy.toFixed(1)+'" x2="'+(W-pad)+'" y2="'+zy.toFixed(1)+'" stroke="var(--grid)" stroke-width="1.5"/>'
+    + '<line x1="'+zx.toFixed(1)+'" y1="'+pad+'" x2="'+zx.toFixed(1)+'" y2="'+(H-pad)+'" stroke="var(--grid)" stroke-width="1.5"/>';
+  if(spec.connect && pts.length>1){ inner += '<line x1="'+xOf(pts[0][0]).toFixed(1)+'" y1="'+yOf(pts[0][1]).toFixed(1)+'" x2="'+xOf(pts[1][0]).toFixed(1)+'" y2="'+yOf(pts[1][1]).toFixed(1)+'" stroke="var(--c)" stroke-width="2.5"/>'; }
+  pts.forEach(p=>{ inner += '<circle cx="'+xOf(p[0]).toFixed(1)+'" cy="'+yOf(p[1]).toFixed(1)+'" r="5" fill="var(--c)"/>'
+    + svgTxt(xOf(p[0]), yOf(p[1])-10, '('+p[0]+', '+p[1]+')', {size:11, mono:true}); });
+  return svgOpen('0 0 '+W+' '+H, H) + inner + '</svg>';
+}
+function diagPlaceValueChart(spec){
+  const digits=spec.digits, n=digits.length, W=220, cw=(W-20)/n, y0=30, h=50;
+  let inner='';
+  digits.forEach((d,i)=>{
+    const x=10+i*cw, isHi = i===spec.highlightPos;
+    inner += '<rect x="'+x.toFixed(1)+'" y="'+y0+'" width="'+(cw-4).toFixed(1)+'" height="'+h+'" fill="'+(isHi?'var(--c)':'var(--c-soft)')+'" stroke="var(--c)" stroke-width="2" rx="4"/>'
+      + svgTxt(x+cw/2-2, y0+h/2+7, d, {size:18, color:isHi?'var(--paper-raise)':'var(--c)'});
+  });
+  return svgOpen('0 0 '+W+' 100', 100) + inner + '</svg>';
+}
+function diagSquareArea(spec){
+  return svgOpen('0 0 200 150', 150)
+    + '<rect x="45" y="20" width="110" height="110" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2.5" rx="3"/>'
+    + svgTxt(100, 82, 'area = '+spec.area, {size:14})
+    + svgTxt(100, 145, 'side = ?', {size:13, color:'var(--ink-faint)', mono:false})
+    + '</svg>';
+}
+function diagIconRow(spec){
+  const n=Math.min(spec.n,12), W=220, gap=W/n;
+  let inner='';
+  for(let i=0;i<n;i++){ inner += '<circle cx="'+(gap*i+gap/2).toFixed(1)+'" cy="40" r="12" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/>'; }
+  return svgOpen('0 0 '+W+' 80', 80) + inner + '</svg>';
+}
+function diagBalanceScale(){
+  return svgOpen('0 0 200 130', 130)
+    + '<line x1="100" y1="18" x2="100" y2="100" stroke="var(--c)" stroke-width="4"/>'
+    + '<line x1="30" y1="45" x2="170" y2="45" stroke="var(--c)" stroke-width="3"/>'
+    + '<line x1="30" y1="45" x2="30" y2="65" stroke="var(--c)" stroke-width="2"/>'
+    + '<line x1="170" y1="45" x2="170" y2="65" stroke="var(--c)" stroke-width="2"/>'
+    + '<path d="M 8 65 Q 30 90 52 65 Z" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/>'
+    + '<path d="M 148 65 Q 170 90 192 65 Z" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/>'
+    + '<polygon points="85,100 115,100 122,115 78,115" fill="var(--c)"/>'
+    + '</svg>';
+}
+function renderDiagram(spec){
+  if(!spec) return '';
+  switch(spec.type){
+    case 'rectDims': return diagRectDims(spec);
+    case 'rightTriangle': return diagRightTriangle(spec);
+    case 'circle': return diagCircle(spec);
+    case 'angle': return diagAngle(spec);
+    case 'polygon': return diagPolygon(spec);
+    case 'fractionBar': return diagFractionBar(spec);
+    case 'percentBar': return diagPercentBar(spec);
+    case 'numberLineDots': return diagNumberLineDots(spec);
+    case 'signedJump': return diagSignedJump(spec);
+    case 'coordPoints': return diagCoordPoints(spec);
+    case 'placeValueChart': return diagPlaceValueChart(spec);
+    case 'squareArea': return diagSquareArea(spec);
+    case 'iconRow': return diagIconRow(spec);
+    case 'balanceScale': return diagBalanceScale();
+    default: return '';
+  }
+}
+
+/* ============== app state ============== */
+const state = { screen:'login', profileId:null, session:null };
+
+function currentProfiles(){ return loadProfiles(); }
+function currentProfile(){ return currentProfiles().find(p=>p.id===state.profileId); }
+function currentData(){ return loadData(state.profileId); }
+
+/* ============== AI hint (Claude) — falls back to the static concept text
+   when the sample capability isn't available (e.g. self-hosted outside Claude) */
+let cachedSample; // undefined = not checked yet, null = unavailable, function = ready
+async function getSample(){
+  if(cachedSample !== undefined) return cachedSample;
+  if(typeof window==='undefined' || !window.claude || !window.claude.use){ cachedSample = null; return null; }
+  try{ cachedSample = await window.claude.use('sample'); }catch(e){ cachedSample = null; }
+  return cachedSample;
+}
+function buildHintPrompt(problem, grade){
+  const plainPrompt = String(problem.prompt).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  return 'You are a warm, encouraging math tutor helping a grade '+(grade||4)+' student who is stuck. '+
+    'Topic: '+TOPIC_LABEL[problem.subtopic]+'. Their practice problem is:\n"'+plainPrompt+'"\n\n'+
+    'Give ONE short hint (2-3 sentences, simple age-appropriate language) that explains the METHOD or the first step to take. '+
+    'Do NOT reveal the final answer and do NOT solve the whole problem for them — just point them toward the approach.';
+}
+
+/* Chat thread for follow-up questions under the hint. problem.chat holds the
+   full turn history (index 0 is the hidden setup prompt, never shown), and
+   is resent in full on every call since the sample capability has no memory. */
+function chatBubbleHtml(turn){
+  const shown = turn.display!==undefined ? turn.display : turn.content;
+  if(turn.role==='user') return '<div class="chat-bubble chat-user">'+esc(shown)+'</div>';
+  return '<div class="chat-bubble chat-claude"><span class="hint-source">🤖 Claude</span>'+esc(shown)+'</div>';
+}
+function renderHelpPanel(problem, aiAvailable){
+  const panel = document.getElementById('help-panel');
+  if(!panel) return;
+  let html = (problem.chat||[]).slice(1).map(chatBubbleHtml).join('');
+  if(aiAvailable){
+    html += '<div class="chat-ask-row"><input type="text" id="chat-input" placeholder="Ask a follow-up question..." autocomplete="off"><button class="btn btn-ghost" id="chat-send-btn">Ask</button></div>';
+  }
+  panel.innerHTML = html;
+  const inp = document.getElementById('chat-input'), send = document.getElementById('chat-send-btn');
+  if(inp && send){
+    const submit = ()=> askFollowup(problem);
+    send.addEventListener('click', submit);
+    inp.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submit(); });
+  }
+}
+async function askFollowup(problem){
+  const inp = document.getElementById('chat-input');
+  if(!inp) return;
+  const question = inp.value.trim();
+  if(!question) return;
+  problem.chat.push({ role:'user', content: question+'\n\n(Reminder: still do not reveal the final answer — just help me understand the approach.)', display: question });
+  renderHelpPanel(problem, true);
+  const panel = document.getElementById('help-panel');
+  panel.insertAdjacentHTML('beforeend', '<div class="chat-bubble chat-claude" id="chat-pending"><span class="hint-source">🤖 Claude</span>Thinking…</div>');
+  const askRow = panel.querySelector('.chat-ask-row'); if(askRow) askRow.remove();
+  const sampleFn = await getSample();
+  if(!sampleFn){
+    const el=document.getElementById('chat-pending'); if(el) el.remove();
+    renderHelpPanel(problem, false);
+    return;
+  }
+  try{
+    const result = await sampleFn(problem.chat, {
+      modelTier:'quick',
+      onText: ({text})=>{ const el=document.getElementById('chat-pending'); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); }
+    });
+    problem.chat.push({ role:'assistant', content: result.text || 'Sorry, I am not sure about that one — try asking your teacher.' });
+  }catch(e){
+    problem.chat.push({ role:'assistant', content:'Sorry, I could not answer that just now. Try asking again.' });
+  }
+  renderHelpPanel(problem, true);
+}
+
+/* ============== render: login ============== */
+function renderLogin(){
+  const profiles = currentProfiles();
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <h1>Yugi</h1>
+        <p class="tag">Grade-level mastery, then Olympiad-style problem solving — three <span class="num">20</span>-minute sessions a day, following a <span class="num">16</span>-week syllabus matched to your grade, for ages <span class="num">8</span>–<span class="num">16</span>.</p>
+      </div>
+      <div class="tabs" id="tabs">
+        ${profiles.map((p)=>{
+          const data=loadData(p.id); const band=bandForGrade(p.grade);
+          const streak=p.grade? computeStreak(data,band) : 0;
+          return `<div class="tab" data-id="${esc(p.id)}">
+            <div class="badge avatar-badge">${svgAvatarChibi(avatarFor(p))}</div>
+            <div class="name">${esc(p.name)}</div>
+            <div class="streak">${p.grade? 'Grade '+p.grade+(streak>0?' · 🔥 '+streak+'-day streak':'') : 'New learner'}</div>
+          </div>`;
+        }).join('')}
+        <div class="tab tab-new" id="tab-new">
+          <div style="font-size:26px;">＋</div>
+          <div>Add a learner</div>
+          <div class="new-form" id="new-form" style="display:none;">
+            <input id="new-name" type="text" placeholder="First name" maxlength="20">
+            <button class="btn btn-primary" id="create-btn" style="padding:10px 16px;">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  app.querySelectorAll('.tab[data-id]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const id = el.getAttribute('data-id');
+      state.profileId = id;
+      const p = currentProfiles().find(x=>x.id===id);
+      state.screen = (p && p.grade) ? 'dashboard' : 'gradeSelect';
+      render();
+    });
+  });
+  const tabNew = document.getElementById('tab-new');
+  tabNew.addEventListener('click', (e)=>{
+    if(e.target.id==='new-name' || e.target.id==='create-btn') return;
+    document.getElementById('new-form').style.display='flex';
+    document.getElementById('new-name').focus();
+  });
+  document.getElementById('new-name').addEventListener('keydown', (e)=>{ if(e.key==='Enter') doCreate(); });
+  document.getElementById('create-btn').addEventListener('click', doCreate);
+  function doCreate(){
+    const input = document.getElementById('new-name');
+    const name = input.value.trim();
+    if(!name) { input.focus(); return; }
+    const id = 'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    const list = currentProfiles(); list.push({id, name, createdAt:Date.now()}); saveProfiles(list);
+    state.profileId = id; state.screen='avatarSelect'; state.avatarReturnTo='gradeSelect'; render();
+  }
+}
+
+/* ============== render: avatar select ============== */
+function renderAvatarSelect(){
+  const profile = currentProfile();
+  if(!profile){ state.screen='login'; render(); return; }
+  const current = avatarFor(profile);
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <h1>Pick your look, ${esc(profile.name)}!</h1>
+        <p class="tag">Choose an avatar — you can change it any time from the dashboard.</p>
+      </div>
+      <div class="avatar-grid">
+        ${AVATAR_PRESETS.map(a=>`<button class="avatar-option ${a.id===current.id?'selected':''}" data-avatar="${a.id}">${svgAvatarChibi(a)}</button>`).join('')}
+      </div>
+    </div>
+  `;
+  app.querySelectorAll('[data-avatar]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const avatarId = btn.getAttribute('data-avatar');
+      const list = currentProfiles();
+      const idx = list.findIndex(p=>p.id===profile.id);
+      if(idx>=0){ list[idx].avatarId = avatarId; saveProfiles(list); }
+      state.screen = state.avatarReturnTo || 'dashboard';
+      render();
+    });
+  });
+}
+
+/* ============== render: grade select ============== */
+function renderGradeSelect(){
+  const profile = currentProfile();
+  if(!profile){ state.screen='login'; render(); return; }
+  const app = document.getElementById('app');
+  const grades = [3,4,5,6,7,8,9,10];
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <h1>What grade is ${esc(profile.name)} in?</h1>
+        <p class="tag">This picks the right Olympiad package — the topics and difficulty are matched to grade level, from 4th-grade fundamentals up to Algebra 2 &amp; AMC-style problem solving.</p>
+      </div>
+      <div class="grade-grid">
+        ${grades.map(g=>`<button class="grade-btn" data-grade="${g}">${g}${g===10?'th+':g===3?'rd':g===1?'st':g===2?'nd':'th'}<span class="grade-band-label">${bandLabelFor(bandForGrade(g))}</span></button>`).join('')}
+      </div>
+    </div>
+  `;
+  app.querySelectorAll('[data-grade]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const grade = parseInt(btn.getAttribute('data-grade'));
+      const list = currentProfiles();
+      const idx = list.findIndex(p=>p.id===profile.id);
+      if(idx>=0){ list[idx].grade = grade; saveProfiles(list); }
+      state.screen='dashboard'; render();
+    });
+  });
+}
+
+/* ============== render: dashboard ============== */
+function accuracyFor(data, subtopics){
+  let correct=0, attempted=0;
+  subtopics.forEach(st=>{ const s=data.topicStats[st]; if(s){ correct+=s.correct; attempted+=s.attempted; } });
+  return attempted>0 ? Math.round(100*correct/attempted) : null;
+}
+function dayTrail(data, band){
+  const strandKeys = Object.keys(strandsFor(band));
+  const frontier = data.currentDay||1;
+  const start = Math.max(1, frontier-6);
+  const trail=[];
+  for(let d=start; d<=frontier; d++){
+    const dayObj = data.days[d];
+    const n = dayObj ? strandKeys.filter(k=>dayObj[k]&&dayObj[k].done).length : 0;
+    trail.push({ day:d, n, total:strandKeys.length, isCurrent:d===frontier });
+  }
+  return trail;
+}
+function renderDashboard(){
+  const profile = currentProfile();
+  if(!profile){ state.screen='login'; render(); return; }
+  if(!profile.grade){ state.screen='gradeSelect'; render(); return; }
+  const band = bandForGrade(profile.grade);
+  const strands = strandsFor(band);
+  const data = currentData();
+  ensureBand(data, band);
+  const dayNum = data.currentDay||1;
+  ensureDay(data, band, dayNum);
+  saveData(profile.id, data);
+  const dayObj = data.days[dayNum];
+  const streak = computeStreak(data, band);
+  const strandKeys = Object.keys(strands);
+  const doneCount = strandKeys.filter(k=>dayObj[k]&&dayObj[k].done).length;
+  const trail = dayTrail(data, band);
+  const phaseIdx = currentPhaseIndex(data);
+  const week = currentWeekNumber(data);
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="dash-header">
+      <div class="dash-header-left">
+        <div class="dash-avatar">${svgAvatarChibi(avatarFor(profile))}</div>
+        <div>
+          <h2>Hi, ${esc(profile.name)} 👋</h2>
+          <div class="phase-line">Grade ${profile.grade} · ${bandLabelFor(band)} · Week ${week} · ${PHASES[phaseIdx].name}</div>
+          <div style="margin-top:6px;">
+            <button class="link-btn" id="switch-btn">Not you? Switch learner</button>
+            <span style="color:var(--grid);">·</span>
+            <button class="link-btn" id="progress-btn">🏆 Roadmap &amp; progress</button>
+            <span style="color:var(--grid);">·</span>
+            <button class="link-btn" id="change-grade-btn">Change grade</button>
+            <span style="color:var(--grid);">·</span>
+            <button class="link-btn" id="change-avatar-btn">Change avatar</button>
+            <span style="color:var(--grid);">·</span>
+            <button class="link-btn" id="edit-name-btn">Edit name</button>
+          </div>
+        </div>
+      </div>
+      <div class="streak-pill">🔥 ${streak} day${streak===1?'':'s'}</div>
+    </div>
+
+    <div class="today-bar">
+      <div class="row1"><strong>Day ${dayNum} sessions: ${doneCount} of ${strandKeys.length}</strong>${doneCount===strandKeys.length?'<span style="color:var(--good);font-weight:700;">Day complete! Day '+(dayNum+1)+' is ready 🎉</span>':''}</div>
+      <div class="dots">
+        ${strandKeys.map(k=>`<div class="dot ${dayObj[k].done?'on':''}"></div>`).join('')}
+      </div>
+    </div>
+
+    <div class="strand-grid">
+      ${Object.values(strands).map(s=>{
+        const st = dayObj[s.key];
+        const acc = accuracyFor(data, s.subtopics);
+        return `<div class="strand-card" style="--c:var(--${s.color});--c-soft:var(--${s.color}-soft);">
+          <div class="icon">${s.icon}</div>
+          <h3>${s.name}</h3>
+          <div class="sub">${s.tagline}</div>
+          <div class="status-pill ${st.done?'done':'todo'}">${st.done? ('✓ Complete — '+st.score+'/'+st.total+(st.assisted?' · '+st.assisted+' assisted':'')) : 'Not started'}</div>
+          ${acc!==null?`<div class="acc">Lifetime accuracy: ${acc}%</div>`:''}
+          <button class="btn btn-strand" style="background:var(--${s.color});" data-strand="${s.key}">${st.done?'Practice again':'Start session'}</button>
+          ${st.done && st.review ? `<button class="link-btn" data-review="${s.key}">📋 Review Day ${dayNum} answers</button>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="week-strip">
+      <h4>YOUR DAYS</h4>
+      <div class="week-cols">
+        ${trail.map(t=>`<div class="week-col ${t.isCurrent?'today':''}">
+            <div class="bar"><div class="fill" style="height:${(t.n/t.total*100)}%"></div></div>
+            <div class="lbl">${t.day}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('switch-btn').addEventListener('click', ()=>{ state.screen='login'; render(); });
+  document.getElementById('progress-btn').addEventListener('click', ()=>{ state.screen='progress'; render(); });
+  document.getElementById('change-grade-btn').addEventListener('click', ()=>{ state.screen='gradeSelect'; render(); });
+  document.getElementById('change-avatar-btn').addEventListener('click', ()=>{ state.screen='avatarSelect'; state.avatarReturnTo='dashboard'; render(); });
+  document.getElementById('edit-name-btn').addEventListener('click', ()=>{
+    showRenameModal(profile.name, (newName)=>{
+      const list = currentProfiles();
+      const idx = list.findIndex(p=>p.id===profile.id);
+      if(idx>=0){ list[idx].name = newName; saveProfiles(list); }
+      render();
+    });
+  });
+  app.querySelectorAll('[data-strand]').forEach(btn=>{
+    btn.addEventListener('click', ()=> startSession(btn.getAttribute('data-strand')));
+  });
+  app.querySelectorAll('[data-review]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.getAttribute('data-review');
+      const s = strands[key];
+      openReview(dayObj[key].review||[], { strandName:s.name, color:s.color, dayNum, returnTo:'dashboard' });
+    });
+  });
+}
+
+/* ============== session ============== */
+function pickSubtopicSequence(strand, data, dayNum){
+  const unlocked = currentPhaseIndex(data)>=1 && strand.advanced ? strand.subtopics.concat(strand.advanced) : strand.subtopics;
+  const subs = unlocked;
+  const shift = dayNum % subs.length;
+  const rotated = subs.slice(shift).concat(subs.slice(0,shift));
+  const focusCount = Math.min(3, subs.length);
+  const focus = rotated.slice(0,focusCount);
+  const weights = focus.map(st=>{
+    const s = data.topicStats[st];
+    const acc = s && s.attempted>0 ? s.correct/s.attempted : 0.75;
+    return 1 + (1-acc)*2;
+  });
+  const seq=[];
+  for(let i=0;i<PROBLEMS_PER_SESSION;i++){
+    let r = Math.random()*weights.reduce((a,b)=>a+b,0);
+    let idx=0; for(;idx<weights.length;idx++){ r-=weights[idx]; if(r<=0) break; }
+    seq.push(focus[Math.min(idx,focus.length-1)]);
+  }
+  return seq;
+}
+function startSession(strandKey){
+  const profile = currentProfile();
+  const band = bandForGrade(profile.grade);
+  const strand = strandsFor(band)[strandKey];
+  const data = currentData();
+  ensureBand(data, band);
+  const dayNum = data.currentDay||1;
+  ensureDay(data, band, dayNum);
+  const wasDone = data.days[dayNum][strandKey].done;
+  const seq = pickSubtopicSequence(strand, data, dayNum);
+  const problems = seq.map(st=>{ const p = GENERATORS[st](); p.subtopic=st; return p; });
+  state.session = { strandKey, band, dayNum, problems, idx:0, correct:0, assisted:0, answered:0, timeLeft:SESSION_LENGTH_SEC, timerId:null, checked:false, wasDone, reviewLog:[] };
+  state.screen='session';
+  render();
+  const timerEl = ()=>document.getElementById('timer-val');
+  state.session.timerId = setInterval(()=>{
+    state.session.timeLeft--;
+    const el = timerEl();
+    if(el){ el.textContent = fmtTime(state.session.timeLeft); if(state.session.timeLeft<=60) el.parentElement.classList.add('low'); }
+    if(state.session.timeLeft<=0){ clearInterval(state.session.timerId); finishSession(); }
+  },1000);
+}
+function fmtTime(sec){ sec=Math.max(0,sec); return Math.floor(sec/60)+':'+pad2(sec%60); }
+
+function renderSession(){
+  const sess = state.session;
+  const strand = strandsFor(sess.band)[sess.strandKey];
+  const problem = sess.problems[sess.idx];
+  const app = document.getElementById('app');
+  const pct = Math.round((sess.idx)/sess.problems.length*100);
+
+  let answerHtml='';
+  if(problem.type==='choice'){
+    answerHtml = `<div class="choice-row" id="choice-row">
+      ${problem.choices.map(c=>`<button class="choice-btn" data-choice="${esc(c)}" style="--c:var(--${strand.color})">${esc(c)}</button>`).join('')}
+    </div>`;
+  } else {
+    answerHtml = `<div class="answer-row">
+      <input type="text" class="answer-input" id="answer-input" placeholder="${esc(problem.placeholder||'Your answer')}" autocomplete="off">
+      <button class="btn btn-strand" style="background:var(--${strand.color})" id="check-btn">Check</button>
+    </div>`;
+  }
+
+  app.innerHTML = `
+    <div class="session-top" style="background:var(--${strand.color}-soft);">
+      <button class="link-btn" id="exit-btn" style="color:var(--${strand.color})">← Exit session</button>
+      <div style="font-family:'Fredoka';font-weight:600;color:var(--${strand.color})">${strand.name} · ${sess.idx+1} / ${sess.problems.length}</div>
+      <div class="timer" id="timer-wrap" style="color:var(--${strand.color})">⏱ <span id="timer-val" class="num">${fmtTime(sess.timeLeft)}</span></div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="--c:var(--${strand.color});width:${pct}%"></div></div>
+    <div class="problem-card" style="--c:var(--${strand.color});--c-soft:var(--${strand.color}-soft)">
+      <div class="problem-tags">
+        <div class="eyebrow">${TOPIC_LABEL[problem.subtopic]}</div>
+        <div class="exam-tag">Style: ${examStyleFor(problem.subtopic, sess.band)}</div>
+      </div>
+      ${problem.diagram ? `<div class="problem-diagram">${renderDiagram(problem.diagram)}</div>` : ''}
+      <div class="${problem.isEquation?'problem-eq':'problem-text'}">${problem.prompt}</div>
+      <div class="help-row">
+        <button class="btn btn-ghost help-btn" id="help-btn" ${problem.assisted?'disabled':''}>${problem.assisted?'✓ Hint shown':'💡 Need a hint?'}</button>
+      </div>
+      <div id="help-panel" class="help-panel" hidden></div>
+      ${answerHtml}
+      <div id="feedback-slot"></div>
+    </div>
+    <div class="session-actions" id="actions-slot"></div>
+  `;
+  if(sess.timeLeft<=60) document.getElementById('timer-wrap').classList.add('low');
+
+  document.getElementById('help-btn').addEventListener('click', async ()=>{
+    problem.assisted = true;
+    const btn = document.getElementById('help-btn');
+    const panel = document.getElementById('help-panel');
+    btn.disabled = true;
+    panel.hidden = false;
+    const sampleFn = await getSample();
+    if(!sampleFn){
+      panel.innerHTML = '<div class="chat-bubble chat-claude">'+esc(CONCEPT_HELP[problem.subtopic]||'')+'</div>';
+      btn.textContent = '✓ Hint shown';
+      return;
+    }
+    btn.textContent = '🤖 Asking Claude...';
+    const profile = currentProfile();
+    problem.chat = [{ role:'user', content: buildHintPrompt(problem, profile&&profile.grade) }];
+    panel.innerHTML = '<div class="chat-bubble chat-claude" id="chat-pending"><span class="hint-source">🤖 Claude</span>Thinking…</div>';
+    try{
+      const result = await sampleFn(problem.chat, {
+        modelTier:'quick',
+        onText: ({text})=>{ const el=document.getElementById('chat-pending'); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); }
+      });
+      problem.chat.push({ role:'assistant', content: result.text || CONCEPT_HELP[problem.subtopic] || '' });
+    }catch(e){
+      problem.chat.push({ role:'assistant', content: CONCEPT_HELP[problem.subtopic]||'' });
+    }
+    btn.textContent = '✓ Hint shown';
+    renderHelpPanel(problem, true);
+  });
+
+  document.getElementById('exit-btn').addEventListener('click', ()=>{
+    showConfirmModal('Exit this session?', 'Your progress on this session will not be saved.', 'Exit session', ()=>{
+      clearInterval(sess.timerId); state.session=null; state.screen='dashboard'; render();
+    });
+  });
+
+  if(problem.type==='choice'){
+    app.querySelectorAll('[data-choice]').forEach(btn=>{
+      btn.addEventListener('click', ()=> submitAnswer(btn.getAttribute('data-choice')));
+    });
+  } else {
+    const input = document.getElementById('answer-input');
+    input.focus();
+    input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') document.getElementById('check-btn').click(); });
+    document.getElementById('check-btn').addEventListener('click', ()=> submitAnswer(input.value));
+  }
+}
+
+function submitAnswer(rawInput){
+  const sess = state.session;
+  const problem = sess.problems[sess.idx];
+  const strand = strandsFor(sess.band)[sess.strandKey];
+  let isCorrect;
+  if(problem.check){ isCorrect = problem.check(rawInput); }
+  else if(problem.type==='choice'){ isCorrect = rawInput===problem.answer; }
+  else { isCorrect = checkNumber(rawInput, problem.answer); }
+
+  const wasAssisted = !!problem.assisted;
+  sess.answered++;
+  if(isCorrect && !wasAssisted) sess.correct++;
+  if(wasAssisted) sess.assisted = (sess.assisted||0)+1;
+  const data = currentData();
+  const s = data.topicStats[problem.subtopic] || {correct:0, attempted:0, assisted:0, log:[]};
+  s.attempted++;
+  if(wasAssisted) s.assisted = (s.assisted||0)+1;
+  if(isCorrect && !wasAssisted) s.correct++;
+  s.log = s.log||[]; s.log.push((isCorrect && !wasAssisted)?1:0); if(s.log.length>30) s.log.shift();
+  data.topicStats[problem.subtopic] = s;
+  saveData(state.profileId, data);
+
+  sess.reviewLog.push({
+    subtopic: problem.subtopic, prompt: problem.prompt, isEquation: !!problem.isEquation,
+    userAnswer: rawInput, correctAnswer: problem.answer, isCorrect, assisted: wasAssisted,
+    explanation: problem.explanation
+  });
+
+  if(problem.type==='choice'){
+    document.querySelectorAll('[data-choice]').forEach(btn=>{
+      btn.disabled=true;
+      const val = btn.getAttribute('data-choice');
+      if(val===problem.answer) btn.classList.add('correct');
+      else if(val===rawInput) btn.classList.add('wrong');
+      else btn.classList.add('dim');
+    });
+  } else {
+    document.getElementById('answer-input').disabled=true;
+    document.getElementById('check-btn').disabled=true;
+  }
+  document.getElementById('help-btn').disabled = true;
+
+  const isLast = sess.idx>=sess.problems.length-1;
+  document.getElementById('feedback-slot').innerHTML = `
+    <div class="feedback ${isCorrect?(wasAssisted?'assisted':'correct'):'wrong'}">
+      ${isCorrect?'✅ Correct!':'❌ Not quite — the answer is '+esc(String(problem.answer))+'.'}
+      ${wasAssisted?'<span class="assisted-note">📝 Recorded as assisted, since the concept was explained first.</span>':''}
+      <span class="explain">${problem.explanation}</span>
+    </div>`;
+  document.getElementById('actions-slot').innerHTML = `<button class="btn btn-primary" id="next-btn">${isLast?'Finish session':'Next problem →'}</button>`;
+  document.getElementById('next-btn').addEventListener('click', ()=>{
+    if(isLast){ clearInterval(sess.timerId); finishSession(); }
+    else { sess.idx++; renderSession(); }
+  });
+}
+
+function finishSession(){
+  const sess = state.session;
+  if(!sess) return;
+  const data = currentData();
+  const dayNum = sess.dayNum;
+  ensureDay(data, sess.band, dayNum);
+  const strandKey = sess.strandKey;
+  const alreadyDone = data.days[dayNum][strandKey].done;
+  if(!alreadyDone){
+    data.days[dayNum][strandKey] = { done:true, score:sess.correct, total:sess.answered, assisted:sess.assisted||0, review:sess.reviewLog };
+  } else {
+    // Bonus "practice again" rounds keep the original score on record, but still
+    // save their own review so the dashboard link works even for older completions
+    // recorded before review-logging existed.
+    data.days[dayNum][strandKey].review = sess.reviewLog;
+  }
+  const nowFullyDone = allDone(data.days[dayNum], sess.band);
+  if(nowFullyDone && dayNum === (data.currentDay||1)){
+    data.currentDay = dayNum+1;
+  }
+  pruneOldReviews(data, 30);
+  saveData(state.profileId, data);
+  state.screen='summary';
+  state.session.dayNumFinished = dayNum;
+  state.session.becameFullyDone = nowFullyDone;
+  state.session.newStreak = computeStreak(data, sess.band);
+  render();
+}
+
+function renderSummary(){
+  const sess = state.session;
+  const strand = strandsFor(sess.band)[sess.strandKey];
+  const pct = sess.answered>0 ? Math.round(100*sess.correct/sess.answered) : 0;
+  let msg = 'Nice effort — practice makes progress!';
+  if(pct>=90) msg='Outstanding work! 🌟'; else if(pct>=70) msg='Great job! Keep it up.';
+  const app = document.getElementById('app');
+  const missed = sess.answered - sess.correct - (sess.assisted||0);
+  app.innerHTML = `
+    <div class="summary-card">
+      <div class="eyebrow" style="color:var(--${strand.color})">${strand.name} — Session Complete</div>
+      <div class="score" style="color:var(--${strand.color})">${sess.correct}/${sess.answered}</div>
+      <h2>${msg}</h2>
+      <div class="score-breakdown">
+        <span class="sb-item sb-correct">${sess.correct} correct</span>
+        ${sess.assisted? `<span class="sb-item sb-assisted">${sess.assisted} assisted</span>` : ''}
+        ${missed>0? `<span class="sb-item sb-missed">${missed} missed</span>` : ''}
+      </div>
+      <p>You worked for ${fmtTime(SESSION_LENGTH_SEC-sess.timeLeft)} on ${sess.answered} problem${sess.answered===1?'':'s'}.${sess.assisted?' Assisted answers don’t count toward mastery, so keep an eye on those topics.':''}</p>
+      ${sess.becameFullyDone ? `<div class="day-banner">🎉 Day ${sess.dayNumFinished} complete — Day ${sess.dayNumFinished+1} is ready! Streak: ${sess.newStreak} day${sess.newStreak===1?'':'s'}</div>` : ''}
+      <div class="summary-actions">
+        <button class="btn btn-ghost" id="review-btn">📋 Review answers</button>
+        <button class="btn btn-primary" id="back-btn">Back to dashboard</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('back-btn').addEventListener('click', ()=>{ state.session=null; state.screen='dashboard'; render(); });
+  document.getElementById('review-btn').addEventListener('click', ()=>{
+    openReview(sess.reviewLog, { strandName:strand.name, color:strand.color, dayNum:sess.dayNumFinished, returnTo:'summary' });
+  });
+}
+
+/* ============== render: roadmap & progress ============== */
+function renderProgress(){
+  const profile = currentProfile();
+  if(!profile){ state.screen='login'; render(); return; }
+  if(!profile.grade){ state.screen='gradeSelect'; render(); return; }
+  const band = bandForGrade(profile.grade);
+  const strands = strandsFor(band);
+  const data = currentData();
+  ensureBand(data, band);
+  saveData(profile.id, data);
+  const persona = personaFor(data, band);
+  const phaseIdx = currentPhaseIndex(data);
+  const week = currentWeekNumber(data);
+  const topDay = data.currentDay||1;
+  const startDay = Math.max(1, topDay-59);
+  const pastDayNums = [];
+  for(let d=topDay; d>=startDay; d--){ if(data.days[d]) pastDayNums.push(d); }
+  const app = document.getElementById('app');
+
+  app.innerHTML = `
+    <div class="dash-header">
+      <div>
+        <h2>${esc(profile.name)}'s Roadmap</h2>
+        <div class="phase-line">Grade ${profile.grade} · ${bandLabelFor(band)}</div>
+        <button class="link-btn" id="back-btn">← Back to dashboard</button>
+      </div>
+    </div>
+
+    <div class="persona-card">
+      <div class="persona-badge">🏆</div>
+      <div>
+        <div class="persona-title">${persona.title}</div>
+        <div class="persona-stats">${persona.mastered} of ${persona.totalTopics} topics mastered${persona.overallAcc!==null?' · '+persona.overallAcc+'% overall accuracy':' · just getting started'}</div>
+      </div>
+    </div>
+
+    <div class="roadmap">
+      <h4>OLYMPIAD SYLLABUS</h4>
+      <div class="roadmap-track">
+        ${PHASES.map((p,i)=>`<div class="roadmap-step ${i===phaseIdx?'current':''} ${i<phaseIdx?'past':''}">
+          <div class="roadmap-dot"></div>
+          <div class="roadmap-name">${p.name}</div>
+          <div class="roadmap-weeks">Wk ${p.weeks[0]}${p.weeks[1]<99?'–'+p.weeks[1]:'+'}</div>
+        </div>`).join('')}
+      </div>
+      <p class="roadmap-current">Week ${week} · <strong>${PHASES[phaseIdx].name}</strong> — ${PHASES[phaseIdx].tagline}</p>
+      <p class="roadmap-disclaimer">Each question is tagged with a "Style" — the competition whose topics and difficulty it's modeled after (e.g. AMC 8, MOEMS). These are original practice questions, not reproductions of real past exam questions.</p>
+    </div>
+
+    <div class="sources-card">
+      <h4>WHERE TO FIND REAL PAST EXAMS FOR GRADE ${profile.grade}</h4>
+      <div class="sources-list">
+        ${(BAND_OFFICIAL_SOURCES[band]||[]).map(src=>`<div class="source-row">
+          <div class="source-name">${esc(src.name)}</div>
+          <div class="source-note">${esc(src.note)}</div>
+        </div>`).join('')}
+      </div>
+      <p class="sources-hint">Search each organization's own site for "past contests" or "practice problems" — official retired questions are the real thing to time yourself against.</p>
+    </div>
+
+    <div class="strand-grid">
+      ${Object.values(strands).map(s=>{
+        const rating = strandRating(data, s);
+        const series = strandSessionSeries(data, s.key);
+        const trend = trendLabel(series);
+        return `<div class="trend-card" style="--c:var(--${s.color})">
+          <div class="trend-head">
+            <h3>${s.name}</h3>
+            <span class="tier-pill">${rating.label}${rating.acc!==null?' · '+rating.acc+'%':''}</span>
+          </div>
+          ${sparklineSvg(series, 'var(--'+s.color+')')}
+          <div class="trend-note tone-${trend.tone}">${trend.text}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="week-strip">
+      <h4>TOPIC MASTERY</h4>
+      ${Object.values(strands).map(s=>{
+        const subs = s.subtopics.concat(s.advanced||[]);
+        return `<div class="mastery-group">
+          <div class="mastery-strand-label" style="color:var(--${s.color})">${s.name}</div>
+          ${subs.map(st=>{
+            const stat = data.topicStats[st];
+            const tier = masteryTier(stat);
+            const trend = subtopicTrend(stat);
+            const acc = stat && stat.attempted>0 ? Math.round(100*stat.correct/stat.attempted) : 0;
+            const locked = (s.advanced||[]).includes(st) && phaseIdx<1;
+            return `<div class="subtopic-row">
+              <div class="subtopic-name">${TOPIC_LABEL[st]}${locked?' <span class="locked-tag">unlocks Wk 5</span>':''}</div>
+              <div class="bar-track"><div class="bar-fill" style="width:${stat?acc:0}%;background:var(--${s.color})"></div></div>
+              <div class="subtopic-pct num">${stat&&stat.attempted>0?acc+'%':'—'}</div>
+              <div class="trend-arrow ${trend||'flat'}">${trend==='up'?'▲':trend==='down'?'▼':'–'}</div>
+              <div class="tier-pill small">${tier.label}</div>
+            </div>`;
+          }).join('')}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="past-days-card">
+      <h4>PAST DAYS</h4>
+      ${pastDayNums.length===0 ? '<p style="color:var(--ink-faint);font-size:13px;">No days finished yet — complete Day 1 to see it here.</p>' : pastDayNums.map(d=>`
+        <div class="past-day-row">
+          <div class="past-day-label">Day ${d}</div>
+          <div class="past-day-strands">
+            ${Object.values(strands).map(s=>{
+              const rec = data.days[d] && data.days[d][s.key];
+              if(!rec || !rec.done) return `<span class="past-strand-chip todo" style="--c:var(--${s.color})">${s.name.split(' ')[0]}: not done</span>`;
+              return `<span class="past-strand-chip" style="--c:var(--${s.color})">${s.name.split(' ')[0]}: ${rec.score}/${rec.total}${rec.assisted?' · '+rec.assisted+' asst.':''}${rec.review?` <button class="mini-review-btn" data-day="${d}" data-strand="${s.key}" title="Review ${esc(s.name)}">📋</button>`:''}</span>`;
+            }).join('')}
+          </div>
+        </div>`).join('')}
+      ${pastDayNums.length>0 ? '<p class="sources-hint">Only the most recent 30 days keep the full question-by-question review — older days still show scores.</p>' : ''}
+    </div>
+  `;
+  document.getElementById('back-btn').addEventListener('click', ()=>{ state.screen='dashboard'; render(); });
+  app.querySelectorAll('.mini-review-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const d = parseInt(btn.getAttribute('data-day'));
+      const key = btn.getAttribute('data-strand');
+      const s = strands[key];
+      openReview(data.days[d][key].review||[], { strandName:s.name, color:s.color, dayNum:d, returnTo:'progress' });
+    });
+  });
+}
+
+/* ============== custom confirm modal (window.confirm is blocked in sandboxed iframes) ============== */
+function showConfirmModal(title, message, confirmLabel, onConfirm){
+  const existing = document.getElementById('modal-overlay');
+  if(existing) existing.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'modal-overlay';
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>${esc(title)}</h3>
+      <p>${esc(message)}</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn btn-primary" id="modal-confirm">${esc(confirmLabel)}</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  const close = ()=> overlay.remove();
+  overlay.querySelector('#modal-cancel').addEventListener('click', close);
+  overlay.querySelector('#modal-confirm').addEventListener('click', ()=>{ close(); onConfirm(); });
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+}
+
+function showRenameModal(currentName, onSave){
+  const existing = document.getElementById('modal-overlay');
+  if(existing) existing.remove();
+  const overlay = document.createElement('div');
+  overlay.id = 'modal-overlay';
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <h3>Update name</h3>
+      <input type="text" id="rename-input" class="modal-input" value="${esc(currentName)}" maxlength="20" autocomplete="off">
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn btn-primary" id="modal-confirm">Save</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  const input = document.getElementById('rename-input');
+  input.focus(); input.select();
+  const close = ()=> overlay.remove();
+  const save = ()=>{ const val=input.value.trim(); if(!val){ input.focus(); return; } close(); onSave(val); };
+  overlay.querySelector('#modal-cancel').addEventListener('click', close);
+  overlay.querySelector('#modal-confirm').addEventListener('click', save);
+  input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') save(); });
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
+}
+
+/* ============== render: review ============== */
+function openReview(log, meta){
+  state.reviewLog = log||[];
+  state.reviewMeta = meta||{};
+  state.screen = 'review';
+  render();
+}
+function renderReview(){
+  const log = state.reviewLog||[];
+  const meta = state.reviewMeta||{};
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="dash-header">
+      <div>
+        <h2>Review: ${esc(meta.strandName||'Session')}</h2>
+        <div class="phase-line">Day ${meta.dayNum||''} · ${log.length} problem${log.length===1?'':'s'}</div>
+        <button class="link-btn" id="review-back-btn">← Back</button>
+      </div>
+    </div>
+    <div class="review-list">
+      ${log.length===0 ? '<p style="color:var(--ink-faint);">No answers recorded for this session.</p>' : log.map((r,i)=>`
+        <div class="review-item ${r.isCorrect?'correct':'wrong'}" style="--c:var(--${meta.color||'blue'})">
+          <div class="review-mark">${r.isCorrect?'✅':'❌'}</div>
+          <div class="review-body">
+            <div class="review-eyebrow">Q${i+1} · ${esc(TOPIC_LABEL[r.subtopic]||'')}</div>
+            <div class="${r.isEquation?'review-prompt mono':'review-prompt'}">${r.prompt}</div>
+            <div class="review-answers">
+              <span class="review-your">Your answer: <strong>${esc(r.userAnswer===''||r.userAnswer==null?'(blank)':String(r.userAnswer))}</strong></span>
+              ${!r.isCorrect?`<span class="review-correct">Correct answer: <strong>${esc(String(r.correctAnswer))}</strong></span>`:''}
+            </div>
+            <div class="review-explain">${r.explanation||''}</div>
+            ${r.assisted?'<span class="assisted-note">📝 This one was assisted.</span>':''}
+          </div>
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('review-back-btn').addEventListener('click', ()=>{ state.screen = meta.returnTo||'dashboard'; render(); });
+}
+
+/* ============== router ============== */
+function render(){
+  if(state.screen==='login') renderLogin();
+  else if(state.screen==='gradeSelect') renderGradeSelect();
+  else if(state.screen==='avatarSelect') renderAvatarSelect();
+  else if(state.screen==='dashboard') renderDashboard();
+  else if(state.screen==='session') renderSession();
+  else if(state.screen==='summary') renderSummary();
+  else if(state.screen==='progress') renderProgress();
+  else if(state.screen==='review') renderReview();
+}
+render();
+})();
+</script>
