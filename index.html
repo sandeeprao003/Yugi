@@ -50,6 +50,62 @@
   --info:#A98CF0;    --info-soft:rgba(169,140,240,.16);
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.35);
 }
+/* ---------- Kid-picked color themes (separate from light/dark; see THEMES in JS) ---------- */
+:root[data-color-theme="neonArcade"]{
+  --paper:#150E28; --paper-raise:#1F1640; --grid:rgba(255,255,255,.09);
+  --ink:#F5EFFF; --ink-soft:#C6B8E8; --ink-faint:#8F7FB8;
+  --blue:#00E5FF;  --blue-soft:rgba(0,229,255,.16);  --blue-line:rgba(0,229,255,.4);
+  --amber:#FF3EC9; --amber-soft:rgba(255,62,201,.16); --amber-line:rgba(255,62,201,.4);
+  --teal:#39FF88;  --teal-soft:rgba(57,255,136,.16);  --teal-line:rgba(57,255,136,.4);
+  --good:#39FF88;  --good-soft:rgba(57,255,136,.14);
+  --bad:#FF5C7A;   --bad-soft:rgba(255,92,122,.14);
+  --info:#B98CFF;  --info-soft:rgba(185,140,255,.16);
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5);
+}
+:root[data-color-theme="candyPop"]{
+  --paper:#FFF9FC; --paper-raise:#FFFFFF; --grid:#FFE1EE;
+  --ink:#4A2E3D; --ink-soft:#7A5A6B; --ink-faint:#A98CA0;
+  --blue:#4FC4C0;  --blue-soft:#E3F9F7;  --blue-line:#BDEFEA;
+  --amber:#FFA630; --amber-soft:#FFF0DC; --amber-line:#FFDCA8;
+  --teal:#D9509A;  --teal-soft:#FDE6F1;  --teal-line:#F8C2DE;
+  --good:#4CAF7D;  --good-soft:#E4F5EC;
+  --bad:#E4576B;   --bad-soft:#FDE8EA;
+  --info:#8B6FE8;  --info-soft:#EEE9FC;
+  --shadow: 0 1px 2px rgba(74,46,61,.08), 0 6px 16px rgba(74,46,61,.1);
+}
+:root[data-color-theme="galaxy"]{
+  --paper:#0D0B21; --paper-raise:#171335; --grid:rgba(255,255,255,.08);
+  --ink:#ECE8FF; --ink-soft:#B5ACDD; --ink-faint:#8377B0;
+  --blue:#7B61FF;  --blue-soft:rgba(123,97,255,.16);  --blue-line:rgba(123,97,255,.4);
+  --amber:#FF61A6; --amber-soft:rgba(255,97,166,.16); --amber-line:rgba(255,97,166,.4);
+  --teal:#00D9FF;  --teal-soft:rgba(0,217,255,.16);   --teal-line:rgba(0,217,255,.4);
+  --good:#4FE0A0;  --good-soft:rgba(79,224,160,.14);
+  --bad:#FF6B7A;   --bad-soft:rgba(255,107,122,.14);
+  --info:#A98CF0;  --info-soft:rgba(169,140,240,.16);
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5);
+}
+:root[data-color-theme="blockyCraft"]{
+  --paper:#F6FBF1; --paper-raise:#FFFFFF; --grid:#DCEFCB;
+  --ink:#28351F; --ink-soft:#57684A; --ink-faint:#8B9A7D;
+  --blue:#3D9BDC;  --blue-soft:#E3F3FC;  --blue-line:#BFE3F6;
+  --amber:#E0A526; --amber-soft:#FBF0D6; --amber-line:#F3DC9E;
+  --teal:#3F9D5E;  --teal-soft:#E3F5E7;  --teal-line:#BEE6C8;
+  --good:#3F9D5E;  --good-soft:#E3F5E7;
+  --bad:#C6543D;   --bad-soft:#FAE4DE;
+  --info:#7D6BC9;  --info-soft:#EBE7FA;
+  --shadow: 0 1px 2px rgba(40,53,31,.08), 0 6px 16px rgba(40,53,31,.1);
+}
+:root[data-color-theme="cyberMint"]{
+  --paper:#081714; --paper-raise:#0F241F; --grid:rgba(255,255,255,.08);
+  --ink:#E5FFF6; --ink-soft:#9FCDBE; --ink-faint:#6B9186;
+  --blue:#3D5AFE;  --blue-soft:rgba(61,90,254,.16);  --blue-line:rgba(61,90,254,.4);
+  --amber:#FF3D71; --amber-soft:rgba(255,61,113,.16); --amber-line:rgba(255,61,113,.4);
+  --teal:#00FFB2;  --teal-soft:rgba(0,255,178,.16);   --teal-line:rgba(0,255,178,.4);
+  --good:#00FFB2;  --good-soft:rgba(0,255,178,.14);
+  --bad:#FF3D71;   --bad-soft:rgba(255,61,113,.14);
+  --info:#7B8CFF;  --info-soft:rgba(123,140,255,.16);
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5);
+}
 *{box-sizing:border-box;}
 body{
   margin:0;
@@ -67,7 +123,8 @@ button{ font-family:inherit; }
 :focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
 @media (prefers-reduced-motion: reduce){ *{ animation-duration:.001ms !important; transition-duration:.001ms !important; } }
 
-#app{ max-width:920px; margin:0 auto; padding:28px 20px 64px; }
+#app{ max-width:920px; margin:0 auto; padding:28px 20px 64px; transition:max-width .15s ease; }
+#app.wide{ max-width:1300px; }
 
 .eyebrow{ font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); }
 
@@ -109,6 +166,17 @@ button{ font-family:inherit; }
 .avatar-option:hover{ transform:translateY(-3px); }
 .avatar-option.selected{ border-color:var(--blue); }
 .avatar-option svg{ display:block; width:100%; height:auto; }
+.theme-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; max-width:600px; margin:0 auto; }
+.theme-option{
+  background:var(--paper-raise); border:2.5px solid var(--grid); border-radius:16px; padding:16px 12px; cursor:pointer;
+  transition:transform .12s ease, border-color .12s ease; box-shadow:var(--shadow);
+  display:flex; flex-direction:column; align-items:center; gap:10px; font-family:inherit;
+}
+.theme-option:hover{ transform:translateY(-3px); }
+.theme-option.selected{ border-color:var(--blue); }
+.theme-swatches{ display:flex; gap:6px; }
+.theme-swatch{ width:26px; height:26px; border-radius:50%; box-shadow:inset 0 0 0 1px rgba(0,0,0,.12); }
+.theme-name{ font-family:'Fredoka'; font-weight:600; font-size:14px; color:var(--ink); }
 .tab .name{ font-weight:600; font-size:16px; }
 .tab .streak{ margin-top:6px; font-size:12px; color:var(--ink-faint); }
 .tab-new{ border-style:dashed; color:var(--ink-faint); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; }
@@ -127,6 +195,42 @@ button{ font-family:inherit; }
 .grade-band-label{ font-family:'Inter'; font-weight:500; font-size:11px; color:var(--ink-faint); }
 
 /* ---------- Dashboard ---------- */
+.dashboard-grid{ display:grid; grid-template-columns:260px 1fr; gap:24px; align-items:start; }
+.daily-log-sidebar{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:16px 18px;
+  box-shadow:var(--shadow); position:sticky; top:20px; max-height:calc(100vh - 40px); overflow-y:auto;
+}
+.daily-log-sidebar h4{ margin:0 0 14px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; position:sticky; top:0; background:var(--paper-raise); }
+.dashboard-main{ min-width:0; }
+.day-log-list{ display:flex; flex-direction:column; gap:12px; overflow-y:auto; max-height:calc(100vh - 140px); padding-right:4px; }
+.day-log-row{
+  background:var(--paper); border:1px solid var(--grid); border-radius:10px; padding:10px 10px 8px;
+}
+.day-log-row-header{ display:flex; align-items:center; gap:8px; font-family:'Fredoka'; font-weight:700; font-size:13px; margin-bottom:8px; }
+.day-log-row .doubts-chip{ margin:0; }
+.day-log-row-topics{ display:flex; flex-wrap:wrap; gap:6px; }
+.day-log-chip{
+  flex:1 1 72px; font-size:11px; font-weight:600; padding:6px 7px; border-radius:8px; background:var(--c-soft, var(--grid));
+  color:var(--c, var(--ink-soft)); text-align:center; display:flex; flex-direction:column; gap:2px;
+}
+.day-log-chip.todo{ background:var(--grid); color:var(--ink-faint); font-weight:500; }
+.day-log-chip.todo.studied{ background:var(--c-soft, var(--grid)); color:var(--c, var(--ink-soft)); }
+.day-log-score{ font-size:10px; font-weight:500; opacity:.85; }
+.day-log-row .mini-review-btn{ font-size:10px; color:inherit; text-decoration:underline; }
+@media (max-width:860px){
+  .dashboard-grid{ grid-template-columns:1fr; }
+  .daily-log-sidebar{ position:static; max-height:none; order:2; }
+  .daily-log-sidebar h4{ position:static; }
+  .day-log-list{ max-height:420px; }
+  .dashboard-main{ order:1; }
+}
+.subject-switch{ display:flex; gap:10px; margin-bottom:18px; }
+.subject-tab{
+  flex:1; padding:12px 14px; border-radius:14px; border:2px solid var(--grid); background:var(--paper-raise);
+  font-family:'Fredoka'; font-weight:600; font-size:15px; color:var(--ink-faint); cursor:pointer; transition:all .15s;
+}
+.subject-tab.active{ border-color:var(--blue); color:var(--blue); background:var(--blue-soft); }
+.subject-tab:hover{ transform:translateY(-2px); }
 .dash-header{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:22px; flex-wrap:wrap; }
 .dash-header-left{ display:flex; align-items:center; gap:14px; }
 .dash-avatar{ width:56px; height:56px; border-radius:50%; overflow:hidden; flex-shrink:0; background:var(--grid); }
@@ -159,6 +263,9 @@ button{ font-family:inherit; }
 .acc{ font-size:12px; color:var(--ink-faint); }
 
 .week-strip{ background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow); }
+.dashboard-report{ margin-top:28px; padding-top:22px; border-top:2px dashed var(--grid); }
+.dashboard-report .report-section:last-child{ margin-bottom:0; }
+.dashboard-report .strand-grid, .dashboard-report .week-strip{ margin-top:18px; }
 .week-strip h4{ margin:0 0 12px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; }
 .week-cols{ display:flex; gap:10px; justify-content:space-between; }
 .week-col{ display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
@@ -209,7 +316,7 @@ button{ font-family:inherit; }
 .feedback .explain{ color:var(--ink-soft); font-weight:400; margin-top:4px; display:block; }
 .assisted-note{ color:var(--info); font-weight:600; display:block; margin-top:6px; font-size:13px; }
 
-.help-row{ margin-top:2px; }
+.help-row{ margin-top:2px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
 .help-btn{ font-size:13px; padding:8px 16px; }
 .help-btn:disabled{ opacity:.6; }
 .help-panel{ display:flex; flex-direction:column; gap:8px; max-width:52ch; width:100%; text-align:left; }
@@ -222,6 +329,15 @@ button{ font-family:inherit; }
 .chat-ask-row input{ flex:1; min-width:0; font-family:inherit; font-size:14px; padding:9px 12px; border-radius:10px; border:1.5px solid var(--grid); background:var(--paper); color:var(--ink); }
 .chat-ask-row input:focus{ border-color:var(--info); }
 .chat-ask-row button{ font-size:13px; padding:8px 16px; flex-shrink:0; }
+.confirm-row{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:center;
+  background:var(--paper); border:1.5px dashed var(--grid); border-radius:10px; padding:10px 12px;
+}
+.confirm-label{ font-size:13px; font-weight:600; color:var(--ink-soft); }
+.confirm-btn{ font-size:12px; padding:6px 12px; }
+.confirm-note{ font-size:12px; font-weight:600; padding:4px 2px; }
+.confirm-note.good{ color:var(--good); }
+.confirm-note.warn{ color:var(--amber); }
 .problem-diagram{ display:flex; justify-content:center; margin:2px 0; }
 .problem-diagram svg{ max-width:280px; width:100%; height:auto; }
 
@@ -248,6 +364,30 @@ button{ font-family:inherit; }
 .review-your strong{ color:var(--ink); }
 .review-correct strong{ color:var(--good); }
 .review-explain{ font-size:13px; color:var(--ink-soft); }
+.review-doubts{ margin-top:10px; padding-top:10px; border-top:1px dashed var(--grid); display:flex; flex-direction:column; gap:6px; }
+.review-doubts-label{ font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--info); }
+
+/* ---------- Learn ---------- */
+.lesson-list{ display:flex; flex-direction:column; gap:16px; margin-bottom:24px; }
+.lesson-card{
+  background:var(--paper-raise); border:1.5px solid var(--grid); border-radius:16px; padding:20px 22px;
+  box-shadow:var(--shadow); border-left:5px solid var(--c);
+}
+.lesson-head{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.lesson-head h3{ margin:0; font-size:17px; }
+.lesson-concept{ font-size:14px; line-height:1.6; color:var(--ink-soft); margin:0 0 14px; }
+.lesson-example{
+  background:var(--c-soft); border-radius:12px; padding:16px 18px; display:flex; flex-direction:column;
+  align-items:center; text-align:center; gap:10px;
+}
+.lesson-example-label{ font-size:11px; font-weight:700; letter-spacing:.06em; color:var(--c); }
+.lesson-answer{ font-size:14px; }
+.lesson-answer strong{ color:var(--c); }
+.lesson-explain{ font-size:13px; color:var(--ink-soft); max-width:52ch; }
+.lesson-actions{ display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; }
+.lesson-actions .link-btn{ font-size:13px; }
+.lesson-cta{ display:flex; justify-content:center; margin:8px 0 24px; }
+.btn-learn{ font-size:13px; padding:9px 14px; }
 
 .session-actions{ display:flex; justify-content:center; margin-top:22px; }
 
@@ -265,6 +405,8 @@ button{ font-family:inherit; }
 }
 
 /* ---------- Roadmap & Progress ---------- */
+.report-section{ margin-bottom:32px; }
+.section-heading{ margin:0 0 14px; font-size:14px; color:var(--ink); font-weight:700; letter-spacing:.03em; }
 .phase-line{ font-size:13px; color:var(--ink-faint); margin-top:2px; font-weight:600; }
 .persona-card{
   display:flex; align-items:center; gap:18px; background:var(--paper-raise); border:1.5px solid var(--grid);
@@ -308,7 +450,12 @@ button{ font-family:inherit; }
 .past-days-card h4{ margin:0 0 14px; font-size:13px; color:var(--ink-soft); font-weight:700; letter-spacing:.03em; position:sticky; top:0; background:var(--paper-raise); }
 .past-day-row{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:10px 0; border-bottom:1px solid var(--grid); }
 .past-day-row:last-child{ border-bottom:none; }
-.past-day-label{ font-family:'Fredoka'; font-weight:600; font-size:14px; min-width:52px; flex-shrink:0; }
+.past-day-label{ font-family:'Fredoka'; font-weight:600; font-size:14px; min-width:52px; flex-shrink:0; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.doubts-chip{
+  font-family:'Inter'; font-weight:600; font-size:11px; padding:3px 9px; border-radius:999px;
+  background:var(--info-soft); color:var(--info); cursor:pointer; border:none;
+}
+.doubts-chip:hover{ filter:brightness(0.95); }
 .past-day-strands{ display:flex; gap:8px; flex-wrap:wrap; flex:1; }
 .past-strand-chip{ font-size:12px; font-weight:600; padding:5px 10px; border-radius:999px; background:var(--c-soft, var(--grid)); color:var(--c, var(--ink-soft)); display:inline-flex; align-items:center; gap:4px; }
 .past-strand-chip.todo{ background:var(--grid); color:var(--ink-faint); font-weight:500; }
@@ -1235,11 +1382,573 @@ const GENERATORS = {
   amcStylePuzzle1:genAmcStylePuzzle1, amcStylePuzzle2:genAmcStylePuzzle2
 };
 
+Object.assign(TOPIC_LABEL, {
+  livingThings:'Living vs. Non-Living', plantParts:'Plant Parts', animalGroups:'Animal Groups',
+  weatherBasics:'Weather Basics', rocksSoil:'Rocks & Soil', solarSystemBasics:'The Solar System',
+  statesOfMatter:'States of Matter', forcesMotionBasics:'Forces & Motion', simpleMachinesID:'Simple Machines',
+  lifeCycles:'Life Cycles', habitats:'Habitats & Adaptations', earthResources:'Natural Resources',
+  moonPhases:'Moon Phases', magnetism:'Magnetism', soundLight:'Sound & Light',
+  cellsBasics:'Anatomy & Physiology: Cell Basics', ecosystemsFoodChains:'Ecology: Food Chains', humanBodySystems:'Anatomy & Physiology: Body Systems',
+  waterCycle:'Water Quality: The Water Cycle', weatherClimate:'Meteorology', solarSystemDeeper:'Astronomy',
+  matterMixtures:'Chemistry Lab: Matter & Mixtures', energyForms:'Physics: Forms of Energy', simpleMachinesMath:'Physics: Simple Machine Math',
+  cellStructure:'Anatomy & Physiology: Cell Biology', geneticsBasics:'Heredity', ecologyBiomes:'Ecology',
+  plateTectonics:'Dynamic Planet', climateSystems:'Meteorology', astronomyDeeper:'Astronomy',
+  atomsElements:'Chemistry Lab: Atoms & Elements', statesMatterEnergy:'Chemistry Lab: Temperature Conversion', forcesMotion:'Physics: Forces & Motion',
+  geneticsInheritance:'Heredity: Punnett Squares', evolutionNaturalSelection:'Evolution', cellBiologyAdvanced:'Anatomy & Physiology: Cell Processes',
+  atomicStructure:'Chemistry Lab: Atomic Structure', periodicTableTrends:'Chemistry Lab: Periodic Trends',
+  stoichiometryBasics:'Chemistry Lab: Stoichiometry', kinematics:'Physics: Kinematics', forcesNewtonsLaws:'Physics: Newton’s Laws', energyWorkPower:'Physics: Work, Energy & Power'
+});
+
+/* General strategy for each topic — teaches the METHOD, never the specific
+   answer to the problem on screen, so a kid can read this and still work
+   the problem out themselves. */
+Object.assign(CONCEPT_HELP, {
+  livingThings:'Living things grow, need food and water, and can reproduce — non-living things do not.',
+  plantParts:'Each plant part has a job: roots absorb water, stems transport it, leaves make food, flowers make seeds.',
+  animalGroups:'Look at body coverings (fur, feathers, scales) and how babies are born to sort animals into groups.',
+  weatherBasics:'Think about what instrument or process is involved — temperature, wind, or water changing state.',
+  rocksSoil:'Think about how the rock formed: from cooling lava, from pressed layers, or from heat and pressure.',
+  solarSystemBasics:'Picture the order of the planets from the Sun, and what’s at the very center.',
+  statesOfMatter:'Think about whether the substance holds its shape, takes the shape of a container, or spreads out to fill any space.',
+  forcesMotionBasics:'A force is any push or pull — think about what’s pushing, pulling, or resisting motion.',
+  simpleMachinesID:'Picture how the object moves or changes force — a ramp, a wheel, a wedge, or a lever.',
+  lifeCycles:'Think about the order of stages an animal or plant goes through, from birth or seed to adult.',
+  habitats:'Match the body feature or behavior to the specific problem it solves in that environment.',
+  earthResources:'Ask whether nature can replace it quickly (renewable) or it takes millions of years (non-renewable).',
+  moonPhases:'Picture how much of the Moon’s sunlit half you can see from Earth at each point in its orbit.',
+  magnetism:'Remember: like poles push apart, opposite poles pull together, and only certain metals are attracted.',
+  soundLight:'Think about whether the question is about vibrations (sound) or rays bouncing/passing through (light).',
+  cellsBasics:'Think about which cell part does that specific job — controlling, powering, or protecting the cell.',
+  ecosystemsFoodChains:'Trace the energy: it starts with the Sun, flows to producers, then to consumers.',
+  humanBodySystems:'Match the organ to its main job — pumping, breathing, digesting, or thinking.',
+  waterCycle:'Follow the water: heating turns it to vapor, cooling turns vapor to clouds, then it falls back down.',
+  weatherClimate:'Weather is short-term (today); climate is the long-term pattern (over years).',
+  solarSystemDeeper:'Think about what’s spinning (rotation, causing day/night) versus what’s orbiting (causing years and phases).',
+  matterMixtures:'Ask whether the parts can be seen or separated easily (mixture) or are chemically joined (compound).',
+  energyForms:'Ask whether the energy is from motion (kinetic), position (potential), or something stored chemically.',
+  simpleMachinesMath:'Mechanical advantage compares the effort arm to the load arm — divide effort by load.',
+  cellStructure:'Match each organelle to its job: energy, proteins, storage, or waste.',
+  geneticsBasics:'Dominant traits show up with just one copy; recessive traits need two copies to appear.',
+  ecologyBiomes:'Think about temperature and rainfall — those two things define most biomes.',
+  plateTectonics:'Think about what happens where plates meet: colliding, pulling apart, or sliding past.',
+  climateSystems:'Think about what traps heat, reflects light, or moves warm and cold air/water around the globe.',
+  astronomyDeeper:'Think about what’s blocking what for eclipses, and what powers the Sun through fusion.',
+  atomsElements:'Protons are positive, electrons are negative, neutrons are neutral — protons define the element.',
+  statesMatterEnergy:'Multiply the Celsius temperature by 9/5, then add 32 to get Fahrenheit.',
+  forcesMotion:'Speed is distance divided by time; force is mass multiplied by acceleration.',
+  geneticsInheritance:'Draw a quick Punnett square for Aa × Aa — you’ll get 1 AA, 2 Aa, and 1 aa out of 4.',
+  evolutionNaturalSelection:'Natural selection favors traits that help an organism survive and reproduce in its environment.',
+  cellBiologyAdvanced:'Photosynthesis and respiration are opposites — one builds glucose, the other breaks it down for energy.',
+  atomicStructure:'The number of protons never changes for an element; neutrons can vary (isotopes), electrons can be gained or lost (ions).',
+  periodicTableTrends:'Elements in the same column share properties; atomic size generally shrinks left-to-right and grows top-to-bottom.',
+  stoichiometryBasics:'Divide the given mass by the molar mass to find the number of moles.',
+  kinematics:'For speed or acceleration, divide the change in the quantity by the time it took.',
+  forcesNewtonsLaws:'Force equals mass times acceleration — rearrange to solve for whichever value is missing.',
+  energyWorkPower:'Work equals force times distance; power equals work divided by time.'
+});
+
+/* Turns one bank entry into a problem object. Bank items with `choices` become
+   multiple-choice; items with `accept` become short-answer text (checked
+   case-insensitively against any accepted spelling). */
+function bankProblem(item){
+  if(item.choices){
+    return { isEquation:false, type:'choice', prompt:item.q, choices:shuffle(item.choices.slice()), answer:item.a, explanation:item.exp };
+  }
+  return { isEquation:false, type:'text', prompt:item.q, placeholder:item.placeholder||'Type your answer',
+    check:(input)=> (item.accept||[item.a]).some(acc=> String(input).trim().toLowerCase()===String(acc).toLowerCase()),
+    answer:item.a, explanation:item.exp };
+}
+
+/* ================================================================
+   GRADE 3–4 BANKS: Life Science / Earth & Space Science / Physical Science
+   ================================================================ */
+const BANK_livingThings = [
+  {q:'Which of these is a living thing?', choices:['Rock','Tree','Water','Cloud'], a:'Tree', exp:'Living things grow, need food and water, and can reproduce — a tree does all of these.'},
+  {q:'What do plants need to make their own food?', choices:['Sunlight, water and air','Only water','Only soil','Only sunlight'], a:'Sunlight, water and air', exp:'Plants use sunlight, water, and carbon dioxide from the air to make food through photosynthesis.'},
+  {q:'Which part of a plant absorbs water from the soil?', choices:['Root','Leaf','Flower','Stem'], a:'Root', exp:'Roots grow into the soil and take up water and nutrients.'},
+  {q:'What is it called when a caterpillar changes into a butterfly?', choices:['Metamorphosis','Hibernation','Migration','Pollination'], a:'Metamorphosis', exp:'Metamorphosis is a dramatic change in body form during an animal’s life cycle.'},
+  {q:'Which of these is NOT a living thing?', choices:['Rock','Mushroom','Bacteria','Fish'], a:'Rock', exp:'A rock does not grow, eat, or reproduce, so it is non-living.'},
+  {q:'What do animals need to survive?', choices:['Food, water, air and shelter','Only food','Only water','Toys'], a:'Food, water, air and shelter', exp:'All animals need these basic things to stay alive.'},
+  {q:'Which sense organ do you use to see?', choices:['Eyes','Ears','Nose','Skin'], a:'Eyes', exp:'Eyes detect light and let the brain form images.'},
+  {q:'What is a baby dog called?', choices:['Puppy','Kitten','Cub','Calf'], a:'Puppy', exp:'A baby dog is called a puppy.'}
+];
+const BANK_plantParts = [
+  {q:'Which part of the plant makes seeds?', choices:['Flower','Root','Stem','Leaf'], a:'Flower', exp:'Flowers produce seeds after being pollinated.'},
+  {q:'What is the main job of leaves?', choices:['Make food using sunlight','Hold the plant in soil','Carry water only','Make flowers'], a:'Make food using sunlight', exp:'Leaves use sunlight, water, and air to make food through photosynthesis.'},
+  {q:'Which part of the plant carries water from roots to leaves?', choices:['Stem','Flower','Seed','Petal'], a:'Stem', exp:'The stem acts like a pipe, moving water and nutrients upward.'},
+  {q:'What grows into a new plant?', choices:['Seed','Rock','Leaf','Petal'], a:'Seed', exp:'A seed contains a tiny plant that can grow when it has water, air, and warmth.'},
+  {q:'Which part of a plant is usually underground?', choices:['Root','Flower','Leaf','Petal'], a:'Root', exp:'Roots anchor the plant and absorb water underground.'},
+  {q:'What do we call the process of a seed starting to grow?', choices:['Germination','Photosynthesis','Pollination','Respiration'], a:'Germination', exp:'Germination is when a seed sprouts and begins to grow.'},
+  {q:'Bees help plants by carrying this from flower to flower:', choices:['Pollen','Water','Soil','Bark'], a:'Pollen', exp:'Carrying pollen between flowers is called pollination.'},
+  {q:'Which part of the plant protects the seeds?', choices:['Fruit','Root','Stem','Leaf'], a:'Fruit', exp:'Fruit forms around seeds and helps protect and spread them.'}
+];
+const BANK_animalGroups = [
+  {q:'Which group of animals has fur or hair and feeds milk to their babies?', choices:['Mammals','Reptiles','Birds','Fish'], a:'Mammals', exp:'Mammals are warm-blooded, usually have hair, and nurse their young with milk.'},
+  {q:'Which of these is a reptile?', choices:['Snake','Dog','Eagle','Frog'], a:'Snake', exp:'Reptiles have dry, scaly skin — snakes, lizards, and turtles are all reptiles.'},
+  {q:'What covers the body of a bird?', choices:['Feathers','Fur','Scales','Slime'], a:'Feathers', exp:'Feathers help birds fly and stay warm.'},
+  {q:'Which animal group breathes through gills?', choices:['Fish','Mammals','Birds','Insects'], a:'Fish', exp:'Gills let fish take in oxygen from water.'},
+  {q:'An animal that eats only plants is called:', choices:['Herbivore','Carnivore','Omnivore','Predator'], a:'Herbivore', exp:'Herbivores, like rabbits and deer, eat only plants.'},
+  {q:'An animal that eats both plants and animals is called:', choices:['Omnivore','Herbivore','Carnivore','Producer'], a:'Omnivore', exp:'Omnivores, like bears and humans, eat a mix of plants and animals.'},
+  {q:'Which of these is an amphibian?', choices:['Frog','Lizard','Turtle','Owl'], a:'Frog', exp:'Amphibians like frogs live part of their life in water and part on land.'},
+  {q:'How many legs does an insect have?', choices:['6','4','8','2'], a:'6', exp:'All insects have six legs.'}
+];
+const BANK_weatherBasics = [
+  {q:'What instrument measures temperature?', choices:['Thermometer','Barometer','Anemometer','Compass'], a:'Thermometer', exp:'A thermometer shows how hot or cold something is.'},
+  {q:'What causes rain to fall from clouds?', choices:['Water droplets become too heavy to stay in the air','The sun pushes them down','Wind blows them out','Clouds get too cold and shatter'], a:'Water droplets become too heavy to stay in the air', exp:'When droplets in a cloud combine and get heavy enough, gravity pulls them down as rain.'},
+  {q:'Which season usually comes right after winter?', choices:['Spring','Summer','Fall','Another winter'], a:'Spring', exp:'The order of seasons is spring, summer, fall, then winter.'},
+  {q:'What is the water that falls from clouds called?', choices:['Precipitation','Evaporation','Condensation','Humidity'], a:'Precipitation', exp:'Rain, snow, sleet, and hail are all forms of precipitation.'},
+  {q:'A very strong spinning wind storm shaped like a funnel is called a:', choices:['Tornado','Hurricane','Blizzard','Drought'], a:'Tornado', exp:'A tornado is a fast-spinning column of air reaching from a cloud to the ground.'},
+  {q:'What tool shows wind direction?', choices:['Wind vane','Thermometer','Ruler','Scale'], a:'Wind vane', exp:'A wind vane points in the direction the wind is blowing from.'},
+  {q:'Which type of cloud usually brings thunderstorms?', choices:['Cumulonimbus','Cirrus','Stratus','Cumulus'], a:'Cumulonimbus', exp:'Tall, dark cumulonimbus clouds produce thunder, lightning, and heavy rain.'},
+  {q:'What do we call frozen precipitation that falls as small ice balls?', choices:['Hail','Fog','Dew','Mist'], a:'Hail', exp:'Hail forms when raindrops freeze into balls of ice inside storm clouds.'}
+];
+const BANK_rocksSoil = [
+  {q:'Which type of rock forms from cooled melted rock (lava or magma)?', choices:['Igneous','Sedimentary','Metamorphic','Mineral'], a:'Igneous', exp:'Igneous rock forms when molten rock cools and hardens.'},
+  {q:'Which type of rock forms from layers of sand, mud, and shells pressed together?', choices:['Sedimentary','Igneous','Metamorphic','Fossil'], a:'Sedimentary', exp:'Sedimentary rock forms when layers of sediment are pressed and cemented together over time.'},
+  {q:'What is soil mostly made of?', choices:['Broken-down rock and decayed plants/animals','Only water','Only sand','Only metal'], a:'Broken-down rock and decayed plants/animals', exp:'Soil is a mix of weathered rock particles and decomposed organic matter.'},
+  {q:'What do we call the remains or traces of ancient living things preserved in rock?', choices:['Fossils','Minerals','Crystals','Sediments'], a:'Fossils', exp:'Fossils are preserved remains or traces of ancient organisms.'},
+  {q:'Which layer of soil is usually darkest and richest in nutrients for plants?', choices:['Topsoil','Bedrock','Subsoil','Sand layer'], a:'Topsoil', exp:'Topsoil is the nutrient-rich upper layer where most plant roots grow.'},
+  {q:'Rock that has been changed by heat and pressure underground is called:', choices:['Metamorphic','Igneous','Sedimentary','Organic'], a:'Metamorphic', exp:'Metamorphic rock forms when existing rock is transformed by heat and pressure.'},
+  {q:'What is the process called when wind and water slowly wear away rock?', choices:['Erosion','Evaporation','Condensation','Germination'], a:'Erosion', exp:'Erosion is the gradual wearing away and moving of rock and soil by wind or water.'},
+  {q:'Which of these is an example of a mineral?', choices:['Quartz','Wood','Plastic','Leaf'], a:'Quartz', exp:'Quartz is a naturally occurring mineral found in many rocks.'}
+];
+const BANK_solarSystemBasics = [
+  {q:'Which planet is closest to the Sun?', choices:['Mercury','Venus','Earth','Mars'], a:'Mercury', exp:'Mercury is the first planet from the Sun.'},
+  {q:'Which planet do we live on?', choices:['Earth','Mars','Venus','Jupiter'], a:'Earth', exp:'Earth is the third planet from the Sun.'},
+  {q:'What is the largest planet in our solar system?', choices:['Jupiter','Saturn','Earth','Neptune'], a:'Jupiter', exp:'Jupiter is by far the largest planet in the solar system.'},
+  {q:'What is at the center of our solar system?', choices:['The Sun','The Moon','Earth','A black hole'], a:'The Sun', exp:'All the planets orbit the Sun at the center of the solar system.'},
+  {q:'How long does it take Earth to go around the Sun once?', choices:['About one year','About one day','About one month','About ten years'], a:'About one year', exp:'One full trip around the Sun takes about 365 days — one year.'},
+  {q:'What natural object orbits the Earth?', choices:['The Moon','Mars','The Sun','A comet'], a:'The Moon', exp:'The Moon is Earth’s only natural satellite.'},
+  {q:'Which planet is known for its large rings?', choices:['Saturn','Mercury','Earth','Mars'], a:'Saturn', exp:'Saturn has a spectacular system of icy rings.'},
+  {q:'What do we call a large rock that orbits the Sun, smaller than a planet?', choices:['Asteroid','Comet','Star','Moon'], a:'Asteroid', exp:'Asteroids are rocky bodies, many found in the asteroid belt between Mars and Jupiter.'}
+];
+const BANK_statesOfMatter = [
+  {q:'Which state of matter has a definite shape and volume?', choices:['Solid','Liquid','Gas','Plasma'], a:'Solid', exp:'Solids keep their shape and do not flow.'},
+  {q:'Which state of matter takes the shape of its container but has a fixed volume?', choices:['Liquid','Solid','Gas','Plasma'], a:'Liquid', exp:'Liquids flow to fit their container but their amount (volume) stays the same.'},
+  {q:'What happens to water when it freezes?', choices:['It changes from liquid to solid','It changes from gas to liquid','It disappears','It becomes hotter'], a:'It changes from liquid to solid', exp:'Freezing turns liquid water into solid ice.'},
+  {q:'What is it called when a liquid changes into a gas?', choices:['Evaporation','Condensation','Freezing','Melting'], a:'Evaporation', exp:'Evaporation happens when a liquid absorbs enough energy to become a gas.'},
+  {q:'What is it called when a gas changes into a liquid?', choices:['Condensation','Evaporation','Melting','Freezing'], a:'Condensation', exp:'Condensation happens when a gas cools and turns into a liquid.'},
+  {q:'Which state of matter can be easily squeezed into a smaller space?', choices:['Gas','Solid','Liquid','None of these'], a:'Gas', exp:'Gas particles are spread far apart, so gases can be compressed.'},
+  {q:'What do we call the temperature at which a solid turns into a liquid?', choices:['Melting point','Boiling point','Freezing point','Dew point'], a:'Melting point', exp:'The melting point is the temperature where a solid becomes a liquid.'},
+  {q:'Steam is an example of which state of matter?', choices:['Gas','Liquid','Solid','Plasma'], a:'Gas', exp:'Steam is water in its gas form.'}
+];
+const BANK_forcesMotionBasics = [
+  {q:'A push or pull on an object is called a:', choices:['Force','Mass','Speed','Energy'], a:'Force', exp:'Any push or pull is a force.'},
+  {q:'What force pulls objects down toward the Earth?', choices:['Gravity','Friction','Magnetism','Tension'], a:'Gravity', exp:'Gravity pulls objects toward the center of the Earth.'},
+  {q:'What force slows down objects that are sliding against each other?', choices:['Friction','Gravity','Magnetism','Motion'], a:'Friction', exp:'Friction is a force that resists motion between two surfaces.'},
+  {q:'If you push a toy car harder, what usually happens to its speed?', choices:['It goes faster','It goes slower','It stops immediately','Nothing changes'], a:'It goes faster', exp:'A bigger push (force) generally speeds an object up more.'},
+  {q:'What do we call it when an object is moving?', choices:['Motion','Rest','Mass','Weight'], a:'Motion', exp:'Motion describes an object changing position over time.'},
+  {q:'A ball sitting still on a table has zero:', choices:['Motion','Mass','Weight','Gravity'], a:'Motion', exp:'A still object is at rest, so it has no motion.'},
+  {q:'Which surface would create MORE friction?', choices:['Rough sandpaper','Smooth ice','Wet glass','Polished metal'], a:'Rough sandpaper', exp:'Rougher surfaces create more friction than smooth ones.'},
+  {q:'What happens to a ball if no force acts on it while it is rolling on a frictionless surface?', choices:['It keeps moving at the same speed','It speeds up on its own','It stops immediately','It changes direction'], a:'It keeps moving at the same speed', exp:'Without any force acting on it, a moving object keeps moving at a constant speed.'}
+];
+const BANK_simpleMachinesID = [
+  {q:'Which simple machine is a flat surface set at an angle, like a ramp?', choices:['Inclined plane','Lever','Pulley','Wheel and axle'], a:'Inclined plane', exp:'A ramp is an inclined plane — it makes lifting easier over a longer distance.'},
+  {q:'A seesaw is an example of which simple machine?', choices:['Lever','Pulley','Screw','Wedge'], a:'Lever', exp:'A seesaw pivots on a fulcrum, just like a lever.'},
+  {q:'Which simple machine uses a rope and a wheel to lift objects?', choices:['Pulley','Lever','Wedge','Inclined plane'], a:'Pulley', exp:'A pulley uses a wheel and rope to change the direction of a pulling force.'},
+  {q:'A doorknob is an example of which simple machine?', choices:['Wheel and axle','Lever','Pulley','Screw'], a:'Wheel and axle', exp:'Turning the knob (wheel) rotates the axle inside to open the latch.'},
+  {q:'Which simple machine is used to split things apart, like an axe head?', choices:['Wedge','Lever','Pulley','Screw'], a:'Wedge', exp:'A wedge is a shape that pushes materials apart.'},
+  {q:'A spiral ramp wrapped around a pole, like in a jar lid, is called a:', choices:['Screw','Wedge','Lever','Pulley'], a:'Screw', exp:'A screw is an inclined plane wrapped around a cylinder.'},
+  {q:'Simple machines make work easier mainly by:', choices:['Changing the size or direction of a force','Making objects heavier','Removing all friction','Creating new energy'], a:'Changing the size or direction of a force', exp:'Simple machines trade force for distance, or change the direction you push or pull.'},
+  {q:'Scissors use which two simple machines together?', choices:['Levers and wedges','Pulleys and screws','Wheels and inclined planes','Only levers'], a:'Levers and wedges', exp:'Each scissor blade is a lever, and the sharp edges act as wedges.'}
+];
+const BANK_lifeCycles = [
+  {q:'What is the correct order of a butterfly’s life cycle?', choices:['Egg, caterpillar, chrysalis, butterfly','Butterfly, egg, caterpillar, chrysalis','Caterpillar, egg, butterfly, chrysalis','Chrysalis, egg, caterpillar, butterfly'], a:'Egg, caterpillar, chrysalis, butterfly', exp:'A butterfly starts as an egg, hatches into a caterpillar, forms a chrysalis, then emerges as a butterfly.'},
+  {q:'What is a young frog called before it grows legs?', choices:['Tadpole','Cub','Kit','Larva'], a:'Tadpole', exp:'A tadpole hatches from a frog egg and lives in water before growing legs.'},
+  {q:'What do we call the series of stages a living thing goes through as it grows?', choices:['Life cycle','Food chain','Habitat','Ecosystem'], a:'Life cycle', exp:'A life cycle is the sequence of stages an organism passes through from birth to death.'},
+  {q:'What is the resting stage called when a caterpillar changes into a butterfly?', choices:['Chrysalis','Larva','Egg','Nymph'], a:'Chrysalis', exp:'Inside the chrysalis (pupa), the caterpillar’s body transforms into a butterfly.'},
+  {q:'What is the first stage in a plant’s life cycle?', choices:['Seed','Flower','Root','Fruit'], a:'Seed', exp:'A plant begins life as a seed, which germinates and grows into a seedling.'},
+  {q:'Which animal hatches from an egg and looks very different from its parents at first?', choices:['Butterfly','Kitten','Puppy','Human'], a:'Butterfly', exp:'A caterpillar looks nothing like the adult butterfly it will become — this big change is called metamorphosis.'},
+  {q:'What do we call a baby chicken?', choices:['Chick','Cub','Joey','Fawn'], a:'Chick', exp:'A baby chicken is called a chick.'},
+  {q:'What must happen to a seed before it can grow into a plant?', choices:['Germination','Evaporation','Pollination','Hibernation'], a:'Germination', exp:'Germination is when a seed sprouts and begins to grow, needing water, air, and warmth.'}
+];
+const BANK_habitats = [
+  {q:'What is a habitat?', choices:['The natural home of a plant or animal','A type of food','A kind of weather','A group of predators'], a:'The natural home of a plant or animal', exp:'A habitat provides an organism with food, water, shelter, and space to live.'},
+  {q:'Which habitat would a polar bear be adapted to live in?', choices:['Arctic (cold, icy)','Desert (hot, dry)','Rainforest (warm, wet)','Grassland'], a:'Arctic (cold, icy)', exp:'Polar bears have thick fur and fat to survive extreme cold.'},
+  {q:'A camel’s ability to store fat and go a long time without water helps it survive in the:', choices:['Desert','Ocean','Forest','Tundra'], a:'Desert', exp:'This adaptation helps camels survive with little water in hot, dry deserts.'},
+  {q:'What do we call a special feature that helps a living thing survive in its environment?', choices:['Adaptation','Habitat','Ecosystem','Ration'], a:'Adaptation', exp:'An adaptation is a trait that helps an organism survive in its habitat.'},
+  {q:'Fish have gills to help them survive in which habitat?', choices:['Water','Desert','Forest','Mountains'], a:'Water', exp:'Gills let fish take in oxygen dissolved in water.'},
+  {q:'Which habitat is known for very little rainfall and extreme heat during the day?', choices:['Desert','Rainforest','Wetland','Tundra'], a:'Desert', exp:'Deserts receive very little precipitation and can be extremely hot.'},
+  {q:'A thick coat of fur helps an arctic fox stay warm. This is an example of a:', choices:['Physical adaptation','Habitat','Food chain','Life cycle'], a:'Physical adaptation', exp:'A physical adaptation is a body feature — like fur — that helps survival.'},
+  {q:'Why do some animals migrate?', choices:['To find food or a better climate','To grow new fur','To lay flatter eggs','To change color permanently'], a:'To find food or a better climate', exp:'Migration lets animals move to areas with more food or milder weather.'}
+];
+const BANK_earthResources = [
+  {q:'Which of these is a renewable resource?', choices:['Sunlight','Coal','Oil','Natural gas'], a:'Sunlight', exp:'Sunlight is constantly available and does not run out, so it is renewable.'},
+  {q:'Which of these is a non-renewable resource?', choices:['Coal','Wind','Sunlight','Water (rain)'], a:'Coal', exp:'Coal takes millions of years to form and can be used up faster than it is replaced.'},
+  {q:'What do we call materials from the Earth that people use, like water, air, and minerals?', choices:['Natural resources','Fossils','Landfills','Pollutants'], a:'Natural resources', exp:'Natural resources are materials found in nature that people use.'},
+  {q:'Which action helps conserve natural resources?', choices:['Recycling','Littering','Wasting water','Cutting down all forests'], a:'Recycling', exp:'Recycling reuses materials so fewer new resources need to be taken from the Earth.'},
+  {q:'Wind and solar power are examples of:', choices:['Renewable energy','Fossil fuels','Non-renewable resources','Minerals'], a:'Renewable energy', exp:'Wind and sunlight are naturally replenished, making them renewable energy sources.'},
+  {q:'Why are fossil fuels like oil and coal considered non-renewable?', choices:['They take millions of years to form','They are found everywhere','They come from plants only','They never run out'], a:'They take millions of years to form', exp:'Because they form so slowly, using them up faster than nature replaces them makes them non-renewable.'},
+  {q:'Which of these is the BEST way to conserve water at home?', choices:['Turning off the tap while brushing teeth','Leaving the hose running','Taking longer showers','Watering the lawn at noon'], a:'Turning off the tap while brushing teeth', exp:'Turning off water when not in use helps conserve this important resource.'},
+  {q:'Trees are a renewable resource because:', choices:['New trees can be planted to replace ones that are cut down','They never get used up','They are made of plastic','They grow instantly'], a:'New trees can be planted to replace ones that are cut down', exp:'As long as new trees are planted and given time to grow, trees can be a renewable resource.'}
+];
+const BANK_moonPhases = [
+  {q:'What causes the Moon to seem to change shape in the sky?', choices:['Different amounts of the sunlit Moon are visible from Earth','The Moon changes size','Clouds cover part of the Moon','The Moon turns different colors'], a:'Different amounts of the sunlit Moon are visible from Earth', exp:'The Moon does not produce its own light — we see different portions of its sunlit half as it orbits Earth.'},
+  {q:'What is it called when we cannot see the Moon at all?', choices:['New Moon','Full Moon','Half Moon','Crescent Moon'], a:'New Moon', exp:'During a new moon, the sunlit side faces away from Earth, so we cannot see it.'},
+  {q:'What is it called when the entire face of the Moon is lit up?', choices:['Full Moon','New Moon','Quarter Moon','Crescent Moon'], a:'Full Moon', exp:'A full moon happens when the entire near side of the Moon is lit by the Sun.'},
+  {q:'About how long does it take the Moon to go through all its phases once?', choices:['About one month','About one day','About one year','About one week'], a:'About one month', exp:'The Moon takes about 29.5 days — roughly a month — to complete a full cycle of phases.'},
+  {q:'A thin sliver of the Moon that is just barely visible is called a:', choices:['Crescent Moon','Full Moon','Gibbous Moon','New Moon'], a:'Crescent Moon', exp:'A crescent moon shows just a small sliver of the lit side.'},
+  {q:'Does the Moon produce its own light?', choices:['No, it reflects light from the Sun','Yes, it glows on its own','No, it reflects light from Earth','Yes, it burns like a star'], a:'No, it reflects light from the Sun', exp:'The Moon has no light of its own — we see it because it reflects sunlight.'},
+  {q:'When more than half the Moon is lit but it is not yet full, we call it:', choices:['Gibbous','Crescent','New','Quarter'], a:'Gibbous', exp:'A gibbous moon is more than half lit but not completely full.'},
+  {q:'What is a lunar eclipse?', choices:['When Earth’s shadow falls on the Moon','When the Moon blocks the Sun','When the Moon turns blue','When stars disappear'], a:'When Earth’s shadow falls on the Moon', exp:'A lunar eclipse happens when Earth passes between the Sun and Moon, casting a shadow on the Moon.'}
+];
+const BANK_magnetism = [
+  {q:'Which of these materials would a magnet attract?', choices:['Iron nail','Plastic ruler','Wooden block','Paper'], a:'Iron nail', exp:'Magnets attract certain metals like iron, nickel, and cobalt.'},
+  {q:'What happens when you put two magnets together with their like poles (N-N or S-S) facing each other?', choices:['They repel (push apart)','They attract (pull together)','Nothing happens','They stick permanently'], a:'They repel (push apart)', exp:'Like poles repel each other, while opposite poles attract.'},
+  {q:'What do we call the invisible area around a magnet where its force can be felt?', choices:['Magnetic field','Gravity field','Force zone','Energy ring'], a:'Magnetic field', exp:'A magnetic field is the region around a magnet where magnetic force acts.'},
+  {q:'A magnet has how many poles?', choices:['2 (North and South)','1','3','4'], a:'2 (North and South)', exp:'Every magnet has a North pole and a South pole.'},
+  {q:'Which of these would NOT be attracted to a magnet?', choices:['Aluminum foil','Iron nail','Steel paperclip','Cobalt'], a:'Aluminum foil', exp:'Aluminum is not magnetic, unlike iron, steel, and cobalt.'},
+  {q:'What happens when opposite poles of two magnets (N-S) face each other?', choices:['They attract (pull together)','They repel (push apart)','Nothing happens','They cancel out completely'], a:'They attract (pull together)', exp:'Opposite poles attract each other.'},
+  {q:'Which everyday object uses a magnet?', choices:['Compass','Wooden pencil','Glass cup','Rubber band'], a:'Compass', exp:'A compass needle is a small magnet that lines up with Earth’s magnetic field to point north.'},
+  {q:'Can a magnetic force act without the objects touching?', choices:['Yes, magnets can attract or repel from a distance','No, magnets must touch to work','Only underwater','Only in space'], a:'Yes, magnets can attract or repel from a distance', exp:'Magnetic force can act through the air without direct contact.'}
+];
+const BANK_soundLight = [
+  {q:'What causes sound?', choices:['Vibrations','Gravity','Magnetism','Evaporation'], a:'Vibrations', exp:'Sound is created when something vibrates and creates sound waves.'},
+  {q:'Light travels in straight lines called:', choices:['Rays','Waves only','Circles','Loops'], a:'Rays', exp:'Light travels outward from a source in straight lines called rays.'},
+  {q:'What do we call a material that lets light pass through easily, like glass?', choices:['Transparent','Opaque','Translucent','Reflective'], a:'Transparent', exp:'Transparent materials let most light pass straight through.'},
+  {q:'What do we call a material that blocks all light, like wood?', choices:['Opaque','Transparent','Translucent','Reflective'], a:'Opaque', exp:'Opaque materials do not let any light pass through, so they cast a shadow.'},
+  {q:'What is created when an opaque object blocks light?', choices:['A shadow','An echo','A vibration','A reflection'], a:'A shadow', exp:'A shadow forms on the side of an object opposite the light source, where light cannot reach.'},
+  {q:'What do we call sound bouncing off a surface and coming back?', choices:['An echo','A shadow','A vibration','A wave crest'], a:'An echo', exp:'An echo is a reflected sound wave that bounces back to the listener.'},
+  {q:'A material like frosted glass that lets SOME light through but you can’t see clearly through it is called:', choices:['Translucent','Transparent','Opaque','Reflective'], a:'Translucent', exp:'Translucent materials scatter light, letting some through while blurring what’s behind them.'},
+  {q:'What happens to light when it hits a mirror?', choices:['It reflects (bounces back)','It disappears','It changes to sound','It gets absorbed completely'], a:'It reflects (bounces back)', exp:'A mirror reflects light, bouncing it back in a predictable direction.'}
+];
+
+/* ================================================================
+   GRADE 5–6 BANKS: Life Science / Earth & Space Science / Physical Science
+   ================================================================ */
+const BANK_cellsBasics = [
+  {q:'What is the basic unit of life?', choices:['Cell','Atom','Tissue','Organ'], a:'Cell', exp:'All living things are made of one or more cells.'},
+  {q:'Which part of the cell controls its activities and contains DNA?', choices:['Nucleus','Cell membrane','Cytoplasm','Mitochondria'], a:'Nucleus', exp:'The nucleus stores DNA and directs the cell’s activities.'},
+  {q:'Which structure is found in plant cells but NOT animal cells?', choices:['Cell wall','Nucleus','Cell membrane','Cytoplasm'], a:'Cell wall', exp:'The rigid cell wall supports and protects plant cells.'},
+  {q:'What is often called the powerhouse of the cell?', choices:['Mitochondria','Nucleus','Ribosome','Vacuole'], a:'Mitochondria', exp:'Mitochondria produce most of the cell’s usable energy.'},
+  {q:'Which part of the cell allows nutrients in and waste out?', choices:['Cell membrane','Nucleus','Chloroplast','Cell wall'], a:'Cell membrane', exp:'The cell membrane controls what enters and leaves the cell.'},
+  {q:'Plant cells contain chloroplasts, which are used for:', choices:['Making food from sunlight (photosynthesis)','Breaking down waste','Storing DNA','Fighting infection'], a:'Making food from sunlight (photosynthesis)', exp:'Chloroplasts capture sunlight to make food for the plant.'},
+  {q:'A group of similar cells working together forms a:', choices:['Tissue','Organ','Organism','Organ system'], a:'Tissue', exp:'Tissues are groups of similar cells doing a shared job.'},
+  {q:'Are all living things made of cells?', choices:['Yes, all living things are made of one or more cells','No, only animals have cells','No, only plants have cells','Only humans have cells'], a:'Yes, all living things are made of one or more cells', exp:'Cells are the basic building blocks of every living organism.'}
+];
+const BANK_ecosystemsFoodChains = [
+  {q:'In a food chain, what do we call an organism that makes its own food?', choices:['Producer','Consumer','Decomposer','Predator'], a:'Producer', exp:'Producers, like plants, make their own food using sunlight.'},
+  {q:'What do we call an animal that only eats other animals?', choices:['Carnivore','Herbivore','Omnivore','Producer'], a:'Carnivore', exp:'Carnivores eat only meat.'},
+  {q:'What role do decomposers play in an ecosystem?', choices:['They break down dead organisms and recycle nutrients','They make food from sunlight','They hunt live prey','They pollinate flowers'], a:'They break down dead organisms and recycle nutrients', exp:'Decomposers like fungi and bacteria return nutrients to the soil.'},
+  {q:'A food web is best described as:', choices:['Many connected food chains in an ecosystem','A single chain of predator and prey','A place where animals sleep','A type of habitat'], a:'Many connected food chains in an ecosystem', exp:'A food web shows how many food chains overlap and connect.'},
+  {q:'Where does most of the energy in a food chain originally come from?', choices:['The Sun','The soil','Water','Decomposers'], a:'The Sun', exp:'Sunlight is captured by producers and passed along the food chain.'},
+  {q:'What happens to the amount of energy available at each higher level of a food chain?', choices:['It decreases','It increases','It stays the same','It disappears completely'], a:'It decreases', exp:'Energy is lost as heat at each step, so less is available higher up the chain.'},
+  {q:'An organism that hunts and eats other organisms is called a:', choices:['Predator','Prey','Producer','Decomposer'], a:'Predator', exp:'A predator is an animal that hunts other animals for food.'},
+  {q:'An organism that is hunted and eaten by another is called:', choices:['Prey','Predator','Producer','Consumer only'], a:'Prey', exp:'Prey animals are hunted and eaten by predators.'}
+];
+const BANK_humanBodySystems = [
+  {q:'Which organ pumps blood through the body?', choices:['Heart','Lungs','Stomach','Kidney'], a:'Heart', exp:'The heart pumps blood through the circulatory system.'},
+  {q:'Which system is responsible for breathing?', choices:['Respiratory system','Digestive system','Circulatory system','Skeletal system'], a:'Respiratory system', exp:'The respiratory system brings oxygen in and removes carbon dioxide.'},
+  {q:'Which system breaks down food so the body can use its nutrients?', choices:['Digestive system','Respiratory system','Nervous system','Muscular system'], a:'Digestive system', exp:'The digestive system breaks food down into nutrients the body can absorb.'},
+  {q:'What is the main job of the skeletal system?', choices:['Support the body and protect organs','Pump blood','Digest food','Send electrical signals'], a:'Support the body and protect organs', exp:'Bones support the body and protect organs like the brain and heart.'},
+  {q:'Which organ is the control center of the nervous system?', choices:['Brain','Heart','Liver','Lungs'], a:'Brain', exp:'The brain processes information and controls the body.'},
+  {q:'Which organs filter waste out of the blood?', choices:['Kidneys','Lungs','Heart','Stomach'], a:'Kidneys', exp:'Kidneys filter waste from the blood to make urine.'},
+  {q:'What do red blood cells mainly carry around the body?', choices:['Oxygen','Food','Water','Bacteria'], a:'Oxygen', exp:'Red blood cells carry oxygen from the lungs to the rest of the body.'},
+  {q:'Muscles work together with which system to help you move?', choices:['Skeletal system','Digestive system','Respiratory system','Circulatory system'], a:'Skeletal system', exp:'Muscles pull on bones to create movement.'}
+];
+const BANK_waterCycle = [
+  {q:'What is it called when the Sun heats water and turns it into vapor?', choices:['Evaporation','Condensation','Precipitation','Collection'], a:'Evaporation', exp:'Heat from the Sun turns liquid water into water vapor.'},
+  {q:'What is it called when water vapor cools and turns into clouds?', choices:['Condensation','Evaporation','Precipitation','Runoff'], a:'Condensation', exp:'Condensation happens when water vapor cools and forms tiny droplets.'},
+  {q:'What do we call water falling from clouds as rain, snow, or hail?', choices:['Precipitation','Evaporation','Condensation','Transpiration'], a:'Precipitation', exp:'Precipitation is any water that falls from clouds to the ground.'},
+  {q:'What is it called when water flows over land into rivers, lakes, and oceans?', choices:['Runoff / collection','Evaporation','Sublimation','Transpiration'], a:'Runoff / collection', exp:'Runoff carries water over land back into larger bodies of water.'},
+  {q:'What is it called when plants release water vapor into the air?', choices:['Transpiration','Evaporation','Condensation','Precipitation'], a:'Transpiration', exp:'Transpiration is water vapor released from plant leaves.'},
+  {q:'Where is most of Earth’s water found?', choices:['Oceans','Rivers','Lakes','Underground'], a:'Oceans', exp:'Oceans hold the vast majority of Earth’s water.'},
+  {q:'The water cycle is powered mainly by energy from:', choices:['The Sun','The Moon','Wind','Volcanoes'], a:'The Sun', exp:'The Sun’s heat drives evaporation, which powers the whole cycle.'},
+  {q:'Is the total amount of water on Earth increasing, decreasing, or staying about the same over time?', choices:['Staying about the same — it is recycled','Increasing every year','Decreasing every year','Doubling every decade'], a:'Staying about the same — it is recycled', exp:'Water constantly moves through the cycle but the total amount stays roughly constant.'}
+];
+const BANK_weatherClimate = [
+  {q:'What is the difference between weather and climate?', choices:['Weather is short-term conditions; climate is the long-term pattern','Weather and climate mean exactly the same thing','Climate only refers to temperature; weather does not','Weather is measured in years; climate in days'], a:'Weather is short-term conditions; climate is the long-term pattern', exp:'Weather is what is happening now; climate is the average pattern over many years.'},
+  {q:'What instrument measures air pressure?', choices:['Barometer','Thermometer','Anemometer','Rain gauge'], a:'Barometer', exp:'A barometer measures atmospheric pressure.'},
+  {q:'What instrument measures wind speed?', choices:['Anemometer','Barometer','Thermometer','Hygrometer'], a:'Anemometer', exp:'An anemometer spins to measure how fast the wind is blowing.'},
+  {q:'A region near the equator typically has which climate?', choices:['Warm and often humid','Cold and dry','Snowy year-round','Very windy only'], a:'Warm and often humid', exp:'Areas near the equator receive strong, direct sunlight year-round, making them warm.'},
+  {q:'What causes the seasons on Earth?', choices:['The tilt of Earth’s axis as it orbits the Sun','The changing distance from the Moon','The Earth spinning faster in summer','Ocean currents alone'], a:'The tilt of Earth’s axis as it orbits the Sun', exp:'Earth’s tilted axis means different parts get more direct sunlight at different times of year.'},
+  {q:'Which of these best describes humidity?', choices:['The amount of water vapor in the air','The temperature of the air','The speed of the wind','The air pressure'], a:'The amount of water vapor in the air', exp:'Humidity measures how much moisture is in the air.'},
+  {q:'A large mass of air with a fairly uniform temperature and humidity is called a(n):', choices:['Air mass','Front','Isobar','Jet stream'], a:'Air mass', exp:'An air mass is a large body of air with similar properties throughout.'},
+  {q:'What is formed when a warm air mass meets a cold air mass?', choices:['A front','A drought','A rainbow','An eclipse'], a:'A front', exp:'A front is the boundary where two different air masses meet, often bringing weather changes.'}
+];
+const BANK_solarSystemDeeper = [
+  {q:'Which planet comes right after Mars, moving outward from the Sun?', choices:['Jupiter','Venus','Saturn','Mercury'], a:'Jupiter', exp:'The order from the Sun is Mercury, Venus, Earth, Mars, then Jupiter.'},
+  {q:'What is the name for a planet’s path around the Sun?', choices:['Orbit','Rotation','Axis','Eclipse'], a:'Orbit', exp:'An orbit is the curved path a planet follows around the Sun.'},
+  {q:'What do we call one full spin of the Earth on its axis?', choices:['A day','A year','A month','An orbit'], a:'A day', exp:'One full rotation of Earth takes about 24 hours — one day.'},
+  {q:'What causes day and night on Earth?', choices:['Earth rotating on its axis','Earth orbiting the Sun','The Moon blocking the Sun','The Sun moving around Earth'], a:'Earth rotating on its axis', exp:'As Earth spins, different sides face toward or away from the Sun.'},
+  {q:'Which of these is a dwarf planet?', choices:['Pluto','Mars','Venus','Neptune'], a:'Pluto', exp:'Pluto is classified as a dwarf planet.'},
+  {q:'What is a comet mostly made of?', choices:['Ice, dust, and rock','Solid iron','Liquid water','Burning gas only'], a:'Ice, dust, and rock', exp:'Comets are often called "dirty snowballs" made of ice, dust, and rocky material.'},
+  {q:'Why does the Moon appear to change shape (phases) during the month?', choices:['We see different amounts of its sunlit side as it orbits Earth','The Moon changes size','Clouds cover parts of it','The Sun changes brightness'], a:'We see different amounts of its sunlit side as it orbits Earth', exp:'The Moon does not change shape — we just see varying amounts of its lit side.'},
+  {q:'What is a light-year a measurement of?', choices:['Distance','Time','Brightness','Temperature'], a:'Distance', exp:'A light-year is the distance light travels in one year, used for huge distances in space.'}
+];
+const BANK_matterMixtures = [
+  {q:'A mixture where you can easily see and separate the different parts is called:', choices:['A heterogeneous mixture','A solution','A pure element','A compound'], a:'A heterogeneous mixture', exp:'Heterogeneous mixtures have visibly different parts, like a salad.'},
+  {q:'Salt water is an example of a:', choices:['Solution','Pure element','Heterogeneous mixture','Compound only'], a:'Solution', exp:'A solution is a mixture where one substance dissolves evenly into another.'},
+  {q:'In a solution, the substance being dissolved is called the:', choices:['Solute','Solvent','Mixture','Compound'], a:'Solute', exp:'The solute is the substance that gets dissolved.'},
+  {q:'In salt water, water is the:', choices:['Solvent','Solute','Precipitate','Residue'], a:'Solvent', exp:'The solvent is the substance that does the dissolving.'},
+  {q:'Which method could separate sand from water?', choices:['Filtration','Melting','Burning','Freezing only'], a:'Filtration', exp:'Filtration uses a filter to separate solid particles from a liquid.'},
+  {q:'A substance made of two or more elements chemically bonded together is called a:', choices:['Compound','Mixture','Solution','Element'], a:'Compound', exp:'Compounds are chemically bonded, unlike simple mixtures.'},
+  {q:'Which of these is a physical change, not a chemical change?', choices:['Ice melting into water','Wood burning','Iron rusting','An egg cooking'], a:'Ice melting into water', exp:'Melting changes the state of water but not what it is made of.'},
+  {q:'Which of these is a chemical change?', choices:['Paper burning to ash','Tearing paper','Freezing water','Crushing a can'], a:'Paper burning to ash', exp:'Burning creates new substances (ash and gases), so it is a chemical change.'}
+];
+const BANK_energyForms = [
+  {q:'The energy of motion is called:', choices:['Kinetic energy','Potential energy','Chemical energy','Thermal energy'], a:'Kinetic energy', exp:'Kinetic energy is the energy an object has because it is moving.'},
+  {q:'Stored energy due to an object’s position (like a ball held up high) is called:', choices:['Potential energy','Kinetic energy','Sound energy','Electrical energy'], a:'Potential energy', exp:'Potential energy is stored energy based on position or condition.'},
+  {q:'The energy stored in food and fuels is called:', choices:['Chemical energy','Kinetic energy','Light energy','Nuclear energy'], a:'Chemical energy', exp:'Chemical energy is released when bonds in food or fuel are broken.'},
+  {q:'A moving car has mostly which type of energy?', choices:['Kinetic energy','Potential energy','Sound energy','Nuclear energy'], a:'Kinetic energy', exp:'A moving object’s main energy of motion is kinetic energy.'},
+  {q:'Which of these is a renewable energy source?', choices:['Solar power','Coal','Natural gas','Oil'], a:'Solar power', exp:'Solar power comes from sunlight, which is constantly renewed.'},
+  {q:'Energy cannot be created or destroyed, only changed from one form to another — this idea is called:', choices:['Conservation of energy','Newton’s first law','The water cycle','Photosynthesis'], a:'Conservation of energy', exp:'This is the law of conservation of energy.'},
+  {q:'A battery mainly stores which kind of energy?', choices:['Chemical energy','Kinetic energy','Light energy','Sound energy'], a:'Chemical energy', exp:'Batteries store energy chemically and release it as electricity.'},
+  {q:'When you rub your hands together quickly, friction converts motion into mostly:', choices:['Heat (thermal) energy','Light energy','Sound energy only','Chemical energy'], a:'Heat (thermal) energy', exp:'Friction between your hands converts motion energy into heat.'}
+];
+
+/* ================================================================
+   GRADE 7–8 BANKS: Biology / Earth & Environmental Science / Chemistry & Physics
+   ================================================================ */
+const BANK_cellStructure = [
+  {q:'Which organelle is responsible for protein synthesis?', choices:['Ribosome','Mitochondria','Nucleus','Vacuole'], a:'Ribosome', exp:'Ribosomes read genetic instructions to build proteins.'},
+  {q:'What is the function of the mitochondria?', choices:['Produce energy (ATP) for the cell','Store genetic information','Control what enters and exits the cell','Produce proteins'], a:'Produce energy (ATP) for the cell', exp:'Mitochondria convert nutrients into usable cellular energy (ATP).'},
+  {q:'Which structure stores water and nutrients and is usually larger in plant cells?', choices:['Vacuole','Ribosome','Nucleolus','Lysosome'], a:'Vacuole', exp:'The large central vacuole in plant cells stores water and helps maintain shape.'},
+  {q:'What is the jelly-like substance that fills a cell and holds its organelles called?', choices:['Cytoplasm','Nucleoplasm','Cytoskeleton','Cell wall'], a:'Cytoplasm', exp:'Cytoplasm fills the cell and suspends its organelles.'},
+  {q:'Which of these organisms have cells WITHOUT a nucleus?', choices:['Bacteria (prokaryotes)','Animals','Plants','Fungi'], a:'Bacteria (prokaryotes)', exp:'Prokaryotic cells like bacteria lack a membrane-bound nucleus.'},
+  {q:'What is the main difference between prokaryotic and eukaryotic cells?', choices:['Eukaryotic cells have a nucleus; prokaryotic cells do not','Prokaryotic cells are always bigger','Only eukaryotic cells have DNA','Only prokaryotic cells can move'], a:'Eukaryotic cells have a nucleus; prokaryotic cells do not', exp:'This nucleus difference is the defining distinction between the two cell types.'},
+  {q:'Which organelle breaks down waste and worn-out cell parts?', choices:['Lysosome','Ribosome','Chloroplast','Golgi body'], a:'Lysosome', exp:'Lysosomes contain enzymes that digest waste and old cell parts.'},
+  {q:'What is the function of the Golgi apparatus (Golgi body)?', choices:['Packages and ships proteins out of the cell','Produces energy','Stores DNA','Photosynthesis'], a:'Packages and ships proteins out of the cell', exp:'The Golgi apparatus processes and packages proteins for use or export.'}
+];
+const BANK_geneticsBasics = [
+  {q:'What molecule carries genetic information in most living things?', choices:['DNA','RNA only','Protein','ATP'], a:'DNA', exp:'DNA stores the genetic instructions for building and running an organism.'},
+  {q:'A specific section of DNA that codes for a trait is called a:', choices:['Gene','Chromosome','Allele pair','Nucleus'], a:'Gene', exp:'A gene is a segment of DNA that codes for a particular trait.'},
+  {q:'What do we call the different versions of a gene (e.g. for brown vs. blue eyes)?', choices:['Alleles','Chromosomes','Genomes','Genotypes only'], a:'Alleles', exp:'Alleles are alternate versions of the same gene.'},
+  {q:'A trait that shows up even if only one copy of the allele is present is called:', choices:['Dominant','Recessive','Mutated','Hybrid'], a:'Dominant', exp:'Dominant alleles show their effect with just one copy.'},
+  {q:'A trait that only shows up if both copies of the allele are present is called:', choices:['Recessive','Dominant','Codominant','Sex-linked'], a:'Recessive', exp:'Recessive traits require two copies of the recessive allele to appear.'},
+  {q:'Where are genes located inside a cell?', choices:['On chromosomes in the nucleus','In the cell wall','In the mitochondria only','Floating freely in the cytoplasm'], a:'On chromosomes in the nucleus', exp:'Genes are arranged along chromosomes inside the nucleus.'},
+  {q:'Offspring get half of their genetic material from each of how many parents (in sexual reproduction)?', choices:['Two','One','Three','Four'], a:'Two', exp:'Each parent contributes half of the offspring’s genetic material.'},
+  {q:'What is an organism’s physical appearance based on its genes called?', choices:['Phenotype','Genotype','Allele','Chromosome'], a:'Phenotype', exp:'Phenotype is the observable expression of an organism’s genes.'}
+];
+const BANK_ecologyBiomes = [
+  {q:'Which biome is characterized by very low rainfall and extreme temperature swings?', choices:['Desert','Rainforest','Tundra','Grassland'], a:'Desert', exp:'Deserts receive little rain and can have hot days and cold nights.'},
+  {q:'Which biome has the greatest biodiversity (most species) on Earth?', choices:['Tropical rainforest','Tundra','Desert','Taiga'], a:'Tropical rainforest', exp:'Warm, wet rainforests support more species than any other biome.'},
+  {q:'The tundra biome is characterized by:', choices:['Cold temperatures and permanently frozen subsoil','Hot temperatures year-round','Heavy year-round rainfall','Dense tropical forests'], a:'Cold temperatures and permanently frozen subsoil', exp:'Tundra has permafrost, a layer of soil that stays frozen year-round.'},
+  {q:'What term describes all the populations of different species living and interacting in an area?', choices:['Community','Ecosystem','Biome','Population'], a:'Community', exp:'A community includes all the different species living together in one area.'},
+  {q:'What term describes a community of organisms PLUS the nonliving parts of their environment?', choices:['Ecosystem','Population','Species','Biome'], a:'Ecosystem', exp:'An ecosystem includes living things and nonliving factors like water, soil, and air.'},
+  {q:'Two species competing for the exact same resources in the same area is an example of:', choices:['Competition','Mutualism','Predation','Symbiosis only'], a:'Competition', exp:'Competition happens when species need the same limited resources.'},
+  {q:'A relationship where both species benefit is called:', choices:['Mutualism','Parasitism','Competition','Predation'], a:'Mutualism', exp:'In mutualism, both organisms gain something from the relationship.'},
+  {q:'A relationship where one organism benefits and the other is harmed is called:', choices:['Parasitism','Mutualism','Commensalism','Competition only'], a:'Parasitism', exp:'A parasite benefits at the expense of its host.'}
+];
+const BANK_plateTectonics = [
+  {q:'What is the theory that Earth’s crust is broken into moving plates called?', choices:['Plate tectonics','Continental drift only','Erosion theory','Rock cycle theory'], a:'Plate tectonics', exp:'Plate tectonics explains how large plates of crust move over time.'},
+  {q:'What usually forms where two tectonic plates collide?', choices:['Mountains','Deserts','Rivers','Glaciers'], a:'Mountains', exp:'Colliding plates push rock upward, forming mountain ranges.'},
+  {q:'What is it called when two plates slide past each other, like the San Andreas Fault?', choices:['Transform boundary','Convergent boundary','Divergent boundary','Subduction zone'], a:'Transform boundary', exp:'At a transform boundary, plates grind past one another.'},
+  {q:'What happens at a divergent plate boundary?', choices:['Plates move apart from each other','Plates crash together','Plates slide past each other','Plates stop moving'], a:'Plates move apart from each other', exp:'Divergent boundaries pull apart, often forming new crust.'},
+  {q:'What natural event is most directly caused by sudden movement along a fault?', choices:['Earthquake','Hurricane','Tornado','Drought'], a:'Earthquake', exp:'Sudden slipping along a fault releases energy as an earthquake.'},
+  {q:'Volcanoes often form near which type of plate boundary?', choices:['Convergent (or divergent) boundaries','Only transform boundaries','Places with no plate activity','The center of continents only'], a:'Convergent (or divergent) boundaries', exp:'Magma can rise where plates collide or pull apart, forming volcanoes.'},
+  {q:'What is the process called when one tectonic plate is forced under another?', choices:['Subduction','Erosion','Deposition','Weathering'], a:'Subduction', exp:'Subduction happens when a denser plate sinks beneath another.'},
+  {q:'Earth’s outer layer, broken into tectonic plates, is called the:', choices:['Crust','Core','Mantle','Atmosphere'], a:'Crust', exp:'The crust is Earth’s thin, rocky outer layer.'}
+];
+const BANK_climateSystems = [
+  {q:'What is the greenhouse effect?', choices:['Gases in the atmosphere trap heat, warming the Earth','The cooling of the atmosphere at night','The process of clouds forming','The melting of polar ice'], a:'Gases in the atmosphere trap heat, warming the Earth', exp:'Greenhouse gases trap heat that would otherwise escape into space.'},
+  {q:'Which gas is most associated with human-caused climate change?', choices:['Carbon dioxide','Nitrogen','Oxygen','Helium'], a:'Carbon dioxide', exp:'Burning fossil fuels releases large amounts of carbon dioxide.'},
+  {q:'What is the jet stream?', choices:['A fast-moving band of air high in the atmosphere','A type of ocean current','A tool for measuring pressure','A type of cloud'], a:'A fast-moving band of air high in the atmosphere', exp:'The jet stream is a narrow band of strong winds that influences weather patterns.'},
+  {q:'Ocean currents affect climate mainly by:', choices:['Moving warm and cold water around the globe','Creating tectonic plates','Controlling the Moon’s phases','Producing tornadoes'], a:'Moving warm and cold water around the globe', exp:'Currents redistribute heat, warming or cooling nearby land.'},
+  {q:'What layer of Earth’s atmosphere do we live in and where most weather occurs?', choices:['Troposphere','Stratosphere','Mesosphere','Thermosphere'], a:'Troposphere', exp:'The troposphere is the lowest atmospheric layer, where weather happens.'},
+  {q:'Which layer of the atmosphere contains the ozone layer that blocks harmful UV rays?', choices:['Stratosphere','Troposphere','Mesosphere','Exosphere'], a:'Stratosphere', exp:'The ozone layer sits within the stratosphere.'},
+  {q:'What is albedo?', choices:['A measure of how much light a surface reflects','The speed of wind','The temperature of the ocean','A type of cloud'], a:'A measure of how much light a surface reflects', exp:'Albedo measures reflectivity — higher albedo means more light bounced back.'},
+  {q:'Which surface would generally have the HIGHEST albedo (reflect the most sunlight)?', choices:['Fresh snow','Dark ocean water','A paved road','A forest'], a:'Fresh snow', exp:'Bright white snow reflects most sunlight rather than absorbing it.'}
+];
+const BANK_astronomyDeeper = [
+  {q:'What is the name for the huge collection of stars, gas, and dust that our solar system belongs to?', choices:['The Milky Way galaxy','The solar nebula','The Kuiper Belt','The asteroid belt'], a:'The Milky Way galaxy', exp:'Our solar system is one small part of the Milky Way galaxy.'},
+  {q:'What is a star mainly made of?', choices:['Hydrogen and helium gas','Solid rock','Liquid water','Ice'], a:'Hydrogen and helium gas', exp:'Stars are huge balls of hydrogen and helium gas.'},
+  {q:'What powers the Sun and other stars?', choices:['Nuclear fusion','Nuclear fission','Chemical burning','Gravity alone'], a:'Nuclear fusion', exp:'Fusion combines hydrogen into helium, releasing enormous energy.'},
+  {q:'What is a light-year used to measure?', choices:['Distance','Time','Speed of light itself','Brightness'], a:'Distance', exp:'A light-year measures how far light travels in one year — a unit of distance.'},
+  {q:'What causes a solar eclipse?', choices:['The Moon passes between the Sun and Earth','The Earth passes between the Sun and Moon','The Sun passes behind the Earth','Clouds block the Sun'], a:'The Moon passes between the Sun and Earth', exp:'A solar eclipse happens when the Moon blocks sunlight from reaching part of Earth.'},
+  {q:'What causes a lunar eclipse?', choices:['The Earth passes between the Sun and the Moon','The Moon passes between the Sun and Earth','The Moon moves away from Earth','The Sun goes dark'], a:'The Earth passes between the Sun and the Moon', exp:'A lunar eclipse happens when Earth’s shadow falls on the Moon.'},
+  {q:'What is the region beyond Mars containing millions of rocky bodies called?', choices:['The asteroid belt','The Kuiper Belt','The Oort Cloud','The exosphere'], a:'The asteroid belt', exp:'The asteroid belt lies between the orbits of Mars and Jupiter.'},
+  {q:'What eventually happens when a very massive star runs out of fuel?', choices:['It can explode as a supernova','It turns into a comet','It becomes a new planet','It cools into an asteroid'], a:'It can explode as a supernova', exp:'Massive stars can end their lives in a dramatic supernova explosion.'}
+];
+const BANK_atomsElements = [
+  {q:'What is the smallest particle of an element that still has the properties of that element?', choices:['Atom','Molecule','Cell','Compound'], a:'Atom', exp:'An atom is the basic unit of a chemical element.'},
+  {q:'Which subatomic particle has a positive charge?', choices:['Proton','Electron','Neutron','Photon'], a:'Proton', exp:'Protons carry a positive electric charge.'},
+  {q:'Which subatomic particle has a negative charge?', choices:['Electron','Proton','Neutron','Nucleus'], a:'Electron', exp:'Electrons carry a negative electric charge.'},
+  {q:'Which subatomic particle has no electric charge?', choices:['Neutron','Proton','Electron','Ion'], a:'Neutron', exp:'Neutrons are electrically neutral.'},
+  {q:'Where are protons and neutrons located in an atom?', choices:['In the nucleus','Orbiting the nucleus','Outside the atom','In electron clouds only'], a:'In the nucleus', exp:'Protons and neutrons cluster together in the atom’s central nucleus.'},
+  {q:'What determines which element an atom is?', choices:['The number of protons','The number of neutrons','The number of electrons only','The total mass'], a:'The number of protons', exp:'The number of protons (atomic number) defines the element.'},
+  {q:'Two or more atoms bonded together form a:', choices:['Molecule','Cell','Nucleus','Isotope'], a:'Molecule', exp:'A molecule is two or more atoms bonded together.'},
+  {q:'What is the chemical symbol for oxygen?', choices:['O','Ox','O2 only','Og'], a:'O', exp:'The element oxygen is represented by the symbol O.'}
+];
+
+/* ================================================================
+   GRADE 9–10+ BANKS: Biology / Chemistry
+   ================================================================ */
+const BANK_geneticsInheritance = [
+  {q:'In a cross between two heterozygous parents (Aa × Aa) for a simple dominant/recessive trait, what fraction of offspring is expected to show the recessive trait?', choices:['1/4','1/2','3/4','All of them'], a:'1/4', exp:'A Punnett square for Aa × Aa gives 1 AA : 2 Aa : 1 aa, so 1/4 are aa (recessive).'},
+  {q:'In a cross Aa × Aa, what fraction of offspring is expected to show the dominant trait?', choices:['3/4','1/4','1/2','None'], a:'3/4', exp:'AA and Aa offspring (3 out of 4) both show the dominant trait.'},
+  {q:'In a cross between a homozygous dominant parent (AA) and a homozygous recessive parent (aa), what fraction of offspring will be heterozygous (Aa)?', choices:['All of them (100%)','Half (50%)','A quarter (25%)','None'], a:'All of them (100%)', exp:'AA × aa always produces Aa offspring, since each parent contributes only one type of allele.'},
+  {q:'A genotype with two identical alleles (like AA or aa) is called:', choices:['Homozygous','Heterozygous','Hybrid','Codominant'], a:'Homozygous', exp:'Homozygous means both alleles for a gene are the same.'},
+  {q:'A genotype with two different alleles (like Aa) is called:', choices:['Heterozygous','Homozygous','Recessive only','Mutant'], a:'Heterozygous', exp:'Heterozygous means the two alleles for a gene are different.'},
+  {q:'A diagram used to predict the possible genotypes of offspring from a cross is called a:', choices:['Punnett square','Pedigree chart','Karyotype','Phylogenetic tree'], a:'Punnett square', exp:'Punnett squares organize all possible allele combinations from a cross.'},
+  {q:'In humans, how many chromosomes does a typical body cell contain?', choices:['46','23','44','48'], a:'46', exp:'Human body cells normally contain 46 chromosomes, in 23 pairs.'},
+  {q:'Sex cells (sperm and egg) in humans contain how many chromosomes each?', choices:['23','46','22','24'], a:'23', exp:'Sex cells contain half the normal number so that fertilization restores 46.'}
+];
+const BANK_evolutionNaturalSelection = [
+  {q:'Who is credited with developing the theory of evolution by natural selection?', choices:['Charles Darwin','Gregor Mendel','Louis Pasteur','Isaac Newton'], a:'Charles Darwin', exp:'Charles Darwin proposed natural selection as the mechanism for evolution.'},
+  {q:'Natural selection favors individuals with traits that:', choices:['Improve survival and reproduction in their environment','Are the most unusual','Are inherited from only one parent','Appear most often regardless of environment'], a:'Improve survival and reproduction in their environment', exp:'Traits that boost survival and reproduction tend to become more common over generations.'},
+  {q:'What is the raw material for evolution, providing new genetic variations?', choices:['Mutations','Photosynthesis','Respiration','Digestion'], a:'Mutations', exp:'Mutations introduce new genetic variation that natural selection can act on.'},
+  {q:'What term describes species evolving similar traits because they live in similar environments, not because they share a recent ancestor?', choices:['Convergent evolution','Divergent evolution','Coevolution','Speciation'], a:'Convergent evolution', exp:'Convergent evolution produces similar traits independently in unrelated species.'},
+  {q:'What is a species best defined as?', choices:['A group of organisms that can interbreed and produce fertile offspring','Any group of animals that look alike','All organisms living in the same habitat','A single individual organism'], a:'A group of organisms that can interbreed and produce fertile offspring', exp:'This is the standard biological definition of a species.'},
+  {q:'Structures like a human arm and a whale flipper, similar due to common ancestry, are called:', choices:['Homologous structures','Analogous structures','Vestigial structures','Convergent structures'], a:'Homologous structures', exp:'Homologous structures share an underlying similarity from a common ancestor.'},
+  {q:'A structure that has lost most or all of its original function through evolution (like the human appendix) is called:', choices:['Vestigial structure','Homologous structure','Analogous structure','Adaptive structure'], a:'Vestigial structure', exp:'Vestigial structures are remnants of features that were more useful to ancestors.'},
+  {q:'What term describes the process by which new species form?', choices:['Speciation','Mutation','Selection','Adaptation only'], a:'Speciation', exp:'Speciation is the evolutionary process of forming new, distinct species.'}
+];
+const BANK_cellBiologyAdvanced = [
+  {q:'What process do cells use to divide and produce two identical daughter cells for growth and repair?', choices:['Mitosis','Meiosis','Fertilization','Transcription'], a:'Mitosis', exp:'Mitosis produces two genetically identical daughter cells.'},
+  {q:'What process produces sex cells (sperm and egg) with half the normal number of chromosomes?', choices:['Meiosis','Mitosis','Binary fission','Cloning'], a:'Meiosis', exp:'Meiosis halves the chromosome number to produce sex cells.'},
+  {q:'What is the process by which cells convert glucose and oxygen into usable energy (ATP)?', choices:['Cellular respiration','Photosynthesis','Fermentation only','Digestion'], a:'Cellular respiration', exp:'Cellular respiration breaks down glucose to release energy as ATP.'},
+  {q:'What is the process by which plants convert sunlight, water, and carbon dioxide into glucose and oxygen?', choices:['Photosynthesis','Cellular respiration','Transpiration','Osmosis'], a:'Photosynthesis', exp:'Photosynthesis uses light energy to build glucose and release oxygen.'},
+  {q:'Where in the cell does most cellular respiration take place?', choices:['Mitochondria','Nucleus','Chloroplast','Ribosome'], a:'Mitochondria', exp:'Mitochondria are the main site of cellular respiration.'},
+  {q:'Where in the plant cell does photosynthesis take place?', choices:['Chloroplast','Mitochondria','Nucleus','Vacuole'], a:'Chloroplast', exp:'Chloroplasts contain chlorophyll and carry out photosynthesis.'},
+  {q:'What is the movement of water across a cell membrane from high to low water concentration called?', choices:['Osmosis','Diffusion of solutes','Active transport','Endocytosis'], a:'Osmosis', exp:'Osmosis is the diffusion of water across a semipermeable membrane.'},
+  {q:'What type of transport requires the cell to use energy to move substances against their concentration gradient?', choices:['Active transport','Passive transport','Osmosis','Simple diffusion'], a:'Active transport', exp:'Active transport uses cellular energy to move substances "uphill".'}
+];
+const BANK_atomicStructure = [
+  {q:'What model describes electrons existing in probability clouds rather than fixed orbits?', choices:['The electron cloud (quantum) model','The plum pudding model','The solar system model only','The Bohr model exclusively'], a:'The electron cloud (quantum) model', exp:'The modern model describes electron locations as probability clouds.'},
+  {q:'Atoms of the same element with different numbers of neutrons are called:', choices:['Isotopes','Ions','Isomers','Allotropes'], a:'Isotopes', exp:'Isotopes have the same number of protons but different numbers of neutrons.'},
+  {q:'An atom that has gained or lost electrons, giving it an electric charge, is called a(n):', choices:['Ion','Isotope','Isomer','Molecule'], a:'Ion', exp:'Ions form when atoms gain or lose electrons.'},
+  {q:'What do we call the total number of protons plus neutrons in an atom’s nucleus?', choices:['Mass number','Atomic number','Atomic mass unit','Valence number'], a:'Mass number', exp:'Mass number is the sum of protons and neutrons.'},
+  {q:'The atomic number of an element tells you the number of:', choices:['Protons','Neutrons','Protons plus neutrons','Electrons in the outer shell only'], a:'Protons', exp:'Atomic number equals the number of protons.'},
+  {q:'Electrons in the outermost shell of an atom, which determine how it bonds, are called:', choices:['Valence electrons','Core electrons','Free electrons','Ionic electrons'], a:'Valence electrons', exp:'Valence electrons determine an atom’s chemical bonding behavior.'},
+  {q:'When an atom loses an electron, it becomes:', choices:['A positively charged ion (cation)','A negatively charged ion (anion)','Neutral','An isotope'], a:'A positively charged ion (cation)', exp:'Losing a negative electron leaves the atom with a positive charge.'},
+  {q:'When an atom gains an electron, it becomes:', choices:['A negatively charged ion (anion)','A positively charged ion (cation)','Neutral','An isotope'], a:'A negatively charged ion (anion)', exp:'Gaining an extra electron gives the atom a negative charge.'}
+];
+const BANK_periodicTableTrends = [
+  {q:'Elements in the same column (group) of the periodic table tend to have similar:', choices:['Chemical properties','Atomic mass exactly','Colors','Melting points exactly'], a:'Chemical properties', exp:'Elements in a group share the same number of valence electrons, giving similar behavior.'},
+  {q:'As you move left to right across a period (row), atomic radius generally:', choices:['Decreases','Increases','Stays the same','Doubles'], a:'Decreases', exp:'Increasing nuclear charge pulls electrons in more tightly across a period.'},
+  {q:'As you move down a group (column), atomic radius generally:', choices:['Increases','Decreases','Stays the same','Becomes zero'], a:'Increases', exp:'Adding electron shells down a group makes atoms larger.'},
+  {q:'Elements in Group 18 (the noble gases) are generally:', choices:['Very unreactive','Highly reactive metals','Extremely reactive nonmetals','Radioactive only'], a:'Very unreactive', exp:'Noble gases have full outer electron shells, making them very stable.'},
+  {q:'Elements in Group 1 (alkali metals) are known for being:', choices:['Highly reactive metals','Unreactive gases','Nonmetals','Metalloids only'], a:'Highly reactive metals', exp:'Alkali metals react vigorously, especially with water.'},
+  {q:'Which side of the periodic table are metals mostly found on?', choices:['The left side','The right side','Only the top','Only the bottom'], a:'The left side', exp:'Most metals are on the left and center of the periodic table.'},
+  {q:'Elements that have properties of both metals and nonmetals are called:', choices:['Metalloids','Noble gases','Halogens','Transition metals'], a:'Metalloids', exp:'Metalloids sit along the "staircase" line and share traits of both metals and nonmetals.'},
+  {q:'Group 17 elements (like fluorine and chlorine), known for being very reactive nonmetals, are called:', choices:['Halogens','Alkali metals','Noble gases','Alkaline earth metals'], a:'Halogens', exp:'Halogens are highly reactive nonmetals in Group 17.'}
+];
+
+Object.assign(GENERATORS, {
+  livingThings:()=>bankProblem(pick(BANK_livingThings)),
+  plantParts:()=>bankProblem(pick(BANK_plantParts)),
+  animalGroups:()=>bankProblem(pick(BANK_animalGroups)),
+  weatherBasics:()=>bankProblem(pick(BANK_weatherBasics)),
+  rocksSoil:()=>bankProblem(pick(BANK_rocksSoil)),
+  solarSystemBasics:()=>bankProblem(pick(BANK_solarSystemBasics)),
+  statesOfMatter:()=>bankProblem(pick(BANK_statesOfMatter)),
+  forcesMotionBasics:()=>bankProblem(pick(BANK_forcesMotionBasics)),
+  simpleMachinesID:()=>bankProblem(pick(BANK_simpleMachinesID)),
+  lifeCycles:()=>bankProblem(pick(BANK_lifeCycles)),
+  habitats:()=>bankProblem(pick(BANK_habitats)),
+  earthResources:()=>bankProblem(pick(BANK_earthResources)),
+  moonPhases:()=>bankProblem(pick(BANK_moonPhases)),
+  magnetism:()=>bankProblem(pick(BANK_magnetism)),
+  soundLight:()=>bankProblem(pick(BANK_soundLight)),
+  cellsBasics:()=>bankProblem(pick(BANK_cellsBasics)),
+  ecosystemsFoodChains:()=>bankProblem(pick(BANK_ecosystemsFoodChains)),
+  humanBodySystems:()=>bankProblem(pick(BANK_humanBodySystems)),
+  waterCycle:()=>bankProblem(pick(BANK_waterCycle)),
+  weatherClimate:()=>bankProblem(pick(BANK_weatherClimate)),
+  solarSystemDeeper:()=>bankProblem(pick(BANK_solarSystemDeeper)),
+  matterMixtures:()=>bankProblem(pick(BANK_matterMixtures)),
+  energyForms:()=>bankProblem(pick(BANK_energyForms)),
+  simpleMachinesMath:genSimpleMachinesMath,
+  cellStructure:()=>bankProblem(pick(BANK_cellStructure)),
+  geneticsBasics:()=>bankProblem(pick(BANK_geneticsBasics)),
+  ecologyBiomes:()=>bankProblem(pick(BANK_ecologyBiomes)),
+  plateTectonics:()=>bankProblem(pick(BANK_plateTectonics)),
+  climateSystems:()=>bankProblem(pick(BANK_climateSystems)),
+  astronomyDeeper:()=>bankProblem(pick(BANK_astronomyDeeper)),
+  atomsElements:()=>bankProblem(pick(BANK_atomsElements)),
+  statesMatterEnergy:genStatesMatterEnergy,
+  forcesMotion:genForcesMotion,
+  geneticsInheritance:()=>bankProblem(pick(BANK_geneticsInheritance)),
+  evolutionNaturalSelection:()=>bankProblem(pick(BANK_evolutionNaturalSelection)),
+  cellBiologyAdvanced:()=>bankProblem(pick(BANK_cellBiologyAdvanced)),
+  atomicStructure:()=>bankProblem(pick(BANK_atomicStructure)),
+  periodicTableTrends:()=>bankProblem(pick(BANK_periodicTableTrends)),
+  stoichiometryBasics:genStoichiometryBasics,
+  kinematics:genKinematics,
+  forcesNewtonsLaws:genForcesNewtonsLaws,
+  energyWorkPower:genEnergyWorkPower
+});
+
+/* ================================================================
+   Procedural generators — physics & chemistry math, self-checking
+   just like the math app's generators.
+   ================================================================ */
+function genSimpleMachinesMath(){
+  const loadArm = randInt(2,10), k = randInt(2,6), effortArm = loadArm*k;
+  return { isEquation:false, type:'number',
+    prompt:'A lever has an effort arm of '+N(effortArm+' cm')+' and a load arm of '+N(loadArm+' cm')+'. What is its mechanical advantage?',
+    answer:k, explanation:'Mechanical advantage = effort arm ÷ load arm = '+effortArm+' ÷ '+loadArm+' = '+k+'.' };
+}
+function genStatesMatterEnergy(){
+  const c = randInt(-4,20)*5; // multiples of 5, from -20 to 100
+  const f = c*9/5+32;
+  return { isEquation:true, type:'number',
+    prompt:'Convert '+N(c+'°C')+' to Fahrenheit using F = (C × 9/5) + 32. What is the temperature in °F?',
+    answer:f, explanation:'('+c+' × 9/5) + 32 = '+(c*9/5)+' + 32 = '+f+'°F.' };
+}
+function genForcesMotion(){
+  if(Math.random()<0.5){
+    const time=randInt(2,10), speed=randInt(5,60), distance=speed*time;
+    return { isEquation:false, type:'number',
+      prompt:'A car travels '+N(distance+' km')+' in '+N(time+' hours')+'. What is its speed in km/h? (speed = distance ÷ time)',
+      answer:speed, explanation:distance+' ÷ '+time+' = '+speed+' km/h.' };
+  }
+  const mass=randInt(2,20), accel=randInt(2,10), force=mass*accel;
+  return { isEquation:true, type:'number',
+    prompt:'An object with a mass of '+N(mass+' kg')+' accelerates at '+N(accel+' m/s²')+'. What force (in Newtons) is needed? (F = m × a)',
+    answer:force, explanation:mass+' × '+accel+' = '+force+' N.' };
+}
+const MOLAR_MASSES = [
+  {name:'water (H₂O)', mass:18}, {name:'carbon dioxide (CO₂)', mass:44}, {name:'sodium chloride (NaCl)', mass:58},
+  {name:'oxygen gas (O₂)', mass:32}, {name:'methane (CH₄)', mass:16}, {name:'ammonia (NH₃)', mass:17}
+];
+function genStoichiometryBasics(){
+  const compound = pick(MOLAR_MASSES), moles = randInt(2,10), mass = moles*compound.mass;
+  return { isEquation:false, type:'number',
+    prompt:'The molar mass of '+compound.name+' is '+N(compound.mass+' g/mol')+'. How many moles are in '+N(mass+' g')+' of it? (moles = mass ÷ molar mass)',
+    answer:moles, explanation:mass+' ÷ '+compound.mass+' = '+moles+' moles.' };
+}
+function genKinematics(){
+  if(Math.random()<0.5){
+    const v1=randInt(0,10), t=randInt(2,10), a=randInt(1,8), v2=v1+a*t;
+    return { isEquation:true, type:'number',
+      prompt:'An object speeds up from '+N(v1+' m/s')+' to '+N(v2+' m/s')+' in '+N(t+' seconds')+'. What is its acceleration in m/s²? (a = Δv ÷ t)',
+      answer:a, explanation:'('+v2+' - '+v1+') ÷ '+t+' = '+a+' m/s².' };
+  }
+  const time=randInt(2,10), speed=randInt(5,40), distance=speed*time;
+  return { isEquation:false, type:'number',
+    prompt:'An object travels '+N(distance+' m')+' in '+N(time+' seconds')+'. What is its average speed in m/s?',
+    answer:speed, explanation:distance+' ÷ '+time+' = '+speed+' m/s.' };
+}
+function genForcesNewtonsLaws(){
+  const accel = randInt(2,10);
+  if(Math.random()<0.5){ const mass=randInt(2,20), force=mass*accel;
+    return { isEquation:true, type:'number', prompt:'A '+N(mass+' kg')+' object accelerates at '+N(accel+' m/s²')+'. What net force (in N) is acting on it? (F = m × a)', answer:force, explanation:mass+' × '+accel+' = '+force+' N.' }; }
+  const rawForce=randInt(10,200), mass=Math.round(rawForce/accel), forceClean=mass*accel;
+  return { isEquation:true, type:'number', prompt:'A net force of '+N(forceClean+' N')+' causes an object to accelerate at '+N(accel+' m/s²')+'. What is the mass of the object in kg? (m = F ÷ a)', answer:mass, explanation:forceClean+' ÷ '+accel+' = '+mass+' kg.' };
+}
+function genEnergyWorkPower(){
+  if(Math.random()<0.5){
+    const force=randInt(5,50), distance=randInt(2,20), work=force*distance;
+    return { isEquation:true, type:'number', prompt:'A force of '+N(force+' N')+' moves an object '+N(distance+' m')+'. How much work (in Joules) is done? (W = F × d)', answer:work, explanation:force+' × '+distance+' = '+work+' J.' };
+  }
+  const rawWork=randInt(10,500), time=randInt(2,20), power=Math.round(rawWork/time), workClean=power*time;
+  return { isEquation:true, type:'number', prompt:N(workClean+' J')+' of work is done in '+N(time+' seconds')+'. What is the power in Watts? (P = W ÷ t)', answer:power, explanation:workClean+' ÷ '+time+' = '+power+' W.' };
+}
+
+
 const ICONS = {
   ops:'<svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="22" y="4" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="4" y="22" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><rect x="22" y="22" width="14" height="14" rx="3" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><text x="11" y="14" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">+</text><text x="29" y="14" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">×</text><text x="11" y="32" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">−</text><text x="29" y="32" font-size="9" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">÷</text></svg>',
   ratio:'<svg viewBox="0 0 40 40" fill="none"><line x1="10" y1="30" x2="30" y2="10" stroke="var(--c)" stroke-width="2.5"/><circle cx="12" cy="12" r="7" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><circle cx="28" cy="28" r="7" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><text x="12" y="15" font-size="8" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">3</text><text x="28" y="31" font-size="8" text-anchor="middle" fill="var(--c)" font-family="IBM Plex Mono">4</text></svg>',
   geo:'<svg viewBox="0 0 40 40" fill="none"><polygon points="6,32 34,32 20,8" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2" stroke-linejoin="round"/><path d="M14 32 A6 6 0 0 1 20 26" stroke="var(--c)" stroke-width="2" fill="none"/></svg>'
 };
+Object.assign(ICONS, {
+  leaf:'<svg viewBox="0 0 40 40" fill="none"><path d="M20 4 C34 4 34 20 20 36 C6 20 6 4 20 4 Z" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><path d="M20 8 L20 32" stroke="var(--c)" stroke-width="1.5"/></svg>',
+  planet:'<svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="10" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2"/><ellipse cx="20" cy="20" rx="17" ry="5" fill="none" stroke="var(--c)" stroke-width="2"/></svg>',
+  flask:'<svg viewBox="0 0 40 40" fill="none"><path d="M16 6 L16 16 L7 32 A4 4 0 0 0 11 36 L29 36 A4 4 0 0 0 33 32 L24 16 L24 6" fill="var(--c-soft)" stroke="var(--c)" stroke-width="2" stroke-linejoin="round"/><line x1="13" y1="6" x2="27" y2="6" stroke="var(--c)" stroke-width="2"/><circle cx="20" cy="27" r="2" fill="var(--c)"/></svg>'
+});
+
 
 /* ============== chibi avatars ============== */
 function svgAvatarChibi(p){
@@ -1279,38 +1988,59 @@ function avatarFor(profile){
   return AVATAR_PRESETS[hashStr((profile&&profile.id)||'x') % AVATAR_PRESETS.length];
 }
 
-const BANDS = [
+const BANDS_MATH = [
   { id:'b3_4', label:'Grades 3–4', name:'Foundations Track' },
   { id:'b5_6', label:'Grades 5–6', name:'Ratios & Reasoning Track' },
   { id:'b7_8', label:'Grades 7–8', name:'Pre-Algebra Track' },
   { id:'b9_10', label:'Grades 9–10+', name:'Algebra & AMC Track' }
 ];
 function bandForGrade(grade){ const g=Number(grade)||4; if(g<=4) return 'b3_4'; if(g<=6) return 'b5_6'; if(g<=8) return 'b7_8'; return 'b9_10'; }
-function bandLabelFor(band){ const b=BANDS.find(x=>x.id===band); return b?b.name:''; }
-function strandsFor(band){ return STRANDS_BY_BAND[band] || STRANDS_BY_BAND.b3_4; }
+function bandsListFor(subject){ return subject==='science' ? BANDS_SCIENCE : BANDS_MATH; }
+function bandLabelFor(subject, band){ const b=bandsListFor(subject).find(x=>x.id===band); return b?b.name:''; }
+function strandsMapFor(subject){ return subject==='science' ? STRANDS_BY_BAND_SCIENCE : STRANDS_BY_BAND_MATH; }
+function strandsFor(subject, band){ const map=strandsMapFor(subject); return map[band] || map.b3_4; }
+function subjectLabel(subject){ return subject==='science' ? 'Science' : 'Math'; }
 
 /* Style/family each band's problems are modeled after — these are ORIGINAL practice
    questions matched to each exam's typical topics and difficulty, never verbatim
    past questions (which are copyrighted by their organizations). */
-const BAND_EXAM_STYLE = {
+const BANDS_SCIENCE = [
+  { id:'b3_4', label:'Grades 3–4', name:'Science Explorers' },
+  { id:'b5_6', label:'Grades 5–6', name:'Science Investigators' },
+  { id:'b7_8', label:'Grades 7–8', name:'Science Olympiad Prep' },
+  { id:'b9_10', label:'Grades 9–10+', name:'Advanced Science Track' }
+];
+const BAND_EXAM_STYLE_MATH = {
   b3_4:  { core:'Math Kangaroo (Levels 3–4)', advanced:'MOEMS (Division E)' },
   b5_6:  { core:'Math Kangaroo (Levels 5–6)', advanced:'MOEMS (Division E)' },
   b7_8:  { core:'MATHCOUNTS (Sprint Round)',  advanced:'AMC 8' },
   b9_10: { core:'AMC 10',                     advanced:'AMC 10 / AMC 12' }
 };
-function examStyleFor(subtopic, band){
-  const strands = strandsFor(band);
+function examStyleMapFor(subject){ return subject==='science' ? BAND_EXAM_STYLE_SCIENCE : BAND_EXAM_STYLE_MATH; }
+function examStyleFor(subtopic, band, subject){
+  const strands = strandsFor(subject, band);
+  const styleMap = examStyleMapFor(subject);
   for(const s of Object.values(strands)){
-    if((s.advanced||[]).includes(subtopic)) return BAND_EXAM_STYLE[band].advanced;
-    if(s.subtopics.includes(subtopic)) return BAND_EXAM_STYLE[band].core;
+    if((s.advanced||[]).includes(subtopic)) return styleMap[band].advanced;
+    if(s.subtopics.includes(subtopic)) return styleMap[band].core;
   }
   return '';
+}
+function officialSourcesFor(subject, band){
+  const map = subject==='science' ? BAND_OFFICIAL_SOURCES_SCIENCE : BAND_OFFICIAL_SOURCES_MATH;
+  return map[band] || [];
 }
 
 /* Where to find the REAL retired contests for each band — organization names only
    (no linked URLs, since those can go stale or be mistyped from memory). Search
    the organization's own site for "past contests" or "practice problems". */
-const BAND_OFFICIAL_SOURCES = {
+const BAND_EXAM_STYLE_SCIENCE = {
+  b3_4:  { core:'National Science Bee (Elementary)', advanced:'National Science Bee (Elementary)' },
+  b5_6:  { core:'Science Olympiad (Division B, grade 6+)', advanced:'Science Olympiad (Division B, grade 6+)' },
+  b7_8:  { core:'Science Olympiad (Division B)', advanced:'Science Olympiad (Division B)' },
+  b9_10: { core:'Science Olympiad (Division C)', advanced:'USABO / USNCO / USAPhO' }
+};
+const BAND_OFFICIAL_SOURCES_MATH = {
   b3_4:  [ { name:'Math Kangaroo USA — Levels 3–4', note:'Publishes free retired contests every year.' },
            { name:'MOEMS — Division E', note:'Math Olympiads for Elementary and Middle Schools; sample problem sets available.' } ],
   b5_6:  [ { name:'Math Kangaroo USA — Levels 5–6', note:'Publishes free retired contests every year.' },
@@ -1321,7 +2051,7 @@ const BAND_OFFICIAL_SOURCES = {
            { name:'Math Kangaroo USA — Levels 9–10', note:'Publishes free retired contests every year.' } ]
 };
 
-const STRANDS_BY_BAND = {
+const STRANDS_BY_BAND_MATH = {
   b3_4: {
     numberOps:{ key:'numberOps', name:'Number & Operations', tagline:'Place value, addition, multiplication, division & factors.', color:'blue',
       subtopics:['placeValue','addSub','multiplication','division','factorsMultiples'], advanced:['numberPatterns','sumDiffPuzzle'], icon:ICONS.ops },
@@ -1356,6 +2086,54 @@ const STRANDS_BY_BAND = {
   }
 };
 
+const BAND_OFFICIAL_SOURCES_SCIENCE = {
+  b3_4:  [ { name:'National Science Bee (Elementary)', note:'A general-knowledge science quiz competition for elementary students.' },
+           { name:'Local & school science fairs', note:'Most districts run elementary science fairs — a great hands-on complement to quiz-style practice.' } ],
+  b5_6:  [ { name:'Science Olympiad — Division B', note:'Middle-school division, typically grades 6–9 depending on region — so 6th graders are already eligible.' },
+           { name:'National Science Bowl (Middle School)', note:'A buzzer-style quiz competition covering biology, chemistry, physics, earth science, energy & math, run by the U.S. Department of Energy.' } ],
+  b7_8:  [ { name:'Science Olympiad — Division B', note:'Middle-school division; several events (like Disease Detectives or Anatomy) are written tests.' },
+           { name:'National Science Bowl (Middle School)', note:'Fast-paced buzzer quiz format across all science subjects.' } ],
+  b9_10: [ { name:'Science Olympiad — Division C', note:'High-school division of Science Olympiad, run by the national nonprofit Science Olympiad, Inc.' },
+           { name:'USABO (USA Biology Olympiad)', note:'Run by the Center for Excellence in Education.' },
+           { name:'USNCO (Chemistry Olympiad)', note:'Run by the American Chemical Society.' },
+           { name:'USAPhO (Physics Olympiad)', note:'Run by the American Association of Physics Teachers.' } ]
+};
+
+const STRANDS_BY_BAND_SCIENCE = {
+  b3_4: {
+    lifeScience:{ key:'lifeScience', name:'Life Science', tagline:'Living things, plant parts, animal groups, life cycles & habitats.', color:'blue',
+      subtopics:['livingThings','plantParts','animalGroups','lifeCycles','habitats'], advanced:[], icon:ICONS.leaf },
+    earthSpace:{ key:'earthSpace', name:'Earth & Space Science', tagline:'Weather, rocks, soil, the solar system, moon phases & resources.', color:'amber',
+      subtopics:['weatherBasics','rocksSoil','solarSystemBasics','earthResources','moonPhases'], advanced:[], icon:ICONS.planet },
+    physicalScience:{ key:'physicalScience', name:'Physical Science', tagline:'States of matter, forces, simple machines, magnetism & sound/light.', color:'teal',
+      subtopics:['statesOfMatter','forcesMotionBasics','simpleMachinesID','magnetism','soundLight'], advanced:[], icon:ICONS.flask }
+  },
+  b5_6: {
+    lifeScience:{ key:'lifeScience', name:'Life Science', tagline:'Cells, ecosystems & human body systems.', color:'blue',
+      subtopics:['cellsBasics','ecosystemsFoodChains','humanBodySystems'], advanced:[], icon:ICONS.leaf },
+    earthSpace:{ key:'earthSpace', name:'Earth & Space Science', tagline:'The water cycle, weather/climate & the solar system.', color:'amber',
+      subtopics:['waterCycle','weatherClimate','solarSystemDeeper'], advanced:[], icon:ICONS.planet },
+    physicalScience:{ key:'physicalScience', name:'Physical Science', tagline:'Mixtures, energy & simple machine math.', color:'teal',
+      subtopics:['matterMixtures','energyForms','simpleMachinesMath'], advanced:[], icon:ICONS.flask }
+  },
+  b7_8: {
+    biology:{ key:'biology', name:'Biology', tagline:'Cell structure, genetics & ecology.', color:'blue',
+      subtopics:['cellStructure','geneticsBasics','ecologyBiomes'], advanced:[], icon:ICONS.leaf },
+    earthEnv:{ key:'earthEnv', name:'Earth & Environmental Science', tagline:'Plate tectonics, climate systems & astronomy.', color:'amber',
+      subtopics:['plateTectonics','climateSystems','astronomyDeeper'], advanced:[], icon:ICONS.planet },
+    chemPhysics:{ key:'chemPhysics', name:'Chemistry & Physics', tagline:'Atoms, temperature conversion & forces in motion.', color:'teal',
+      subtopics:['atomsElements','statesMatterEnergy','forcesMotion'], advanced:[], icon:ICONS.flask }
+  },
+  b9_10: {
+    biology:{ key:'biology', name:'Biology', tagline:'Inheritance, evolution & cell processes.', color:'blue',
+      subtopics:['geneticsInheritance','evolutionNaturalSelection','cellBiologyAdvanced'], advanced:[], icon:ICONS.leaf },
+    chemistry:{ key:'chemistry', name:'Chemistry', tagline:'Atomic structure, periodic trends & stoichiometry.', color:'amber',
+      subtopics:['atomicStructure','periodicTableTrends','stoichiometryBasics'], advanced:[], icon:ICONS.flask },
+    physics:{ key:'physics', name:'Physics', tagline:'Kinematics, Newton’s laws, work & power.', color:'teal',
+      subtopics:['kinematics','forcesNewtonsLaws','energyWorkPower'], advanced:[], icon:ICONS.flask }
+  }
+};
+
 const SESSION_LENGTH_SEC = 20*60;
 const PROBLEMS_PER_SESSION = 10;
 
@@ -1374,35 +2152,80 @@ const PHASES = [
 function currentWeekNumber(data){ return Math.max(1, Math.ceil((data.currentDay||1)/7)); }
 function currentPhaseIndex(data){ const w=currentWeekNumber(data); if(w<=4) return 0; if(w<=8) return 1; if(w<=12) return 2; return 3; }
 
-/* ============== persistence ============== */
-function loadProfiles(){ try{ return JSON.parse(localStorage.getItem('cto_profiles')||'[]'); }catch(e){ return []; } }
-function saveProfiles(list){ localStorage.setItem('cto_profiles', JSON.stringify(list)); }
-function defaultData(){ return { days:{}, topicStats:{}, currentDay:1, band:null }; }
-function loadData(id){
-  try{
-    const raw=localStorage.getItem('cto_data_'+id);
-    const data = raw? JSON.parse(raw) : defaultData();
-    if(!data.days) data.days = {};
-    if(!data.currentDay) data.currentDay = 1;
-    if(!data.topicStats) data.topicStats = {};
-    return data;
-  }catch(e){ return defaultData(); }
+/* ============== persistence ==============
+   Each learner has ONE profile record (name, avatar, a grade PER SUBJECT —
+   a kid can be doing 8th-grade math and 6th-grade science at once), and ONE
+   progress record split into independent .math / .science slices, so the
+   two subjects never share a day-pointer, streak, or topic stats. */
+function loadProfiles(){ try{ return JSON.parse(localStorage.getItem('yugi_profiles')||'[]'); }catch(e){ return []; } }
+function saveProfiles(list){ localStorage.setItem('yugi_profiles', JSON.stringify(list)); }
+function defaultSubjectData(){ return { days:{}, topicStats:{}, currentDay:1, band:null }; }
+function normalizeSubjectData(d){
+  if(!d.days) d.days = {};
+  if(!d.currentDay) d.currentDay = 1;
+  if(!d.topicStats) d.topicStats = {};
+  return d;
 }
-function saveData(id,data){ localStorage.setItem('cto_data_'+id, JSON.stringify(data)); }
-/* Resets day-tracking if the learner's grade band changed (their old days'
-   strand keys wouldn't match the new package) — topicStats is kept either way. */
+function loadFullData(id){
+  try{
+    const raw = localStorage.getItem('yugi_data_'+id);
+    const full = raw ? JSON.parse(raw) : {};
+    full.math = normalizeSubjectData(full.math || defaultSubjectData());
+    full.science = normalizeSubjectData(full.science || defaultSubjectData());
+    return full;
+  }catch(e){ return { math:defaultSubjectData(), science:defaultSubjectData() }; }
+}
+function saveFullData(id, full){ localStorage.setItem('yugi_data_'+id, JSON.stringify(full)); }
+/* loadData/saveData work on ONE subject's slice, so the rest of the app
+   (which was written before subjects existed) barely had to change: it just
+   passes the same slice object it got from loadData back into saveData. */
+function loadData(id, subject){ return loadFullData(id)[subject]; }
+function saveData(id, data){
+  const full = loadFullData(id);
+  full[state.subject] = data;
+  saveFullData(id, full);
+}
+/* Resets day-tracking if the learner's grade band (for this subject) changed
+   (their old days' strand keys wouldn't match the new package) — topicStats
+   is kept either way. */
 function ensureBand(data, band){
   if(data.band !== band){ data.days = {}; data.currentDay = 1; data.band = band; }
 }
-function ensureDay(data, band, dayNum){
+function ensureDay(data, subject, band, dayNum){
   if(!data.days[dayNum]){
-    const day={}; Object.keys(strandsFor(band)).forEach(k=>{ day[k]={done:false}; });
+    const day={ learnDoubts:[], studied:[], strandSeconds:{} }; Object.keys(strandsFor(subject, band)).forEach(k=>{ day[k]={done:false}; });
     data.days[dayNum]=day;
   }
+  if(!data.days[dayNum].learnDoubts) data.days[dayNum].learnDoubts = [];
+  if(!data.days[dayNum].studied) data.days[dayNum].studied = [];
+  if(!data.days[dayNum].strandSeconds) data.days[dayNum].strandSeconds = {};
   return data.days[dayNum];
 }
-function allDone(day, band){ if(!day) return false; return Object.keys(strandsFor(band)).every(k=> day[k] && day[k].done); }
-function computeStreak(data, band){ let count=0, d=1; while(data.days[d] && allDone(data.days[d], band)){ count++; d++; } return count; }
+function fmtDuration(sec){
+  sec = Math.max(0, Math.round(sec||0));
+  const h = Math.floor(sec/3600), m = Math.floor((sec%3600)/60);
+  if(h>0) return h+'h '+m+'m';
+  if(m>0) return m+'m';
+  return sec>0 ? '<1m' : '0m';
+}
+function markStudied(subject, band, strandKey){
+  const profile = currentProfile();
+  if(!profile) return;
+  const data = currentData();
+  ensureBand(data, band);
+  const dayNum = data.currentDay||1;
+  const day = ensureDay(data, subject, band, dayNum);
+  if(!day.studied.includes(strandKey)) day.studied.push(strandKey);
+  saveData(profile.id, data);
+}
+function findStrandForSubtopic(strands, subtopic){
+  for(const s of Object.values(strands)){
+    if(s.subtopics.includes(subtopic) || (s.advanced||[]).includes(subtopic)) return s;
+  }
+  return null;
+}
+function allDone(day, subject, band){ if(!day) return false; return Object.keys(strandsFor(subject, band)).every(k=> day[k] && day[k].done); }
+function computeStreak(data, subject, band){ let count=0, d=1; while(data.days[d] && allDone(data.days[d], subject, band)){ count++; d++; } return count; }
 /* Keeps score/done/assisted forever (tiny), but only keeps the heavier
    per-problem review text for the most recent N completed days. */
 function pruneOldReviews(data, keepLastN){
@@ -1434,8 +2257,8 @@ function masteryTier(stats){
   if(acc>=0.65) return {label:'Developing', tone:'mid'};
   return {label:'Needs practice', tone:'low'};
 }
-function personaFor(data, band){
-  const strands = strandsFor(band);
+function personaFor(data, subject, band){
+  const strands = strandsFor(subject, band);
   const subtopics = Object.values(strands).flatMap(s=>s.subtopics.concat(s.advanced||[]));
   let mastered=0, totalAttempted=0, totalCorrect=0;
   subtopics.forEach(st=>{ const s=data.topicStats[st]; if(s){ totalAttempted+=s.attempted; totalCorrect+=s.correct; if(s.attempted>=5 && s.correct/s.attempted>=0.85) mastered++; } });
@@ -1686,16 +2509,59 @@ function renderDiagram(spec){
 }
 
 /* ============== app state ============== */
-const state = { screen:'login', profileId:null, session:null };
+const state = { screen:'login', profileId:null, session:null, subject:'math' };
 
 function currentProfiles(){ return loadProfiles(); }
 function currentProfile(){ return currentProfiles().find(p=>p.id===state.profileId); }
-function currentData(){ return loadData(state.profileId); }
+function currentData(){ return loadData(state.profileId, state.subject); }
+
+/* ============== color themes ============== */
+const THEMES = [
+  { id:'classic', name:'Classic', swatches:['#3D6EDB','#C97A1E','#1C8E76'] },
+  { id:'neonArcade', name:'Neon Arcade', swatches:['#00E5FF','#FF3EC9','#39FF88'] },
+  { id:'candyPop', name:'Candy Pop', swatches:['#4FC4C0','#FFA630','#D9509A'] },
+  { id:'galaxy', name:'Galaxy Explorer', swatches:['#7B61FF','#FF61A6','#00D9FF'] },
+  { id:'blockyCraft', name:'Blocky Craft', swatches:['#3D9BDC','#E0A526','#3F9D5E'] },
+  { id:'cyberMint', name:'Cyber Mint', swatches:['#3D5AFE','#FF3D71','#00FFB2'] }
+];
+/* Full token values per theme, applied as INLINE styles on <html> (highest
+   possible CSS priority, short of !important) rather than relying only on a
+   [data-color-theme] attribute selector — this guarantees the theme wins over
+   any stylesheet rule, including the light/dark prefers-color-scheme rules and
+   anything the artifact host itself might inject, regardless of source order
+   or specificity quirks. The matching :root[data-color-theme] CSS blocks stay
+   as a readable reference/fallback but the inline styles are what actually run. */
+const THEME_TOKENS = {
+  neonArcade:{ '--paper':'#150E28','--paper-raise':'#1F1640','--grid':'rgba(255,255,255,.09)','--ink':'#F5EFFF','--ink-soft':'#C6B8E8','--ink-faint':'#8F7FB8','--blue':'#00E5FF','--blue-soft':'rgba(0,229,255,.16)','--blue-line':'rgba(0,229,255,.4)','--amber':'#FF3EC9','--amber-soft':'rgba(255,62,201,.16)','--amber-line':'rgba(255,62,201,.4)','--teal':'#39FF88','--teal-soft':'rgba(57,255,136,.16)','--teal-line':'rgba(57,255,136,.4)','--good':'#39FF88','--good-soft':'rgba(57,255,136,.14)','--bad':'#FF5C7A','--bad-soft':'rgba(255,92,122,.14)','--info':'#B98CFF','--info-soft':'rgba(185,140,255,.16)','--shadow':'0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5)' },
+  candyPop:{ '--paper':'#FFF9FC','--paper-raise':'#FFFFFF','--grid':'#FFE1EE','--ink':'#4A2E3D','--ink-soft':'#7A5A6B','--ink-faint':'#A98CA0','--blue':'#4FC4C0','--blue-soft':'#E3F9F7','--blue-line':'#BDEFEA','--amber':'#FFA630','--amber-soft':'#FFF0DC','--amber-line':'#FFDCA8','--teal':'#D9509A','--teal-soft':'#FDE6F1','--teal-line':'#F8C2DE','--good':'#4CAF7D','--good-soft':'#E4F5EC','--bad':'#E4576B','--bad-soft':'#FDE8EA','--info':'#8B6FE8','--info-soft':'#EEE9FC','--shadow':'0 1px 2px rgba(74,46,61,.08), 0 6px 16px rgba(74,46,61,.1)' },
+  galaxy:{ '--paper':'#0D0B21','--paper-raise':'#171335','--grid':'rgba(255,255,255,.08)','--ink':'#ECE8FF','--ink-soft':'#B5ACDD','--ink-faint':'#8377B0','--blue':'#7B61FF','--blue-soft':'rgba(123,97,255,.16)','--blue-line':'rgba(123,97,255,.4)','--amber':'#FF61A6','--amber-soft':'rgba(255,97,166,.16)','--amber-line':'rgba(255,97,166,.4)','--teal':'#00D9FF','--teal-soft':'rgba(0,217,255,.16)','--teal-line':'rgba(0,217,255,.4)','--good':'#4FE0A0','--good-soft':'rgba(79,224,160,.14)','--bad':'#FF6B7A','--bad-soft':'rgba(255,107,122,.14)','--info':'#A98CF0','--info-soft':'rgba(169,140,240,.16)','--shadow':'0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5)' },
+  blockyCraft:{ '--paper':'#F6FBF1','--paper-raise':'#FFFFFF','--grid':'#DCEFCB','--ink':'#28351F','--ink-soft':'#57684A','--ink-faint':'#8B9A7D','--blue':'#3D9BDC','--blue-soft':'#E3F3FC','--blue-line':'#BFE3F6','--amber':'#E0A526','--amber-soft':'#FBF0D6','--amber-line':'#F3DC9E','--teal':'#3F9D5E','--teal-soft':'#E3F5E7','--teal-line':'#BEE6C8','--good':'#3F9D5E','--good-soft':'#E3F5E7','--bad':'#C6543D','--bad-soft':'#FAE4DE','--info':'#7D6BC9','--info-soft':'#EBE7FA','--shadow':'0 1px 2px rgba(40,53,31,.08), 0 6px 16px rgba(40,53,31,.1)' },
+  cyberMint:{ '--paper':'#081714','--paper-raise':'#0F241F','--grid':'rgba(255,255,255,.08)','--ink':'#E5FFF6','--ink-soft':'#9FCDBE','--ink-faint':'#6B9186','--blue':'#3D5AFE','--blue-soft':'rgba(61,90,254,.16)','--blue-line':'rgba(61,90,254,.4)','--amber':'#FF3D71','--amber-soft':'rgba(255,61,113,.16)','--amber-line':'rgba(255,61,113,.4)','--teal':'#00FFB2','--teal-soft':'rgba(0,255,178,.16)','--teal-line':'rgba(0,255,178,.4)','--good':'#00FFB2','--good-soft':'rgba(0,255,178,.14)','--bad':'#FF3D71','--bad-soft':'rgba(255,61,113,.14)','--info':'#7B8CFF','--info-soft':'rgba(123,140,255,.16)','--shadow':'0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.5)' }
+};
+const THEME_VAR_NAMES = ['--paper','--paper-raise','--grid','--ink','--ink-soft','--ink-faint','--blue','--blue-soft','--blue-line','--amber','--amber-soft','--amber-line','--teal','--teal-soft','--teal-line','--good','--good-soft','--bad','--bad-soft','--info','--info-soft','--shadow'];
+const THEME_STORAGE = 'yugi_color_theme';
+function getTheme(){ try{ return localStorage.getItem(THEME_STORAGE) || 'classic'; }catch(e){ return 'classic'; } }
+function applyTheme(id){
+  const root = document.documentElement;
+  if(!root) return;
+  const tokens = THEME_TOKENS[id];
+  if(id && id!=='classic' && tokens){
+    root.setAttribute('data-color-theme', id);
+    THEME_VAR_NAMES.forEach(k=>{ if(tokens[k]!==undefined) root.style.setProperty(k, tokens[k]); });
+  } else {
+    root.removeAttribute('data-color-theme');
+    THEME_VAR_NAMES.forEach(k=> root.style.removeProperty(k));
+  }
+}
+function setTheme(id){
+  try{ localStorage.setItem(THEME_STORAGE, id); }catch(e){}
+  applyTheme(id);
+}
 
 /* ============== AI hint (Claude) — falls back to the static concept text
    when neither the sample capability nor a saved API key is available
    (e.g. self-hosted outside Claude, no key added). */
-const API_KEY_STORAGE = 'cto_api_key';
+const API_KEY_STORAGE = 'yugi_api_key';
 function getApiKey(){ try{ return (localStorage.getItem(API_KEY_STORAGE)||'').trim(); }catch(e){ return ''; } }
 function setApiKey(key){
   try{ if(key) localStorage.setItem(API_KEY_STORAGE, key); else localStorage.removeItem(API_KEY_STORAGE); }catch(e){}
@@ -1732,61 +2598,251 @@ async function getSample(){
 }
 function buildHintPrompt(problem, grade){
   const plainPrompt = String(problem.prompt).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
-  return 'You are a warm, encouraging math tutor helping a grade '+(grade||4)+' student who is stuck. '+
+  return 'You are a warm, encouraging tutor helping a grade '+(grade||4)+' student who is stuck. '+
     'Topic: '+TOPIC_LABEL[problem.subtopic]+'. Their practice problem is:\n"'+plainPrompt+'"\n\n'+
     'Give ONE short hint (2-3 sentences, simple age-appropriate language) that explains the METHOD or the first step to take. '+
-    'Do NOT reveal the final answer and do NOT solve the whole problem for them — just point them toward the approach.';
+    'Do NOT reveal the final answer and do NOT solve the whole problem for them — just point them toward the approach. '+
+    'If a simple diagram would genuinely help them picture it, call the show_diagram tool once; otherwise just explain in words.';
+}
+function buildDoubtPrompt(problem, grade, question){
+  const plainPrompt = String(problem.prompt).replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  return 'You are a warm, encouraging tutor helping a grade '+(grade||4)+' student. '+
+    'Topic: '+TOPIC_LABEL[problem.subtopic]+'. Their practice problem is:\n"'+plainPrompt+'"\n\n'+
+    'The student asks: "'+question+'"\n\n'+
+    'Answer their question in 2-4 short, simple, age-appropriate sentences. Do NOT reveal the final answer to the problem and do NOT fully solve it for them — help them understand the concept or approach. '+
+    'If a simple diagram would genuinely help them picture it, call the show_diagram tool once; otherwise just explain in words.';
 }
 
-/* Chat thread for follow-up questions under the hint. problem.chat holds the
-   full turn history (index 0 is the hidden setup prompt, never shown), and
-   is resent in full on every call since the sample capability has no memory. */
+/* Diagrams Claude can attach to a chat reply via the show_diagram tool, reusing the
+   same schematic SVG renderer as practice problems. Inputs are clamped/coerced so a
+   slightly-off tool call still renders something reasonable instead of crashing. */
+function normalizeDiagramInput(input){
+  if(!input || typeof input!=='object') return null;
+  const clamp = (v,lo,hi)=>{ const n=Math.round(Number(v)); return Number.isFinite(n) ? Math.max(lo, Math.min(hi, n)) : lo; };
+  try{
+    switch(input.type){
+      case 'iconRow': return { type:'iconRow', n: clamp(input.n,2,12) };
+      case 'fractionBar': {
+        const d = clamp(input.d,1,12);
+        return { type:'fractionBar', d, shaded:[clamp(input.shaded,0,d)] };
+      }
+      case 'percentBar': return { type:'percentBar', pct: clamp(input.pct,0,100) };
+      case 'numberLineDots': {
+        const values = Array.isArray(input.values) ? input.values.map(Number).filter(Number.isFinite).slice(0,8) : [];
+        return values.length ? { type:'numberLineDots', values } : null;
+      }
+      case 'rectDims': return { type:'rectDims', w: input.w!=null?String(input.w):'?', h: input.h!=null?String(input.h):'?' };
+      case 'circle': return { type:'circle', r: input.r!=null?String(input.r):'?' };
+      case 'squareArea': return { type:'squareArea', area: input.area!=null?String(input.area):'?' };
+      default: return null;
+    }
+  }catch(e){ return null; }
+}
+function buildDiagramTool(captureRef){
+  return {
+    name: 'show_diagram',
+    description: 'Show one simple schematic diagram to help the student visualize the idea — a fraction bar, a percent bar, a number line with points marked, a row of icons for counting/grouping, a labeled rectangle, a circle, or a square with a given area. Only call this when a picture would truly help; skip it for purely verbal explanations. Call it at most once per reply.',
+    inputSchema: {
+      type:'object',
+      properties:{
+        type:{ type:'string', enum:['iconRow','fractionBar','percentBar','numberLineDots','rectDims','circle','squareArea'] },
+        n:{ type:'number', description:'iconRow: how many icons (2-12).' },
+        d:{ type:'number', description:'fractionBar: total equal parts (the denominator).' },
+        shaded:{ type:'number', description:'fractionBar: how many parts to shade (the numerator).' },
+        pct:{ type:'number', description:'percentBar: percent from 0 to 100.' },
+        values:{ type:'array', items:{type:'number'}, description:'numberLineDots: the numbers to mark on the line.' },
+        w:{ type:'number', description:'rectDims: width label.' },
+        h:{ type:'number', description:'rectDims: height label.' },
+        r:{ type:'number', description:'circle: radius label.' },
+        area:{ type:'number', description:'squareArea: the area value to show.' }
+      },
+      required:['type']
+    },
+    execute: (input)=>{ captureRef.spec = normalizeDiagramInput(input); return { shown: !!captureRef.spec }; }
+  };
+}
+
+/* Chat thread for hints and follow-up doubts on a problem. problem.chat holds the
+   full turn history and is resent in full on every call since the sample capability
+   has no memory. Turns marked hidden:true are real context sent to the model but never
+   shown in the UI (e.g. the "give me a hint" system-style framing); turns instead show
+   their `display` text when present, so a hidden turn's real question can still be
+   echoed to the student via a sibling non-hidden turn with the same display text. */
 function chatBubbleHtml(turn){
   const shown = turn.display!==undefined ? turn.display : turn.content;
   if(turn.role==='user') return '<div class="chat-bubble chat-user">'+esc(shown)+'</div>';
-  return '<div class="chat-bubble chat-claude"><span class="hint-source">🤖 Claude</span>'+esc(shown)+'</div>';
+  let html = '<div class="chat-bubble chat-claude"><span class="hint-source">🤖 Claude</span>'+esc(shown)+'</div>';
+  if(turn.diagram) html += '<div class="problem-diagram">'+renderDiagram(turn.diagram)+'</div>';
+  if(turn.confirmed==='yes') html += '<div class="confirm-note good">✓ Confirmed — that made sense</div>';
+  else if(turn.confirmed==='no') html += '<div class="confirm-note warn">🤔 Said this was still confusing</div>';
+  return html;
 }
-function renderHelpPanel(problem, aiAvailable){
-  const panel = document.getElementById('help-panel');
+function ensureChat(problem){ if(!problem.chat) problem.chat = []; }
+function markAssisted(problem, label){
+  problem.assisted = true;
+  const btn = document.getElementById('help-btn');
+  if(btn){ btn.disabled = true; btn.textContent = label || '✓ Assisted'; }
+}
+/* idSuffix lets the same chat UI be wired up for several problems shown on screen at
+   once (e.g. one per lesson card in the Learn screen) without id collisions — the
+   session screen (one problem visible at a time) just omits it. */
+function renderHelpPanel(problem, aiAvailable, idSuffix){
+  idSuffix = idSuffix || '';
+  const panel = document.getElementById('help-panel'+idSuffix);
   if(!panel) return;
-  let html = (problem.chat||[]).slice(1).map(chatBubbleHtml).join('');
+  const visibleTurns = (problem.chat||[]).filter(t=>!t.hidden);
+  let html = visibleTurns.map(chatBubbleHtml).join('');
+  const lastTurn = visibleTurns[visibleTurns.length-1];
+  const needsConfirm = !!(lastTurn && lastTurn.role==='assistant' && !lastTurn.confirmed);
+  if(needsConfirm){
+    html += '<div class="confirm-row" id="confirm-row'+idSuffix+'">'+
+      '<span class="confirm-label">Did that make sense?</span>'+
+      '<button class="btn btn-ghost confirm-btn" data-confirm="yes">👍 Yes, got it</button>'+
+      '<button class="btn btn-ghost confirm-btn" data-confirm="no">🤔 Still confused</button>'+
+    '</div>';
+  }
   if(aiAvailable){
-    html += '<div class="chat-ask-row"><input type="text" id="chat-input" placeholder="Ask a follow-up question..." autocomplete="off"><button class="btn btn-ghost" id="chat-send-btn">Ask</button></div>';
+    html += '<div class="chat-ask-row"><input type="text" id="chat-input'+idSuffix+'" placeholder="Ask a question..." autocomplete="off"><button class="btn btn-ghost" id="chat-send-btn'+idSuffix+'">Ask</button></div>';
   }
   panel.innerHTML = html;
-  const inp = document.getElementById('chat-input'), send = document.getElementById('chat-send-btn');
+  const inp = document.getElementById('chat-input'+idSuffix), send = document.getElementById('chat-send-btn'+idSuffix);
   if(inp && send){
-    const submit = ()=> askFollowup(problem);
+    const submit = ()=> askFollowup(problem, idSuffix);
     send.addEventListener('click', submit);
     inp.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submit(); });
   }
+  if(needsConfirm){
+    const row = document.getElementById('confirm-row'+idSuffix);
+    if(row) row.querySelectorAll('[data-confirm]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        lastTurn.confirmed = btn.getAttribute('data-confirm');
+        if(idSuffix) persistLearnDoubt(problem);
+        renderHelpPanel(problem, aiAvailable, idSuffix);
+        if(lastTurn.confirmed==='no'){
+          const i2 = document.getElementById('chat-input'+idSuffix);
+          if(i2) i2.focus();
+        }
+      });
+    });
+  }
 }
-async function askFollowup(problem){
-  const inp = document.getElementById('chat-input');
-  if(!inp) return;
-  const question = inp.value.trim();
-  if(!question) return;
-  problem.chat.push({ role:'user', content: question+'\n\n(Reminder: still do not reveal the final answer — just help me understand the approach.)', display: question });
-  renderHelpPanel(problem, true);
+function openAskBox(problem, idSuffix){
+  idSuffix = idSuffix || '';
+  const panel = document.getElementById('help-panel'+idSuffix);
+  if(!panel) return;
+  ensureChat(problem);
+  panel.hidden = false;
+  renderHelpPanel(problem, true, idSuffix);
+  const inp = document.getElementById('chat-input'+idSuffix);
+  if(inp) inp.focus();
+}
+async function requestHint(problem, subject){
   const panel = document.getElementById('help-panel');
+  const btn = document.getElementById('help-btn');
+  if(!panel) return;
+  ensureChat(problem);
+  markAssisted(problem, '🤖 Asking Claude...');
+  panel.hidden = false;
+  if(problem.chat.length===0){
+    const profile = currentProfile();
+    const grade = profile && profile.grades && profile.grades[subject];
+    problem.chat.push({ role:'user', content: buildHintPrompt(problem, grade), hidden:true });
+  } else {
+    const askText = 'Can you give me a hint for this problem?';
+    problem.chat.push({ role:'user', content: askText, display: askText });
+  }
+  renderHelpPanel(problem, true);
   panel.insertAdjacentHTML('beforeend', '<div class="chat-bubble chat-claude" id="chat-pending"><span class="hint-source">🤖 Claude</span>Thinking…</div>');
-  const askRow = panel.querySelector('.chat-ask-row'); if(askRow) askRow.remove();
   const sampleFn = await getSample();
   if(!sampleFn){
     const el=document.getElementById('chat-pending'); if(el) el.remove();
-    renderHelpPanel(problem, false);
+    problem.chat.push({ role:'assistant', content: CONCEPT_HELP[problem.subtopic]||'' });
+    markAssisted(problem, '✓ Hint shown');
+    renderHelpPanel(problem, true);
     return;
   }
+  const diagramCapture = {};
+  const onText = ({text})=>{ const el=document.getElementById('chat-pending'); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); };
+  let result;
   try{
-    const result = await sampleFn(problem.chat, {
-      modelTier:'quick',
-      onText: ({text})=>{ const el=document.getElementById('chat-pending'); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); }
-    });
-    problem.chat.push({ role:'assistant', content: result.text || 'Sorry, I am not sure about that one — try asking your teacher.' });
+    result = await sampleFn(problem.chat, { modelTier:'quick', tools:[buildDiagramTool(diagramCapture)], onText });
   }catch(e){
-    problem.chat.push({ role:'assistant', content:'Sorry, I could not answer that just now. Try asking again.' });
+    try{ result = await sampleFn(problem.chat, { modelTier:'quick', onText }); }
+    catch(e2){ result = null; }
   }
+  problem.chat.push({ role:'assistant', content: (result && result.text) || CONCEPT_HELP[problem.subtopic] || '', diagram: diagramCapture.spec });
+  markAssisted(problem, '✓ Hint shown');
   renderHelpPanel(problem, true);
+}
+/* Learn-screen doubts aren't tied to a saved assessment problem, so they'd
+   otherwise vanish the moment the example regenerates or the page reloads.
+   Persist them into today's day record so they show up in the Daily
+   Learning Log too, just like doubts asked during a real session. */
+function persistLearnDoubt(problem){
+  const profile = currentProfile();
+  const subject = state.subject;
+  const grade = profile && profile.grades && profile.grades[subject];
+  if(!grade) return;
+  const band = bandForGrade(grade);
+  const data = currentData();
+  ensureBand(data, band);
+  const dayNum = data.currentDay||1;
+  const day = ensureDay(data, subject, band, dayNum);
+  const doubts = (problem.chat||[]).filter(t=>!t.hidden);
+  const existing = day.learnDoubts.find(e=>e.subtopic===problem.subtopic);
+  if(existing){ existing.doubts = doubts; existing.prompt = problem.prompt; existing.isEquation = !!problem.isEquation; }
+  else { day.learnDoubts.push({ subtopic: problem.subtopic, prompt: problem.prompt, isEquation: !!problem.isEquation, doubts }); }
+  saveData(profile.id, data);
+}
+async function askFollowup(problem, idSuffix){
+  idSuffix = idSuffix || '';
+  const isLearnContext = !!idSuffix;
+  const inp = document.getElementById('chat-input'+idSuffix);
+  if(!inp) return;
+  const question = inp.value.trim();
+  if(!question) return;
+  ensureChat(problem);
+  markAssisted(problem);
+  if(problem.chat.length===0){
+    const profile = currentProfile();
+    const subject = (state.session && state.session.subject) || state.subject;
+    const grade = profile && profile.grades && profile.grades[subject];
+    problem.chat.push({ role:'user', content: buildDoubtPrompt(problem, grade, question), display: question });
+  } else {
+    problem.chat.push({ role:'user', content: question+'\n\n(Reminder: still do not reveal the final answer — just help me understand the approach.)', display: question });
+  }
+  renderHelpPanel(problem, true, idSuffix);
+  const panel = document.getElementById('help-panel'+idSuffix);
+  panel.insertAdjacentHTML('beforeend', '<div class="chat-bubble chat-claude" id="chat-pending'+idSuffix+'"><span class="hint-source">🤖 Claude</span>Thinking…</div>');
+  const sampleFn = await getSample();
+  if(!sampleFn){
+    const el=document.getElementById('chat-pending'+idSuffix); if(el) el.remove();
+    problem.chat.push({ role:'assistant', content: "I can't reach Claude right now to answer that — try again in a bit, or ask a grown-up if you're stuck!" });
+    if(isLearnContext) persistLearnDoubt(problem);
+    renderHelpPanel(problem, true, idSuffix);
+    return;
+  }
+  const diagramCapture = {};
+  const onText = ({text})=>{ const el=document.getElementById('chat-pending'+idSuffix); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); };
+  let result, lastError;
+  try{
+    result = await sampleFn(problem.chat, { modelTier:'quick', tools:[buildDiagramTool(diagramCapture)], onText });
+  }catch(e){
+    lastError = e;
+    try{ result = await sampleFn(problem.chat, { modelTier:'quick', onText }); lastError = null; }
+    catch(e2){ lastError = e2; }
+  }
+  if(lastError){
+    const code = lastError && lastError.code;
+    const msg = code==='not_granted' ? "Claude AI hints aren't turned on for this session — ask a grown-up to allow it, or try the 💡 hint button instead."
+      : code==='rate_limited' ? "Claude is a little busy right now — wait a few seconds and try asking again."
+      : 'Sorry, I could not answer that just now. Try asking again.';
+    problem.chat.push({ role:'assistant', content: (lastError && lastError.text) || msg });
+  } else {
+    problem.chat.push({ role:'assistant', content: (result && result.text) || 'Sorry, I am not sure about that one — try asking your teacher.', diagram: diagramCapture.spec });
+  }
+  if(isLearnContext) persistLearnDoubt(problem);
+  renderHelpPanel(problem, true, idSuffix);
 }
 
 /* ============== render: login ============== */
@@ -1797,16 +2853,20 @@ function renderLogin(){
     <div class="login-wrap">
       <div class="brand">
         <h1>Yugi</h1>
-        <p class="tag">Grade-level mastery, then Olympiad-style problem solving — three <span class="num">20</span>-minute sessions a day, following a <span class="num">16</span>-week syllabus matched to your grade, for ages <span class="num">8</span>–<span class="num">16</span>.</p>
+        <p class="tag">Grade-level mastery, then Olympiad-style problem solving in <span class="num">Math</span> &amp; <span class="num">Science</span> — three <span class="num">20</span>-minute sessions a day, each on its own syllabus matched to your grade, for ages <span class="num">8</span>–<span class="num">16</span>.</p>
       </div>
       <div class="tabs" id="tabs">
         ${profiles.map((p)=>{
-          const data=loadData(p.id); const band=bandForGrade(p.grade);
-          const streak=p.grade? computeStreak(data,band) : 0;
+          const mg=p.grades&&p.grades.math, sg=p.grades&&p.grades.science;
+          const mStreak = mg? computeStreak(loadData(p.id,'math'), 'math', bandForGrade(mg)) : 0;
+          const sStreak = sg? computeStreak(loadData(p.id,'science'), 'science', bandForGrade(sg)) : 0;
+          const lines=[];
+          if(mg) lines.push('📐 Grade '+mg+(mStreak>0?' · 🔥'+mStreak:''));
+          if(sg) lines.push('🔬 Grade '+sg+(sStreak>0?' · 🔥'+sStreak:''));
           return `<div class="tab" data-id="${esc(p.id)}">
             <div class="badge avatar-badge">${svgAvatarChibi(avatarFor(p))}</div>
             <div class="name">${esc(p.name)}</div>
-            <div class="streak">${p.grade? 'Grade '+p.grade+(streak>0?' · 🔥 '+streak+'-day streak':'') : 'New learner'}</div>
+            <div class="streak">${lines.length? lines.join('<br>') : 'New learner'}</div>
           </div>`;
         }).join('')}
         <div class="tab tab-new" id="tab-new">
@@ -1820,16 +2880,22 @@ function renderLogin(){
       </div>
       <div style="text-align:center;margin-top:28px;">
         <button class="link-btn" id="api-settings-link">⚙️ AI hint settings</button>
+        <span style="color:var(--grid);">·</span>
+        <button class="link-btn" id="theme-settings-link">🎨 Theme</button>
       </div>
     </div>
   `;
   document.getElementById('api-settings-link').addEventListener('click', ()=>{ state.screen='apiKeySettings'; render(); });
+  document.getElementById('theme-settings-link').addEventListener('click', ()=>{ state.screen='themeSelect'; state.themeReturnTo='login'; render(); });
   app.querySelectorAll('.tab[data-id]').forEach(el=>{
     el.addEventListener('click', ()=>{
       const id = el.getAttribute('data-id');
       state.profileId = id;
       const p = currentProfiles().find(x=>x.id===id);
-      state.screen = (p && p.grade) ? 'dashboard' : 'gradeSelect';
+      if(p && p.grades && !p.grades[state.subject]){
+        if(p.grades.math) state.subject='math'; else if(p.grades.science) state.subject='science';
+      }
+      state.screen = (p && p.grades && p.grades[state.subject]) ? 'dashboard' : 'gradeSelect';
       render();
     });
   });
@@ -1846,7 +2912,7 @@ function renderLogin(){
     const name = input.value.trim();
     if(!name) { input.focus(); return; }
     const id = 'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-    const list = currentProfiles(); list.push({id, name, createdAt:Date.now()}); saveProfiles(list);
+    const list = currentProfiles(); list.push({id, name, createdAt:Date.now(), grades:{math:null, science:null}}); saveProfiles(list);
     state.profileId = id; state.screen='avatarSelect'; state.avatarReturnTo='gradeSelect'; render();
   }
 }
@@ -1880,20 +2946,55 @@ function renderAvatarSelect(){
   });
 }
 
+/* ============== render: theme select ============== */
+function renderThemeSelect(){
+  const current = getTheme();
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="login-wrap">
+      <div class="brand">
+        <h1>🎨 Pick a look</h1>
+        <p class="tag">Choose a color theme — you can change it any time from the dashboard.</p>
+      </div>
+      <div class="theme-grid">
+        ${THEMES.map(t=>`<button class="theme-option ${t.id===current?'selected':''}" data-theme-id="${t.id}">
+          <span class="theme-swatches">${t.swatches.map(c=>`<span class="theme-swatch" style="background:${c}"></span>`).join('')}</span>
+          <span class="theme-name">${esc(t.name)}</span>
+        </button>`).join('')}
+      </div>
+      <div style="text-align:center;margin-top:18px;">
+        <button class="link-btn" id="theme-back-btn">← Back</button>
+      </div>
+    </div>
+  `;
+  app.querySelectorAll('[data-theme-id]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      setTheme(btn.getAttribute('data-theme-id'));
+      state.screen = state.themeReturnTo || 'dashboard';
+      render();
+    });
+  });
+  document.getElementById('theme-back-btn').addEventListener('click', ()=>{
+    state.screen = state.themeReturnTo || 'dashboard';
+    render();
+  });
+}
+
 /* ============== render: grade select ============== */
 function renderGradeSelect(){
   const profile = currentProfile();
   if(!profile){ state.screen='login'; render(); return; }
+  const subject = state.subject;
   const app = document.getElementById('app');
   const grades = [3,4,5,6,7,8,9,10];
   app.innerHTML = `
     <div class="login-wrap">
       <div class="brand">
-        <h1>What grade is ${esc(profile.name)} in?</h1>
-        <p class="tag">This picks the right Olympiad package — the topics and difficulty are matched to grade level, from 4th-grade fundamentals up to Algebra 2 &amp; AMC-style problem solving.</p>
+        <h1>What grade is ${esc(profile.name)} in for ${subjectLabel(subject)}?</h1>
+        <p class="tag">This picks the right ${subject==='science'?'Science Olympiad':'Olympiad'} package for ${subjectLabel(subject).toLowerCase()} — the topics and difficulty are matched to grade level. Math and Science each track their own grade, so they can differ.</p>
       </div>
       <div class="grade-grid">
-        ${grades.map(g=>`<button class="grade-btn" data-grade="${g}">${g}${g===10?'th+':g===3?'rd':g===1?'st':g===2?'nd':'th'}<span class="grade-band-label">${bandLabelFor(bandForGrade(g))}</span></button>`).join('')}
+        ${grades.map(g=>`<button class="grade-btn" data-grade="${g}">${g}${g===10?'th+':g===3?'rd':g===1?'st':g===2?'nd':'th'}<span class="grade-band-label">${bandLabelFor(subject, bandForGrade(g))}</span></button>`).join('')}
       </div>
     </div>
   `;
@@ -1902,7 +3003,7 @@ function renderGradeSelect(){
       const grade = parseInt(btn.getAttribute('data-grade'));
       const list = currentProfiles();
       const idx = list.findIndex(p=>p.id===profile.id);
-      if(idx>=0){ list[idx].grade = grade; saveProfiles(list); }
+      if(idx>=0){ if(!list[idx].grades) list[idx].grades={math:null,science:null}; list[idx].grades[subject] = grade; saveProfiles(list); }
       state.screen='dashboard'; render();
     });
   });
@@ -1952,8 +3053,8 @@ function accuracyFor(data, subtopics){
   subtopics.forEach(st=>{ const s=data.topicStats[st]; if(s){ correct+=s.correct; attempted+=s.attempted; } });
   return attempted>0 ? Math.round(100*correct/attempted) : null;
 }
-function dayTrail(data, band){
-  const strandKeys = Object.keys(strandsFor(band));
+function dayTrail(data, subject, band){
+  const strandKeys = Object.keys(strandsFor(subject, band));
   const frontier = data.currentDay||1;
   const start = Math.max(1, frontier-6);
   const trail=[];
@@ -1967,30 +3068,91 @@ function dayTrail(data, band){
 function renderDashboard(){
   const profile = currentProfile();
   if(!profile){ state.screen='login'; render(); return; }
-  if(!profile.grade){ state.screen='gradeSelect'; render(); return; }
-  const band = bandForGrade(profile.grade);
-  const strands = strandsFor(band);
+  if(!profile.grades) profile.grades = {math:profile.grade||null, science:null};
+  const subject = state.subject;
+  if(!profile.grades[subject]){ state.screen='gradeSelect'; render(); return; }
+  const band = bandForGrade(profile.grades[subject]);
+  const strands = strandsFor(subject, band);
   const data = currentData();
   ensureBand(data, band);
   const dayNum = data.currentDay||1;
-  ensureDay(data, band, dayNum);
+  ensureDay(data, subject, band, dayNum);
   saveData(profile.id, data);
   const dayObj = data.days[dayNum];
-  const streak = computeStreak(data, band);
+  const streak = computeStreak(data, subject, band);
   const strandKeys = Object.keys(strands);
   const doneCount = strandKeys.filter(k=>dayObj[k]&&dayObj[k].done).length;
-  const trail = dayTrail(data, band);
+  const trail = dayTrail(data, subject, band);
   const phaseIdx = currentPhaseIndex(data);
   const week = currentWeekNumber(data);
+  const mathStreak = profile.grades.math ? computeStreak(loadData(profile.id,'math'), 'math', bandForGrade(profile.grades.math)) : 0;
+  const sciStreak = profile.grades.science ? computeStreak(loadData(profile.id,'science'), 'science', bandForGrade(profile.grades.science)) : 0;
+  const persona = personaFor(data, subject, band);
+  const topDay = data.currentDay||1;
+  const startDay = Math.max(1, topDay-29);
+  const pastDayNums = [];
+  for(let d=topDay; d>=startDay; d--){ if(data.days[d]) pastDayNums.push(d); }
+  const doubtsForDay = (d)=>{
+    let count = 0;
+    Object.values(strands).forEach(s=>{
+      const rec = data.days[d] && data.days[d][s.key];
+      if(rec && rec.review) rec.review.forEach(r=>{ if(r.doubts && r.doubts.length) count++; });
+    });
+    const learnEntries = data.days[d] && data.days[d].learnDoubts;
+    if(learnEntries) learnEntries.forEach(e=>{ if(e.doubts && e.doubts.length) count++; });
+    return count;
+  };
 
   const app = document.getElementById('app');
   app.innerHTML = `
+    <div class="dashboard-grid">
+    <aside class="daily-log-sidebar">
+      <h4>📅 DAILY LEARNING LOG</h4>
+      ${pastDayNums.length===0 ? '<p style="color:var(--ink-faint);font-size:13px;">No days finished yet — complete Day 1 to see it here.</p>' : `
+      <div class="day-log-list" id="day-log-list">
+        ${pastDayNums.map(d=>{
+          const dCount = doubtsForDay(d);
+          return `<div class="day-log-row">
+            <div class="day-log-row-header">
+              <span>Day ${d}</span>
+              ${dCount>0?`<button class="doubts-chip" data-doubtsday="${d}" title="See what was asked on Day ${d}">💬 ${dCount}</button>`:''}
+            </div>
+            <div class="day-log-row-topics">
+              ${Object.values(strands).map(s=>{
+                const rec = data.days[d] && data.days[d][s.key];
+                const studied = data.days[d] && data.days[d].studied && data.days[d].studied.includes(s.key);
+                const secs = data.days[d] && data.days[d].strandSeconds && data.days[d].strandSeconds[s.key];
+                const timeLine = secs ? `<div class="day-log-score">🕐 ${fmtDuration(secs)}</div>` : '';
+                if(!rec || !rec.done) return `<div class="day-log-chip todo${studied?' studied':''}" style="--c:var(--${s.color})">
+                  <div>${s.name.split(' ')[0]}</div>
+                  ${studied?'<div class="day-log-score">📖 Studied</div>':''}
+                  ${timeLine}
+                </div>`;
+                return `<div class="day-log-chip" style="--c:var(--${s.color})">
+                  <div>${s.name.split(' ')[0]}</div>
+                  <div class="day-log-score">${rec.score}/${rec.total}${rec.assisted?' · '+rec.assisted+' asst.':''}</div>
+                  ${timeLine}
+                  ${rec.review?`<button class="mini-review-btn" data-day="${d}" data-strand="${s.key}" title="Review ${esc(s.name)}">📋 Review</button>`:''}
+                </div>`;
+              }).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <p class="sources-hint">Scroll for older days. Only the most recent 30 days keep the full review.</p>
+      `}
+    </aside>
+    <div class="dashboard-main">
+    <div class="subject-switch">
+      <button class="subject-tab ${subject==='math'?'active':''}" data-subject="math">📐 Math${profile.grades.math?' · G'+profile.grades.math+(mathStreak>0?' · 🔥'+mathStreak:''):' · start'}</button>
+      <button class="subject-tab ${subject==='science'?'active':''}" data-subject="science">🔬 Science${profile.grades.science?' · G'+profile.grades.science+(sciStreak>0?' · 🔥'+sciStreak:''):' · start'}</button>
+    </div>
     <div class="dash-header">
       <div class="dash-header-left">
         <div class="dash-avatar">${svgAvatarChibi(avatarFor(profile))}</div>
         <div>
           <h2>Hi, ${esc(profile.name)} 👋</h2>
-          <div class="phase-line">Grade ${profile.grade} · ${bandLabelFor(band)} · Week ${week} · ${PHASES[phaseIdx].name}</div>
+          <div class="phase-line">${subjectLabel(subject)} · Grade ${profile.grades[subject]} · ${bandLabelFor(subject, band)} · Week ${week} · ${PHASES[phaseIdx].name}</div>
           <div style="margin-top:6px;">
             <button class="link-btn" id="switch-btn">Not you? Switch learner</button>
             <span style="color:var(--grid);">·</span>
@@ -1999,6 +3161,8 @@ function renderDashboard(){
             <button class="link-btn" id="change-grade-btn">Change grade</button>
             <span style="color:var(--grid);">·</span>
             <button class="link-btn" id="change-avatar-btn">Change avatar</button>
+            <span style="color:var(--grid);">·</span>
+            <button class="link-btn" id="change-theme-btn">🎨 Theme</button>
             <span style="color:var(--grid);">·</span>
             <button class="link-btn" id="edit-name-btn">Edit name</button>
           </div>
@@ -2024,7 +3188,8 @@ function renderDashboard(){
           <div class="sub">${s.tagline}</div>
           <div class="status-pill ${st.done?'done':'todo'}">${st.done? ('✓ Complete — '+st.score+'/'+st.total+(st.assisted?' · '+st.assisted+' assisted':'')) : 'Not started'}</div>
           ${acc!==null?`<div class="acc">Lifetime accuracy: ${acc}%</div>`:''}
-          <button class="btn btn-strand" style="background:var(--${s.color});" data-strand="${s.key}">${st.done?'Practice again':'Start session'}</button>
+          <button class="btn btn-ghost btn-learn" data-learn="${s.key}">📚 Learn this topic</button>
+          <button class="btn btn-strand" style="background:var(--${s.color});" data-strand="${s.key}">${st.done?'Practice again':'Take the assessment'}</button>
           ${st.done && st.review ? `<button class="link-btn" data-review="${s.key}">📋 Review Day ${dayNum} answers</button>` : ''}
         </div>`;
       }).join('')}
@@ -2039,11 +3204,68 @@ function renderDashboard(){
           </div>`).join('')}
       </div>
     </div>
+    </div>
+    </div>
+
+    <div class="dashboard-report">
+      <div class="report-section">
+        <h4 class="section-heading">📈 PROGRESS</h4>
+        <div class="persona-card">
+          <div class="persona-badge">🏆</div>
+          <div>
+            <div class="persona-title">${persona.title}</div>
+            <div class="persona-stats">${persona.mastered} of ${persona.totalTopics} topics mastered${persona.overallAcc!==null?' · '+persona.overallAcc+'% overall accuracy':' · just getting started'}</div>
+          </div>
+        </div>
+        <div class="strand-grid">
+          ${Object.values(strands).map(s=>{
+            const rating = strandRating(data, s);
+            const series = strandSessionSeries(data, s.key);
+            const trend = trendLabel(series);
+            return `<div class="trend-card" style="--c:var(--${s.color})">
+              <div class="trend-head">
+                <h3>${s.name}</h3>
+                <span class="tier-pill">${rating.label}${rating.acc!==null?' · '+rating.acc+'%':''}</span>
+              </div>
+              ${sparklineSvg(series, 'var(--'+s.color+')')}
+              <div class="trend-note tone-${trend.tone}">${trend.text}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="week-strip">
+          <h4>TOPIC MASTERY</h4>
+          ${Object.values(strands).map(s=>{
+            const subs = s.subtopics.concat(s.advanced||[]);
+            return `<div class="mastery-group">
+              <div class="mastery-strand-label" style="color:var(--${s.color})">${s.name}</div>
+              ${subs.map(st=>{
+                const stat = data.topicStats[st];
+                const tier = masteryTier(stat);
+                const trend = subtopicTrend(stat);
+                const acc = stat && stat.attempted>0 ? Math.round(100*stat.correct/stat.attempted) : 0;
+                const locked = (s.advanced||[]).includes(st) && phaseIdx<1;
+                return `<div class="subtopic-row">
+                  <div class="subtopic-name">${TOPIC_LABEL[st]}${locked?' <span class="locked-tag">unlocks Wk 5</span>':''}</div>
+                  <div class="bar-track"><div class="bar-fill" style="width:${stat?acc:0}%;background:var(--${s.color})"></div></div>
+                  <div class="subtopic-pct num">${stat&&stat.attempted>0?acc+'%':'—'}</div>
+                  <div class="trend-arrow ${trend||'flat'}">${trend==='up'?'▲':trend==='down'?'▼':'–'}</div>
+                  <div class="tier-pill small">${tier.label}</div>
+                </div>`;
+              }).join('')}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
   `;
+  app.querySelectorAll('[data-subject]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{ state.subject = btn.getAttribute('data-subject'); render(); });
+  });
   document.getElementById('switch-btn').addEventListener('click', ()=>{ state.screen='login'; render(); });
   document.getElementById('progress-btn').addEventListener('click', ()=>{ state.screen='progress'; render(); });
   document.getElementById('change-grade-btn').addEventListener('click', ()=>{ state.screen='gradeSelect'; render(); });
   document.getElementById('change-avatar-btn').addEventListener('click', ()=>{ state.screen='avatarSelect'; state.avatarReturnTo='dashboard'; render(); });
+  document.getElementById('change-theme-btn').addEventListener('click', ()=>{ state.screen='themeSelect'; state.themeReturnTo='dashboard'; render(); });
   document.getElementById('edit-name-btn').addEventListener('click', ()=>{
     showRenameModal(profile.name, (newName)=>{
       const list = currentProfiles();
@@ -2055,11 +3277,44 @@ function renderDashboard(){
   app.querySelectorAll('[data-strand]').forEach(btn=>{
     btn.addEventListener('click', ()=> startSession(btn.getAttribute('data-strand')));
   });
+  app.querySelectorAll('[data-learn]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.learnStrand = btn.getAttribute('data-learn');
+      state.learnExamples = {};
+      state.screen='learn';
+      render();
+    });
+  });
   app.querySelectorAll('[data-review]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const key = btn.getAttribute('data-review');
       const s = strands[key];
       openReview(dayObj[key].review||[], { strandName:s.name, color:s.color, dayNum, returnTo:'dashboard' });
+    });
+  });
+  app.querySelectorAll('.mini-review-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const d = parseInt(btn.getAttribute('data-day'));
+      const key = btn.getAttribute('data-strand');
+      const s = strands[key];
+      openReview(data.days[d][key].review||[], { strandName:s.name, color:s.color, dayNum:d, returnTo:'dashboard' });
+    });
+  });
+  app.querySelectorAll('[data-doubtsday]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const d = parseInt(chip.getAttribute('data-doubtsday'));
+      const entries = [];
+      Object.values(strands).forEach(s=>{
+        const rec = data.days[d] && data.days[d][s.key];
+        if(rec && rec.review) rec.review.forEach(r=>{ if(r.doubts && r.doubts.length) entries.push(Object.assign({}, r, { strandName:s.name, strandColor:s.color })); });
+      });
+      const learnEntries = data.days[d] && data.days[d].learnDoubts;
+      if(learnEntries) learnEntries.forEach(e=>{
+        if(!e.doubts || !e.doubts.length) return;
+        const s = findStrandForSubtopic(strands, e.subtopic);
+        entries.push(Object.assign({}, e, { strandName:(s?s.name:'')+' (Learn)', strandColor:s?s.color:'blue' }));
+      });
+      openDoubtsReport(entries, { dayNum:d, returnTo:'dashboard' });
     });
   });
 }
@@ -2087,16 +3342,17 @@ function pickSubtopicSequence(strand, data, dayNum){
 }
 function startSession(strandKey){
   const profile = currentProfile();
-  const band = bandForGrade(profile.grade);
-  const strand = strandsFor(band)[strandKey];
+  const subject = state.subject;
+  const band = bandForGrade(profile.grades[subject]);
+  const strand = strandsFor(subject, band)[strandKey];
   const data = currentData();
   ensureBand(data, band);
   const dayNum = data.currentDay||1;
-  ensureDay(data, band, dayNum);
+  ensureDay(data, subject, band, dayNum);
   const wasDone = data.days[dayNum][strandKey].done;
   const seq = pickSubtopicSequence(strand, data, dayNum);
   const problems = seq.map(st=>{ const p = GENERATORS[st](); p.subtopic=st; return p; });
-  state.session = { strandKey, band, dayNum, problems, idx:0, correct:0, assisted:0, answered:0, timeLeft:SESSION_LENGTH_SEC, timerId:null, checked:false, wasDone, reviewLog:[] };
+  state.session = { subject, strandKey, band, dayNum, problems, idx:0, correct:0, assisted:0, answered:0, timeLeft:SESSION_LENGTH_SEC, timerId:null, checked:false, wasDone, reviewLog:[] };
   state.screen='session';
   render();
   const timerEl = ()=>document.getElementById('timer-val');
@@ -2111,7 +3367,7 @@ function fmtTime(sec){ sec=Math.max(0,sec); return Math.floor(sec/60)+':'+pad2(s
 
 function renderSession(){
   const sess = state.session;
-  const strand = strandsFor(sess.band)[sess.strandKey];
+  const strand = strandsFor(sess.subject, sess.band)[sess.strandKey];
   const problem = sess.problems[sess.idx];
   const app = document.getElementById('app');
   const pct = Math.round((sess.idx)/sess.problems.length*100);
@@ -2138,12 +3394,13 @@ function renderSession(){
     <div class="problem-card" style="--c:var(--${strand.color});--c-soft:var(--${strand.color}-soft)">
       <div class="problem-tags">
         <div class="eyebrow">${TOPIC_LABEL[problem.subtopic]}</div>
-        <div class="exam-tag">Style: ${examStyleFor(problem.subtopic, sess.band)}</div>
+        <div class="exam-tag">Style: ${examStyleFor(problem.subtopic, sess.band, sess.subject)}</div>
       </div>
       ${problem.diagram ? `<div class="problem-diagram">${renderDiagram(problem.diagram)}</div>` : ''}
       <div class="${problem.isEquation?'problem-eq':'problem-text'}">${problem.prompt}</div>
       <div class="help-row">
-        <button class="btn btn-ghost help-btn" id="help-btn" ${problem.assisted?'disabled':''}>${problem.assisted?'✓ Hint shown':'💡 Need a hint?'}</button>
+        <button class="btn btn-ghost help-btn" id="help-btn" ${problem.assisted?'disabled':''}>${problem.assisted?'✓ Assisted':'💡 Need a hint?'}</button>
+        <button class="btn btn-ghost help-btn" id="ask-btn">❓ Ask a question</button>
       </div>
       <div id="help-panel" class="help-panel" hidden></div>
       ${answerHtml}
@@ -2152,35 +3409,13 @@ function renderSession(){
     <div class="session-actions" id="actions-slot"></div>
   `;
   if(sess.timeLeft<=60) document.getElementById('timer-wrap').classList.add('low');
-
-  document.getElementById('help-btn').addEventListener('click', async ()=>{
-    problem.assisted = true;
-    const btn = document.getElementById('help-btn');
-    const panel = document.getElementById('help-panel');
-    btn.disabled = true;
-    panel.hidden = false;
-    const sampleFn = await getSample();
-    if(!sampleFn){
-      panel.innerHTML = '<div class="chat-bubble chat-claude">'+esc(CONCEPT_HELP[problem.subtopic]||'')+'</div>';
-      btn.textContent = '✓ Hint shown';
-      return;
-    }
-    btn.textContent = '🤖 Asking Claude...';
-    const profile = currentProfile();
-    problem.chat = [{ role:'user', content: buildHintPrompt(problem, profile&&profile.grade) }];
-    panel.innerHTML = '<div class="chat-bubble chat-claude" id="chat-pending"><span class="hint-source">🤖 Claude</span>Thinking…</div>';
-    try{
-      const result = await sampleFn(problem.chat, {
-        modelTier:'quick',
-        onText: ({text})=>{ const el=document.getElementById('chat-pending'); if(el) el.innerHTML = '<span class="hint-source">🤖 Claude</span>'+esc(text); }
-      });
-      problem.chat.push({ role:'assistant', content: result.text || CONCEPT_HELP[problem.subtopic] || '' });
-    }catch(e){
-      problem.chat.push({ role:'assistant', content: CONCEPT_HELP[problem.subtopic]||'' });
-    }
-    btn.textContent = '✓ Hint shown';
+  if(problem.chat && problem.chat.length){
+    document.getElementById('help-panel').hidden = false;
     renderHelpPanel(problem, true);
-  });
+  }
+
+  document.getElementById('help-btn').addEventListener('click', ()=> requestHint(problem, sess.subject));
+  document.getElementById('ask-btn').addEventListener('click', ()=> openAskBox(problem));
 
   document.getElementById('exit-btn').addEventListener('click', ()=>{
     showConfirmModal('Exit this session?', 'Your progress on this session will not be saved.', 'Exit session', ()=>{
@@ -2203,7 +3438,7 @@ function renderSession(){
 function submitAnswer(rawInput){
   const sess = state.session;
   const problem = sess.problems[sess.idx];
-  const strand = strandsFor(sess.band)[sess.strandKey];
+  const strand = strandsFor(sess.subject, sess.band)[sess.strandKey];
   let isCorrect;
   if(problem.check){ isCorrect = problem.check(rawInput); }
   else if(problem.type==='choice'){ isCorrect = rawInput===problem.answer; }
@@ -2225,7 +3460,8 @@ function submitAnswer(rawInput){
   sess.reviewLog.push({
     subtopic: problem.subtopic, prompt: problem.prompt, isEquation: !!problem.isEquation,
     userAnswer: rawInput, correctAnswer: problem.answer, isCorrect, assisted: wasAssisted,
-    explanation: problem.explanation
+    explanation: problem.explanation,
+    doubts: (problem.chat||[]).filter(t=>!t.hidden)
   });
 
   if(problem.type==='choice'){
@@ -2261,7 +3497,7 @@ function finishSession(){
   if(!sess) return;
   const data = currentData();
   const dayNum = sess.dayNum;
-  ensureDay(data, sess.band, dayNum);
+  ensureDay(data, sess.subject, sess.band, dayNum);
   const strandKey = sess.strandKey;
   const alreadyDone = data.days[dayNum][strandKey].done;
   if(!alreadyDone){
@@ -2272,7 +3508,7 @@ function finishSession(){
     // recorded before review-logging existed.
     data.days[dayNum][strandKey].review = sess.reviewLog;
   }
-  const nowFullyDone = allDone(data.days[dayNum], sess.band);
+  const nowFullyDone = allDone(data.days[dayNum], sess.subject, sess.band);
   if(nowFullyDone && dayNum === (data.currentDay||1)){
     data.currentDay = dayNum+1;
   }
@@ -2281,13 +3517,13 @@ function finishSession(){
   state.screen='summary';
   state.session.dayNumFinished = dayNum;
   state.session.becameFullyDone = nowFullyDone;
-  state.session.newStreak = computeStreak(data, sess.band);
+  state.session.newStreak = computeStreak(data, sess.subject, sess.band);
   render();
 }
 
 function renderSummary(){
   const sess = state.session;
-  const strand = strandsFor(sess.band)[sess.strandKey];
+  const strand = strandsFor(sess.subject, sess.band)[sess.strandKey];
   const pct = sess.answered>0 ? Math.round(100*sess.correct/sess.answered) : 0;
   let msg = 'Nice effort — practice makes progress!';
   if(pct>=90) msg='Outstanding work! 🌟'; else if(pct>=70) msg='Great job! Keep it up.';
@@ -2321,35 +3557,22 @@ function renderSummary(){
 function renderProgress(){
   const profile = currentProfile();
   if(!profile){ state.screen='login'; render(); return; }
-  if(!profile.grade){ state.screen='gradeSelect'; render(); return; }
-  const band = bandForGrade(profile.grade);
-  const strands = strandsFor(band);
+  const subject = state.subject;
+  if(!profile.grades || !profile.grades[subject]){ state.screen='gradeSelect'; render(); return; }
+  const band = bandForGrade(profile.grades[subject]);
   const data = currentData();
   ensureBand(data, band);
   saveData(profile.id, data);
-  const persona = personaFor(data, band);
   const phaseIdx = currentPhaseIndex(data);
   const week = currentWeekNumber(data);
-  const topDay = data.currentDay||1;
-  const startDay = Math.max(1, topDay-59);
-  const pastDayNums = [];
-  for(let d=topDay; d>=startDay; d--){ if(data.days[d]) pastDayNums.push(d); }
   const app = document.getElementById('app');
 
   app.innerHTML = `
     <div class="dash-header">
       <div>
-        <h2>${esc(profile.name)}'s Roadmap</h2>
-        <div class="phase-line">Grade ${profile.grade} · ${bandLabelFor(band)}</div>
+        <h2>${esc(profile.name)}'s ${subjectLabel(subject)} Roadmap</h2>
+        <div class="phase-line">Grade ${profile.grades[subject]} · ${bandLabelFor(subject, band)}</div>
         <button class="link-btn" id="back-btn">← Back to dashboard</button>
-      </div>
-    </div>
-
-    <div class="persona-card">
-      <div class="persona-badge">🏆</div>
-      <div>
-        <div class="persona-title">${persona.title}</div>
-        <div class="persona-stats">${persona.mastered} of ${persona.totalTopics} topics mastered${persona.overallAcc!==null?' · '+persona.overallAcc+'% overall accuracy':' · just getting started'}</div>
       </div>
     </div>
 
@@ -2367,9 +3590,9 @@ function renderProgress(){
     </div>
 
     <div class="sources-card">
-      <h4>WHERE TO FIND REAL PAST EXAMS FOR GRADE ${profile.grade}</h4>
+      <h4>WHERE TO FIND REAL PAST EXAMS FOR GRADE ${profile.grades[subject]}</h4>
       <div class="sources-list">
-        ${(BAND_OFFICIAL_SOURCES[band]||[]).map(src=>`<div class="source-row">
+        ${officialSourcesFor(subject, band).map(src=>`<div class="source-row">
           <div class="source-name">${esc(src.name)}</div>
           <div class="source-note">${esc(src.note)}</div>
         </div>`).join('')}
@@ -2377,71 +3600,9 @@ function renderProgress(){
       <p class="sources-hint">Search each organization's own site for "past contests" or "practice problems" — official retired questions are the real thing to time yourself against.</p>
     </div>
 
-    <div class="strand-grid">
-      ${Object.values(strands).map(s=>{
-        const rating = strandRating(data, s);
-        const series = strandSessionSeries(data, s.key);
-        const trend = trendLabel(series);
-        return `<div class="trend-card" style="--c:var(--${s.color})">
-          <div class="trend-head">
-            <h3>${s.name}</h3>
-            <span class="tier-pill">${rating.label}${rating.acc!==null?' · '+rating.acc+'%':''}</span>
-          </div>
-          ${sparklineSvg(series, 'var(--'+s.color+')')}
-          <div class="trend-note tone-${trend.tone}">${trend.text}</div>
-        </div>`;
-      }).join('')}
-    </div>
-
-    <div class="week-strip">
-      <h4>TOPIC MASTERY</h4>
-      ${Object.values(strands).map(s=>{
-        const subs = s.subtopics.concat(s.advanced||[]);
-        return `<div class="mastery-group">
-          <div class="mastery-strand-label" style="color:var(--${s.color})">${s.name}</div>
-          ${subs.map(st=>{
-            const stat = data.topicStats[st];
-            const tier = masteryTier(stat);
-            const trend = subtopicTrend(stat);
-            const acc = stat && stat.attempted>0 ? Math.round(100*stat.correct/stat.attempted) : 0;
-            const locked = (s.advanced||[]).includes(st) && phaseIdx<1;
-            return `<div class="subtopic-row">
-              <div class="subtopic-name">${TOPIC_LABEL[st]}${locked?' <span class="locked-tag">unlocks Wk 5</span>':''}</div>
-              <div class="bar-track"><div class="bar-fill" style="width:${stat?acc:0}%;background:var(--${s.color})"></div></div>
-              <div class="subtopic-pct num">${stat&&stat.attempted>0?acc+'%':'—'}</div>
-              <div class="trend-arrow ${trend||'flat'}">${trend==='up'?'▲':trend==='down'?'▼':'–'}</div>
-              <div class="tier-pill small">${tier.label}</div>
-            </div>`;
-          }).join('')}
-        </div>`;
-      }).join('')}
-    </div>
-
-    <div class="past-days-card">
-      <h4>PAST DAYS</h4>
-      ${pastDayNums.length===0 ? '<p style="color:var(--ink-faint);font-size:13px;">No days finished yet — complete Day 1 to see it here.</p>' : pastDayNums.map(d=>`
-        <div class="past-day-row">
-          <div class="past-day-label">Day ${d}</div>
-          <div class="past-day-strands">
-            ${Object.values(strands).map(s=>{
-              const rec = data.days[d] && data.days[d][s.key];
-              if(!rec || !rec.done) return `<span class="past-strand-chip todo" style="--c:var(--${s.color})">${s.name.split(' ')[0]}: not done</span>`;
-              return `<span class="past-strand-chip" style="--c:var(--${s.color})">${s.name.split(' ')[0]}: ${rec.score}/${rec.total}${rec.assisted?' · '+rec.assisted+' asst.':''}${rec.review?` <button class="mini-review-btn" data-day="${d}" data-strand="${s.key}" title="Review ${esc(s.name)}">📋</button>`:''}</span>`;
-            }).join('')}
-          </div>
-        </div>`).join('')}
-      ${pastDayNums.length>0 ? '<p class="sources-hint">Only the most recent 30 days keep the full question-by-question review — older days still show scores.</p>' : ''}
-    </div>
+    <p class="roadmap-disclaimer" style="text-align:center;">Looking for the daily log or progress charts? Those now live right on the dashboard.</p>
   `;
   document.getElementById('back-btn').addEventListener('click', ()=>{ state.screen='dashboard'; render(); });
-  app.querySelectorAll('.mini-review-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const d = parseInt(btn.getAttribute('data-day'));
-      const key = btn.getAttribute('data-strand');
-      const s = strands[key];
-      openReview(data.days[d][key].review||[], { strandName:s.name, color:s.color, dayNum:d, returnTo:'progress' });
-    });
-  });
 }
 
 /* ============== custom confirm modal (window.confirm is blocked in sandboxed iframes) ============== */
@@ -2495,6 +3656,79 @@ function showRenameModal(currentName, onSave){
   overlay.addEventListener('click', (e)=>{ if(e.target===overlay) close(); });
 }
 
+/* ============== render: learn ============== */
+function makeExample(subtopic){
+  const p = GENERATORS[subtopic]();
+  p.subtopic = subtopic;
+  return p;
+}
+function renderLearn(){
+  const profile = currentProfile();
+  if(!profile){ state.screen='login'; render(); return; }
+  const subject = state.subject;
+  if(!profile.grades || !profile.grades[subject]){ state.screen='gradeSelect'; render(); return; }
+  const band = bandForGrade(profile.grades[subject]);
+  const strand = strandsFor(subject, band)[state.learnStrand];
+  if(!strand){ state.screen='dashboard'; render(); return; }
+  markStudied(subject, band, state.learnStrand);
+  const data = currentData();
+  const phaseIdx = currentPhaseIndex(data);
+  state.learnExamples = state.learnExamples || {};
+  const subs = strand.subtopics.concat(strand.advanced||[]);
+  subs.forEach(st=>{ if(!state.learnExamples[st]) state.learnExamples[st] = makeExample(st); });
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="dash-header">
+      <div>
+        <h2>📚 Learn: ${esc(strand.name)}</h2>
+        <div class="phase-line">${esc(strand.tagline)}</div>
+        <button class="link-btn" id="learn-back-btn">← Back to dashboard</button>
+      </div>
+    </div>
+    <div class="lesson-list">
+      ${subs.map(st=>{
+        const locked = (strand.advanced||[]).includes(st) && phaseIdx<1;
+        const ex = state.learnExamples[st];
+        return `<div class="lesson-card" style="--c:var(--${strand.color});--c-soft:var(--${strand.color}-soft);">
+          <div class="lesson-head">
+            <h3>${esc(TOPIC_LABEL[st]||st)}</h3>
+            ${locked?'<span class="locked-tag">unlocks Wk 5</span>':''}
+          </div>
+          <p class="lesson-concept">${esc(CONCEPT_HELP[st]||'')}</p>
+          <div class="lesson-example">
+            <div class="lesson-example-label">WORKED EXAMPLE</div>
+            ${ex.diagram ? `<div class="problem-diagram">${renderDiagram(ex.diagram)}</div>` : ''}
+            <div class="${ex.isEquation?'problem-eq':'problem-text'}">${ex.prompt}</div>
+            <div class="lesson-answer">Answer: <strong>${esc(String(ex.answer))}</strong></div>
+            <div class="lesson-explain">${ex.explanation||''}</div>
+          </div>
+          <div class="lesson-actions">
+            <button class="link-btn" data-newex="${st}">🔄 Try another example</button>
+            <button class="btn btn-ghost help-btn" id="ask-btn-${esc(st)}">❓ Ask a question</button>
+          </div>
+          <div id="help-panel-${esc(st)}" class="help-panel" hidden></div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="lesson-cta">
+      <button class="btn btn-primary" id="lesson-start-btn">🎯 Take the ${esc(strand.name)} assessment</button>
+    </div>
+  `;
+  document.getElementById('learn-back-btn').addEventListener('click', ()=>{ state.screen='dashboard'; render(); });
+  document.getElementById('lesson-start-btn').addEventListener('click', ()=> startSession(state.learnStrand));
+  subs.forEach(st=>{
+    const askBtn = document.getElementById('ask-btn-'+st);
+    if(askBtn) askBtn.addEventListener('click', ()=> openAskBox(state.learnExamples[st], '-'+st));
+  });
+  app.querySelectorAll('[data-newex]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const st = btn.getAttribute('data-newex');
+      state.learnExamples[st] = makeExample(st);
+      renderLearn();
+    });
+  });
+}
+
 /* ============== render: review ============== */
 function openReview(log, meta){
   state.reviewLog = log||[];
@@ -2516,7 +3750,7 @@ function renderReview(){
     </div>
     <div class="review-list">
       ${log.length===0 ? '<p style="color:var(--ink-faint);">No answers recorded for this session.</p>' : log.map((r,i)=>`
-        <div class="review-item ${r.isCorrect?'correct':'wrong'}" style="--c:var(--${meta.color||'blue'})">
+        <div class="review-item ${r.isCorrect?'correct':'wrong'}" style="--c:var(--${meta.color||'blue'});--c-soft:var(--${meta.color||'blue'}-soft)">
           <div class="review-mark">${r.isCorrect?'✅':'❌'}</div>
           <div class="review-body">
             <div class="review-eyebrow">Q${i+1} · ${esc(TOPIC_LABEL[r.subtopic]||'')}</div>
@@ -2527,6 +3761,10 @@ function renderReview(){
             </div>
             <div class="review-explain">${r.explanation||''}</div>
             ${r.assisted?'<span class="assisted-note">📝 This one was assisted.</span>':''}
+            ${r.doubts && r.doubts.length ? `<div class="review-doubts">
+              <div class="review-doubts-label">💬 Questions asked about this one</div>
+              ${r.doubts.map(chatBubbleHtml).join('')}
+            </div>` : ''}
           </div>
         </div>`).join('')}
     </div>
@@ -2534,18 +3772,101 @@ function renderReview(){
   document.getElementById('review-back-btn').addEventListener('click', ()=>{ state.screen = meta.returnTo||'dashboard'; render(); });
 }
 
+/* ============== render: daily doubts report ============== */
+function openDoubtsReport(entries, meta){
+  state.doubtsEntries = entries||[];
+  state.doubtsMeta = meta||{};
+  state.screen = 'doubtsReport';
+  render();
+}
+function renderDoubtsReport(){
+  const entries = state.doubtsEntries||[];
+  const meta = state.doubtsMeta||{};
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="dash-header">
+      <div>
+        <h2>💬 What was asked on Day ${meta.dayNum||''}</h2>
+        <div class="phase-line">${entries.length} question${entries.length===1?'':'s'} with a doubt asked</div>
+        <button class="link-btn" id="doubts-back-btn">← Back</button>
+      </div>
+    </div>
+    <div class="review-list">
+      ${entries.length===0 ? '<p style="color:var(--ink-faint);">No questions were asked that day.</p>' : entries.map((r,i)=>`
+        <div class="review-item" style="--c:var(--${r.strandColor||'blue'});--c-soft:var(--${r.strandColor||'blue'}-soft)">
+          <div class="review-mark">💬</div>
+          <div class="review-body">
+            <div class="review-eyebrow">${esc(r.strandName||'')} · ${esc(TOPIC_LABEL[r.subtopic]||'')}</div>
+            <div class="${r.isEquation?'review-prompt mono':'review-prompt'}">${r.prompt}</div>
+            <div class="review-doubts">
+              ${r.doubts.map(chatBubbleHtml).join('')}
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('doubts-back-btn').addEventListener('click', ()=>{ state.screen = meta.returnTo||'progress'; render(); });
+}
+
+/* ============== active time tracking ==============
+   Counts wall-clock seconds while the tab is visible AND the kid is on an
+   actual study screen (session or learn), attributed to whichever strand/topic
+   is actually open — not while idle on the dashboard, reading a summary, or
+   with the tab backgrounded. Accumulates into today's day record so the Daily
+   Learning Log can show real time spent per topic, not just whether it's done. */
+let pendingSeconds = {}; // strandKey -> seconds not yet flushed to storage
+function currentTrackedStrand(){
+  if(state.screen==='session' && state.session) return state.session.strandKey;
+  if(state.screen==='learn' && state.learnStrand) return state.learnStrand;
+  return null;
+}
+function flushActiveTime(){
+  const keys = Object.keys(pendingSeconds);
+  if(!keys.length) return;
+  const profile = currentProfile();
+  if(!profile){ pendingSeconds = {}; return; }
+  const grade = profile.grades && profile.grades[state.subject];
+  if(!grade){ pendingSeconds = {}; return; }
+  const band = bandForGrade(grade);
+  const data = currentData();
+  ensureBand(data, band);
+  const dayNum = data.currentDay||1;
+  const day = ensureDay(data, state.subject, band, dayNum);
+  keys.forEach(k=>{ day.strandSeconds[k] = (day.strandSeconds[k]||0) + pendingSeconds[k]; });
+  pendingSeconds = {};
+  saveData(profile.id, data);
+}
+setInterval(()=>{
+  if(document.visibilityState==='visible'){
+    const strandKey = currentTrackedStrand();
+    if(strandKey){
+      pendingSeconds[strandKey] = (pendingSeconds[strandKey]||0) + 1;
+      const total = Object.values(pendingSeconds).reduce((a,b)=>a+b,0);
+      if(total>=10) flushActiveTime();
+    }
+  }
+}, 1000);
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden') flushActiveTime(); });
+
 /* ============== router ============== */
 function render(){
+  flushActiveTime();
+  const appEl = document.getElementById('app');
+  if(appEl) appEl.className = state.screen==='dashboard' ? 'wide' : '';
   if(state.screen==='login') renderLogin();
   else if(state.screen==='gradeSelect') renderGradeSelect();
   else if(state.screen==='avatarSelect') renderAvatarSelect();
   else if(state.screen==='apiKeySettings') renderApiKeySettings();
   else if(state.screen==='dashboard') renderDashboard();
+  else if(state.screen==='learn') renderLearn();
   else if(state.screen==='session') renderSession();
   else if(state.screen==='summary') renderSummary();
   else if(state.screen==='progress') renderProgress();
   else if(state.screen==='review') renderReview();
+  else if(state.screen==='doubtsReport') renderDoubtsReport();
+  else if(state.screen==='themeSelect') renderThemeSelect();
 }
+applyTheme(getTheme());
 render();
 })();
 </script>
