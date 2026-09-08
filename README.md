@@ -1,4 +1,4 @@
-# Yugi
+# Yuji
 
 A single-file web app for grade-level Math **and** Science Olympiad-style practice, built for kids ages 8–16 (grades 3–10+). Math and Science are tracked completely independently — a learner can be on a different grade for each subject at the same time.
 
